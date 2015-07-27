@@ -1660,12 +1660,6 @@
 	insert g2/parent g3
 	true
 ]
-; bug#1989
-#r3only
-[
-	loop 30000000 [make gob! []]
-	true
-]
 #r3only
 [
 	main: make gob! []
@@ -12581,11 +12575,21 @@
 ; bug#1675
 [files: read %fixtures mold files block? files]
 [block? read %fixtures/]
+
+; We put the tests that take a long time and stress at the end.  They may need their own
+; separate file.
+
 ; system/gc.r
 ; bug#1776, bug#2072
 [
 	a: copy []
 	loop 200'000 [a: append/only copy [] a]
 	recycle
+	true
+]
+; bug#1989
+#r3only
+[
+	loop 30000000 [make gob! []]
 	true
 ]
