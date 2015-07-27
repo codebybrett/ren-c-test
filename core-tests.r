@@ -1226,7 +1226,7 @@
 [a: 1 error? try [set 'a 1 / 0] :a =? 1]
 [a: 1 error? try [set/any 'a 1 / 0] :a =? 1]
 ; bug#2190
-[catch/quit [attempt [catch/quit [1 / 0]] quit/return true]]
+[127 = catch/quit [attempt [catch/quit [1 / 0]] quit/return 127]]
 ; bug#2190
 [error? try [catch/quit [attempt [quit]] print x]]
 ; datatypes/event.r
