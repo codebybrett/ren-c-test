@@ -2221,7 +2221,7 @@
 [
     o: make object! [n: 'o b: reduce [func [] [n]]]
 	p: make o [n: 'p]
-	o/b/1 = 'o
+	(o/b)/1 = 'o
 ]
 ; multiple inheritance
 ; bug#1863
