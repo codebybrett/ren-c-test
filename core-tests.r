@@ -3272,10 +3272,10 @@
 	a-value: first ['a/b]
 	a-value == :a-value
 ]
-; lit-words are word-active
+; lit-words aren't word-active
 [
 	a-value: first ['a]
-	a-value == to word! :a-value
+	a-value == :a-value
 ]
 [:true == true]
 [:false == false]
@@ -7266,9 +7266,14 @@
 [0 == do 0]
 [1 == do 1]
 [#a == do #a]
+;-- CC#2101, #1434
 [
 	a-value: first ['a/b]
-	:a-value == do :a-value
+	all [
+		lit-path? a-value
+		path? do :a-value
+		(to-path :a-value) == (do :a-value)
+	]
 ]
 #r2only
 [
@@ -7278,7 +7283,11 @@
 #r3only
 [
 	a-value: first ['a]
-	a-value == do :a-value
+	all [
+		lit-word? a-value
+		path? do :a-value
+		(to-word :a-value) == (do :a-value)
+	]
 ]
 [true = do true]
 [false = do false]
@@ -7311,7 +7320,10 @@
 ]
 [
 	a-value: first [a/b:]
-	:a-value == do :a-value
+	all [
+		set-word? :a-value
+		error? try [do :a-value]
+	]
 ]
 #r2only
 [
