@@ -6743,8 +6743,11 @@
 [-2 == apply :- [2]]
 [none == apply func [a] [a] []]
 [none == apply/only func [a] [a] []]
-[1 == apply func [a] [a] [1 2]]
-[1 == apply/only func [a] [a] [1 2]]
+
+; CC#2237
+[error? try [apply func [a] [a] [1 2]]]
+[error? try [apply/only func [a] [a] [1 2]]]
+
 [true == apply func [/a] [a] [true]]
 [none == apply func [/a] [a] [false]]
 [none == apply func [/a] [a] []]
