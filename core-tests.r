@@ -11287,7 +11287,8 @@
 ]
 #r3only
 ; bug#1764
-[unset 'blk protect/deep 'blk]
+[unset 'blk protect/deep 'blk true]
+[unprotect 'blk]
 ; functions/secure/unprotect.r
 ; bug#1748
 ; block
