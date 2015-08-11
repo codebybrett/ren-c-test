@@ -570,7 +570,6 @@
 [datatype? native!]
 [datatype? none!]
 [datatype? object!]
-[datatype? op!]
 [datatype? pair!]
 [datatype? paren!]
 [datatype? path!]
@@ -2289,9 +2288,9 @@
 	2 == length? words-of append o [self: 1]
 ]
 ; datatypes/op.r
-[op? get '+]
-[not op? 1]
-[op! = type? get '+]
+[infix? get '+]
+[error? try [infix? 1]]
+[any-function? get '+]
 #r2only
 [3 == do reduce [get '+ 1 2]]
 #r3only
@@ -3573,7 +3572,7 @@
 [not equal? :abs :add]
 [equal? :all :all]
 [not equal? :all :any]
-; reflexivity test for op!
+; reflexivity test for infix 
 [equal? :+ :+]
 [not equal? :+ :-]
 ; reflexivity test for function!
@@ -4273,7 +4272,7 @@
 ; error! difference in data
 [not equal? (make error! "hello") (make error! "there")]
 #r3only
-; error! difference in op! code
+; error! difference in infix code
 ; bug#60: operators generate errors with offset NEAR field
 [not equal? (try [1 / 0]) (try [2 / 0])]
 #r3only
@@ -4325,7 +4324,7 @@
 [equiv? :all :all]
 #r3
 [not equiv? :all :any]
-; reflexivity test for op!
+; reflexivity test for infix
 #r3
 [equiv? :+ :+]
 #r3
@@ -4925,7 +4924,7 @@
 [same? :abs :abs]
 ; reflexivity test for native!
 [same? :all :all]
-; reflexivity test for op!
+; reflexivity test for infix
 [same? :+ :+]
 ; reflexivity test for function!
 [
@@ -5399,7 +5398,7 @@
 [strict-equal? :abs :abs]
 ; reflexivity test for native!
 [strict-equal? :all :all]
-; reflexivity test for op!
+; reflexivity test for infix
 [strict-equal? :+ :+]
 ; reflexivity test for function!
 [
