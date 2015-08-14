@@ -6896,9 +6896,12 @@
 	case [false [success: false]]
 	success
 ]
-; not sure these are consistent with other control functions
 [not case []]
-[logic! = type? case [true []]]
+#r2only
+[logic! = case type? [true []]
+#r3only
+;-- CC#2246
+[none? case [true []]]]
 ; case results
 [case [true [true]]]
 [not case [true [false]]]
