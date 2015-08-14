@@ -137,7 +137,7 @@ make object! compose [
 				true
 			]
 			all [
-				parse/all read log-file [
+				parse read log-file [
 					(
 						last-vector: none
 						guard: [end skip]
@@ -167,7 +167,7 @@ make object! compose [
 								{"} copy value to {"} skip
 								; test result found
 								(
-									parse/all value [
+									parse value [
 										"succeeded"
 										(successes: successes + 1)
 											|
