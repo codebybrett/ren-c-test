@@ -985,12 +985,6 @@
 [try/except [make error! [type: 'throw id: 'quit]] [true]]
 ; error types that should be predefined
 #r3only
-[error? make error! [type: 'note id: 'no-load]]
-#r3only
-[error? make error! [type: 'note id: 'exited]]
-#r3only
-[error? make error! [type: 'note id: 'deprecated]]
-#r3only
 [error? make error! [type: 'syntax id: 'invalid]]
 #r3only
 [error? make error! [type: 'syntax id: 'missing]]
@@ -1087,8 +1081,6 @@
 #r3only
 [error? make error! [type: 'script id: 'block-lines]]
 #r3only
-[error? make error! [type: 'script id: 'throw-usage]]
-#r3only
 [error? make error! [type: 'script id: 'locked-word]]
 #r3only
 [error? make error! [type: 'script id: 'protected]]
@@ -1102,8 +1094,6 @@
 [error? make error! [type: 'script id: 'bad-make-arg]]
 #r3only
 [error? make error! [type: 'script id: 'bad-decode]]
-#r3only
-[error? make error! [type: 'script id: 'already-used]]
 #r3only
 [error? make error! [type: 'script id: 'wrong-denom]]
 #r3only
@@ -1165,7 +1155,7 @@
 #r3only
 [error? make error! [type: 'access id: 'read-only]]
 #r3only
-[error? make error! [type: 'access id: 'no-buffer]]
+[error? make error! [type: 'internal id: 'no-buffer]]
 #r3only
 [error? make error! [type: 'access id: 'timeout]]
 #r3only
@@ -1216,8 +1206,6 @@
 [error? make error! [type: 'internal id: 'limit-hit]]
 #r3only
 [error? make error! [type: 'internal id: 'bad-sys-func]]
-#r3only
-[error? make error! [type: 'internal id: 'feature-na]]
 #r3only
 [error? make error! [type: 'internal id: 'not-done]]
 ; triggered errors should not be assignable
