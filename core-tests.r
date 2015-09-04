@@ -8666,9 +8666,30 @@
 ]
 ; Test break, break/return and continue
 [cycle?: true unset? while [cycle?] [break cycle?: false]]
-[cycle?: true unset? while [if cycle? [break] cycle?] [cycle?: false]]  ; bug#1519
-[cycle?: true 1 = while [cycle?] [break/return 1 cycle?: false]]
-[cycle?: true 1 = while [if cycle? [break/return 1] cycle?] [cycle?: false]]  ; bug#1519
+; Test reactions to break and continue in the condition
+[
+	was-stopped: true
+	while [true] [
+		while [break] []
+		was-stopped: false
+		break
+	]
+	was-stopped
+]
+[
+	first-time: true
+	was-continued: false
+	while [true] [
+		unless first-time [
+			was-continued: true
+			break
+		]
+		first-time: false
+		while [continue] [break]
+		break
+	]
+	was-continued
+]
 #r3only
 [
 	success: true
