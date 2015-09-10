@@ -6946,7 +6946,7 @@
 [error? catch [try [1 / 0]]]
 [1 = catch [1]]
 [unset? catch [throw ()]]
-[error? catch [throw try [1 / 0]]]
+[error? first catch [throw reduce [try [1 / 0]]]]
 [1 = catch [throw 1]]
 ; catch/name results
 [unset? catch/name [] 'catch]
@@ -6955,7 +6955,7 @@
 [error? catch/name [try [1 / 0]] 'catch]
 [1 = catch/name [1] 'catch]
 [unset? catch/name [throw/name () 'catch] 'catch]
-[error? catch/name [throw/name try [1 / 0] 'catch] 'catch]
+[error? first catch/name [throw/name reduce [try [1 / 0]] 'catch] 'catch]
 [1 = catch/name [throw/name 1 'catch] 'catch]
 ; recursive cases
 [
