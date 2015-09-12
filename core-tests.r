@@ -513,7 +513,7 @@
 	]
 ]
 ; bug#447
-[slf: 'self do closure [x] [same? slf 'self] 1]
+[slf: 'self eval closure [x] [same? slf 'self] 1]
 ; bug#1528
 [closure? closure [self] []]
 ; bug#2048
@@ -1556,7 +1556,7 @@
 [function? func [self] []]
 #r3only
 ; bug#1756
-[do does [reduce reduce [:self] true]]
+[eval does [reduce reduce [:self] true]]
 #r3only
 ; bug#2025
 [
@@ -5891,10 +5891,10 @@
 ; bug#1655
 [not head? bind next [1] 'rebol]
 ; bug#892, bug#216
-[y: 'x do has [x] [x: true get bind y 'x]]
+[y: 'x eval has [x] [x: true get bind y 'x]]
 ; bug#1893
 [
-	word: do func [x] ['x] 1
+	word: eval func [x] ['x] 1
 	same? word bind 'x word
 ]
 ; bug#2086
@@ -6009,7 +6009,7 @@
 [true == value? 'value?]
 #r3only
 ; bug#1914
-[false == value? do func [x] ['x] none]
+[false == value? eval func [x] ['x] none]
 ; functions/control/all.r
 ; zero values
 [true == all []]
@@ -6721,8 +6721,8 @@
 [error? try [apply 'type?/word []]]
 ; bug#1949: RETURN/redo can break APPLY security
 [same? :add attempt [apply does [return/redo :add] []]]
-; DO is special
-[2 == do does [return apply :do [:add 1 1] 4 4]]
+; EVAL is special
+[8 == eval does [return apply :eval [:add] 4 4]]
 [1 == apply :subtract [2 1]]
 #r3only
 [1 == apply :- [2 1]]
@@ -6755,17 +6755,17 @@
 [[[1]] == head apply :insert [copy [] [1] none none true]]
 [native! == apply :type? [:print]]
 [get-word! == apply/only :type? [:print]]
-[1 == do does [apply :return [1] 2]]
+[1 == eval does [apply :return [1] 2]]
 ; bug#1760
-[1 == do does [apply does [] [return 1] 2]]
+[1 == eval does [apply does [] [return 1] 2]]
 ; bug#1760
-[1 == do does [apply func [a] [a] [return 1] 2]]
+[1 == eval does [apply func [a] [a] [return 1] 2]]
 ; bug#1760
-[1 == do does [apply does [] [return 1]]]
-[1 == do does [apply func [a] [a] [return 1]]]
-[1 == do does [apply :also [return 1 2]]]
+[1 == eval does [apply does [] [return 1]]]
+[1 == eval does [apply func [a] [a] [return 1]]]
+[1 == eval does [apply :also [return 1 2]]]
 ; bug#1760
-[1 == do does [apply :also [2 return 1]]]
+[1 == eval does [apply :also [2 return 1]]]
 [unset? apply func [x [any-type!]] [get/any 'x] [()]]
 [unset? apply func ['x [any-type!]] [get/any 'x] [()]]
 [unset? apply func [:x [any-type!]] [get/any 'x] [()]]
@@ -7014,9 +7014,9 @@
 ]
 #r3only
 ; bug#851
-[error? try [catch/quit [] do make error! ""]]
+[error? try [catch/quit [] fail make error! ""]]
 ; bug#851
-[none? attempt [catch/quit [] do make error! ""]]
+[none? attempt [catch/quit [] fail make error! ""]]
 ; functions/control/compose.r
 [
 	num: 1
@@ -7106,7 +7106,7 @@
 	do [success: true]
 	success
 ]
-[1 == do :abs -1]
+[1 == eval :abs -1]
 #r2only
 [
 	a-value: #{}
@@ -7119,7 +7119,7 @@
 ]
 [
 	a-value: charset ""
-	same? a-value do a-value
+	same? a-value eval a-value
 ]
 ; do block start
 [unset? do []]
@@ -7221,20 +7221,20 @@
 ; do block end
 [
 	a-value: none!
-	same? a-value do a-value
+	same? a-value eval a-value
 ]
-[1/Jan/0000 == do 1/Jan/0000]
-[0.0 == do 0.0]
-[1.0 == do 1.0]
+[1/Jan/0000 == eval 1/Jan/0000]
+[0.0 == eval 0.0]
+[1.0 == eval 1.0]
 [
 	a-value: me@here.com
-	same? a-value do a-value
+	same? a-value eval a-value
 ]
 #r3only
 [error? try [do try [1 / 0] 1]]
 [
 	a-value: does [5]
-	5 == do :a-value
+	5 == eval :a-value
 ]
 #r2only
 [
@@ -7246,23 +7246,23 @@
 [
 	a: 12
 	a-value: first [:a]
-	:a == do :a-value
+	:a == eval :a-value
 ]
-[#"^@" == do #"^@"]
+[#"^@" == eval #"^@"]
 [
 	a-value: make image! 0x0
-	same? a-value do a-value
+	same? a-value eval a-value
 ]
-[0 == do 0]
-[1 == do 1]
-[#a == do #a]
+[0 == eval 0]
+[1 == eval 1]
+[#a == eval #a]
 ;-- CC#2101, #1434
 [
 	a-value: first ['a/b]
 	all [
 		lit-path? a-value
-		path? do :a-value
-		(to-path :a-value) == (do :a-value)
+		path? eval :a-value
+		(to-path :a-value) == (eval :a-value)
 	]
 ]
 #r2only
@@ -7275,18 +7275,18 @@
 	a-value: first ['a]
 	all [
 		lit-word? a-value
-		path? do :a-value
-		(to-word :a-value) == (do :a-value)
+		path? eval :a-value
+		(to-word :a-value) == (eval :a-value)
 	]
 ]
-[true = do true]
-[false = do false]
-[$1 == do $1]
-[unset! = do :type? ()]
+[true = eval true]
+[false = eval false]
+[$1 == eval $1]
+[unset! = eval :type? ()]
 [none? do #[none]]
 [
 	a-value: make object! []
-	same? :a-value do :a-value
+	same? :a-value eval :a-value
 ]
 [
 	a-value: first [(2)]
@@ -7302,17 +7302,17 @@
 [
 	a-value: 'a/b
 	a: make object! [b: 1]
-	a-value == do :a-value
+	a-value == eval :a-value
 ]
 [
 	a-value: make port! http://
-	port? do :a-value
+	port? eval :a-value
 ]
 [
 	a-value: first [a/b:]
 	all [
 		set-word? :a-value
-		error? try [do :a-value]
+		error? try [eval :a-value] ;-- no value to assign after it...
 	]
 ]
 #r2only
@@ -7327,14 +7327,14 @@
 [unset? do ""]
 [
 	a-value: make tag! ""
-	same? :a-value do :a-value
+	same? :a-value eval :a-value
 ]
-[0:00 == do 0:00]
-[0.0.0 == do 0.0.0]
+[0:00 == eval 0:00]
+[0.0.0 == eval 0.0.0]
 [
 	a-value: 'b-value
 	b-value: 1
-	1 == do :a-value
+	1 == eval :a-value
 ]
 ; RETURN stops the evaluation
 [
@@ -7409,7 +7409,7 @@
 [1 = do [do [1]]]
 [1 = do "do [1]"]
 [1 == 1]
-[3 = do :do :add 1 2]
+[3 = eval :eval :add 1 2]
 ; infinite recursion for block
 [
 	blk: [do blk]
@@ -7532,18 +7532,18 @@
 	unset? f1
 ]
 ; the "result" of exit should not be assignable, bug#1515
-[a: 1 do does [a: exit] :a =? 1]
-[a: 1 do does [set 'a exit] :a =? 1]
-[a: 1 do does [set/any 'a exit] :a =? 1]
+[a: 1 eval does [a: exit] :a =? 1]
+[a: 1 eval does [set 'a exit] :a =? 1]
+[a: 1 eval does [set/any 'a exit] :a =? 1]
 ; the "result" of exit should not be passable to functions, bug#1509
-[a: 1 do does [a: error? exit] :a =? 1]
+[a: 1 eval does [a: error? exit] :a =? 1]
 ; bug#1535
-[do does [words-of exit] true]
-[do does [values-of exit] true]
+[eval does [words-of exit] true]
+[eval does [values-of exit] true]
 ; bug#1945
-[do does [spec-of exit] true]
+[eval does [spec-of exit] true]
 ; exit should not be caught by try
-[a: 1 do does [a: error? try [exit]] :a =? 1]
+[a: 1 eval does [a: error? try [exit]] :a =? 1]
 ; functions/control/for.r
 [
 	success: true
@@ -8008,7 +8008,7 @@
 	1 = f1
 ]
 ; Test that exit stops the loop
-[unset? do does [forever [exit]]]
+[unset? eval does [forever [exit]]]
 #r3only
 ; Test that errors do not stop the loop and errors can be returned
 [
@@ -8285,7 +8285,7 @@
 ; functions/control/map-each.r
 ; "return bug"
 [
-	integer? do does [map-each v [] [] 1]
+	integer? eval does [map-each v [] [] 1]
 ]
 ; functions/control/reduce.r
 [[1 2] = reduce [1 1 + 1]]
@@ -8307,8 +8307,8 @@
 [unset? loop 1 [reduce [continue]]]
 [1 = catch [reduce [throw 1]]]
 [1 = catch/name [reduce [throw/name 1 'a]] 'a]
-[1 = do does [reduce [return 1 2] 2]]
-[unset? do does [reduce [exit 1] 2]]
+[1 = eval does [reduce [return 1 2] 2]]
+[unset? eval does [reduce [exit 1] 2]]
 ; recursive behaviour
 [1 = first reduce [first reduce [1]]]
 ; infinite recursion
@@ -8483,18 +8483,18 @@
 	error? f1
 ]
 ; the "result" of return should not be assignable, bug#1515
-[a: 1 do does [a: return 2] :a =? 1]
-[a: 1 do does [set 'a return 2] :a =? 1]
-[a: 1 do does [set/any 'a return 2] :a =? 1]
+[a: 1 eval does [a: return 2] :a =? 1]
+[a: 1 eval does [set 'a return 2] :a =? 1]
+[a: 1 eval does [set/any 'a return 2] :a =? 1]
 ; the "result" of return should not be passable to functions, bug#1509
-[a: 1 do does [a: error? return 2] :a =? 1]
+[a: 1 eval does [a: error? return 2] :a =? 1]
 ; bug#1535
-[do does [words-of return none] true]
-[do does [values-of return none] true]
+[eval does [words-of return none] true]
+[eval does [values-of return none] true]
 ; bug#1945
-[do does [spec-of return none] true]
+[eval does [spec-of return none] true]
 ; return should not be caught by try
-[a: 1 do does [a: error? try [return 2]] :a =? 1]
+[a: 1 eval does [a: error? try [return 2]] :a =? 1]
 ; functions/control/switch.r
 [
 	11 = switch 1 [
@@ -8567,7 +8567,7 @@
 ; bug#822
 [error? try/except [make error! ""] [0]]
 #r3only
-[try/except [do make error! ""] [true]]
+[try/except [fail make error! ""] [true]]
 #r3only
 [try/except [1 / 0] :error?]
 #r3only
@@ -8892,12 +8892,12 @@
 	f: func [] [
 		func [x] [
 			if x = 1 [
-				do f 2
+				eval f 2
 				x = 1
 			]
 		]
 	]
-	do f 1
+	eval f 1
 ]
 ; functions/onvert/to-hex.r
 ; bug#43
@@ -12190,7 +12190,7 @@
 ; bug#1880
 [parse "12" ["" to end]]
 ; bug#100
-[1 == do does [parse [] [(return 1)] 2]]
+[1 == eval does [parse [] [(return 1)] 2]]
 ; bug#1457: TO/THRU + bitset!/charset!
 [parse "a" compose [thru (charset "a")]]
 [not parse "a" compose [thru (charset "a") skip]]
