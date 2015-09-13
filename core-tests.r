@@ -305,7 +305,7 @@
 [
 	a-value: first [:a]
 	f: closure [] [:a-value]
-	(same? :a-value f) and (:a-value == f)
+	(same? :a-value f) and* (:a-value == f)
 ]
 [
 	f: closure [] [#"^@"]
@@ -766,7 +766,7 @@
 [equal? to binary! 2.2250738585072013e-308 #{0010000000000000}]
 [equal? to binary! 2.2250738585072014e-308 #{0010000000000000}]
 ; bug#1753
-[c: last mold/all 1e16 (#"0" <= c) and (#"9" >= c)]
+[c: last mold/all 1e16 (#"0" <= c) and* (#"9" >= c)]
 ; alternative form
 [1.1 == 1,1]
 [1.1 = make decimal! 1.1]
@@ -1305,7 +1305,7 @@
 [
 	a-value: first [:a]
 	f: does [:a-value]
-	(same? :a-value f) and (:a-value == f)
+	(same? :a-value f) and* (:a-value == f)
 ]
 [
 	f: does [#"^@"]
@@ -6921,7 +6921,7 @@
 		true [s1: true]
 		true [s2: true]
 	]
-	s1 and s2
+	s1 and* s2
 ]
 ; recursivity
 [1 = case [true [case [true [1]]]]]
@@ -7543,9 +7543,9 @@
 	num: 0
 	for i 1 10 1 [
 		num: num + 1
-		success: i = num and success
+		success: i = num and* success
 	]
-	10 = num and success
+	10 = num and* success
 ]
 ; cycle return value
 [false = for i 1 1 1 [false]]
@@ -8324,9 +8324,9 @@
 	num: 0
 	repeat i 10 [
 		num: num + 1
-		success: i = num and success
+		success: i = num and* success
 	]
-	10 = num and success
+	10 = num and* success
 ]
 ; cycle return value
 [false = repeat i 1 [false]]
@@ -9212,35 +9212,35 @@
 [0.0.255 = add 0.0.255 0.0.1]
 [0.0.255 = add 0.0.255 0.0.255]
 ; functions/math/and.r
-[true and true = true]
-[true and false = false]
-[false and true = false]
-[false and false = false]
+[true and* true = true]
+[true and* false = false]
+[false and* true = false]
+[false and* false = false]
 ; integer
-[1 and 1 = 1]
-[1 and 0 = 0]
-[0 and 1 = 0]
-[0 and 0 = 0]
-[1 and 2 = 0]
-[2 and 1 = 0]
-[2 and 2 = 2]
+[1 and* 1 = 1]
+[1 and* 0 = 0]
+[0 and* 1 = 0]
+[0 and* 0 = 0]
+[1 and* 2 = 0]
+[2 and* 1 = 0]
+[2 and* 2 = 2]
 ; char
-[#"^(00)" and #"^(00)" = #"^(00)"]
-[#"^(01)" and #"^(00)" = #"^(00)"]
-[#"^(00)" and #"^(01)" = #"^(00)"]
-[#"^(01)" and #"^(01)" = #"^(01)"]
-[#"^(01)" and #"^(02)" = #"^(00)"]
-[#"^(02)" and #"^(02)" = #"^(02)"]
+[#"^(00)" and* #"^(00)" = #"^(00)"]
+[#"^(01)" and* #"^(00)" = #"^(00)"]
+[#"^(00)" and* #"^(01)" = #"^(00)"]
+[#"^(01)" and* #"^(01)" = #"^(01)"]
+[#"^(01)" and* #"^(02)" = #"^(00)"]
+[#"^(02)" and* #"^(02)" = #"^(02)"]
 ; tuple
-[0.0.0 and 0.0.0 = 0.0.0]
-[1.0.0 and 1.0.0 = 1.0.0]
-[2.0.0 and 2.0.0 = 2.0.0]
-[255.255.255 and 255.255.255 = 255.255.255]
+[0.0.0 and* 0.0.0 = 0.0.0]
+[1.0.0 and* 1.0.0 = 1.0.0]
+[2.0.0 and* 2.0.0 = 2.0.0]
+[255.255.255 and* 255.255.255 = 255.255.255]
 ; binary
-[#{030000} and #{020000} = #{020000}]
+[#{030000} and* #{020000} = #{020000}]
 #r2only
 ; string
-["^(03)^(00)" and "^(02)^(00)" = "^(02)^(00)"]
+["^(03)^(00)" and* "^(02)^(00)" = "^(02)^(00)"]
 ; functions/math/arccosine.r
 [0 = arccosine 1]
 [0 = arccosine/radians 1]
