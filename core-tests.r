@@ -7275,7 +7275,7 @@
 	a-value: first ['a]
 	all [
 		lit-word? a-value
-		path? eval :a-value
+		word? eval :a-value
 		(to-word :a-value) == (eval :a-value)
 	]
 ]
@@ -7292,17 +7292,10 @@
 	a-value: first [(2)]
 	2 == do :a-value
 ]
-#r2only
 [
 	a-value: 'a/b
 	a: make object! [b: 1]
-	1 == do :a-value
-]
-#r3only
-[
-	a-value: 'a/b
-	a: make object! [b: 1]
-	a-value == eval :a-value
+	1 == eval :a-value
 ]
 [
 	a-value: make port! http://
@@ -7311,7 +7304,7 @@
 [
 	a-value: first [a/b:]
 	all [
-		set-word? :a-value
+		set-path? :a-value
 		error? try [eval :a-value] ;-- no value to assign after it...
 	]
 ]
