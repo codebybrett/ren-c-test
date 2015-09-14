@@ -2267,13 +2267,13 @@
 #r3only
 [
 	o: bound? use [x] ['x]
-	2 == length? words-of append o 'self
+	3 == length? words-of append o 'self ; !!! weird test, includes /local
 ]
 ; bug#2076
 #r3only
 [
 	o: bound? use [x] ['x]
-	2 == length? words-of append o [self: 1]
+	3 == length? words-of append o [self: 1] ; weird test, includes /local
 ]
 ; datatypes/op.r
 [infix? get '+]
@@ -6728,26 +6728,26 @@
 [1 == apply :- [2 1]]
 #r2only
 [-2 == apply :- [2]]
-[none == apply func [a] [a] []]
-[none == apply/only func [a] [a] []]
+[error? try [apply func [a] [a] []]]
+[error? try [apply/only func [a] [a] []]]
 
 ; CC#2237
 [error? try [apply func [a] [a] [1 2]]]
 [error? try [apply/only func [a] [a] [1 2]]]
 
-[true == apply func [/a] [a] [true]]
+['a = apply func [/a] [a] [true]]
 [none == apply func [/a] [a] [false]]
 [none == apply func [/a] [a] []]
-[true == apply/only func [/a] [a] [true]]
+['a = apply/only func [/a] [a] [true]]
 ; the word 'false
-[true == apply/only func [/a] [a] [false]]
+['a = apply/only func [/a] [a] [false]]
 [false == apply/only func [/a] [a] [#[false]]]
 [none == apply/only func [/a] [a] []]
-[use [a] [a: true true == apply func [/a] [a] [a]]]
+[use [a] [a: true 'a = apply func [/a] [a] [a]]]
 [use [a] [a: false none == apply func [/a] [a] [a]]]
-[use [a] [a: false true == apply func [/a] [a] ['a]]]
-[use [a] [a: false true == apply func [/a] [a] [/a]]]
-[use [a] [a: false true == apply/only func [/a] [a] [a]]]
+[use [a] [a: false 'a = apply func [/a] [a] ['a]]]
+[use [a] [a: false 'a = apply func [/a] [a] [/a]]]
+[use [a] [a: false 'a = apply/only func [/a] [a] [a]]]
 [paren! == apply/only :type? [()]]
 ['paren! == apply/only :type? [() true]]
 [[1] == head apply :insert [copy [] [1] none none none]]
