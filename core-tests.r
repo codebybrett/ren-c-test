@@ -2111,9 +2111,9 @@
 	zero? x - to decimal! to money! x
 ]
 ; datatypes/native.r
-[native? :type?]
+[native? :reduce]
 [not native? 1]
-[native! = type? :type?]
+[native! = type? :reduce]
 ; bug#1659
 ; natives are active
 [same? none! do reduce [:type? make none! none]]
@@ -3271,7 +3271,7 @@
 	:a-value == a-value
 ]
 ; natives are word-active
-[native! == type? :type?]
+[native! == type? :reduce]
 [:none == none]
 ; library test?
 [
