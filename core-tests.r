@@ -3083,21 +3083,21 @@
 #r3
 [typeset? to-typeset internal!]
 #r2only
-[datatype? number!]
+[datatype? any-number!]
 #r3only
-[typeset? number!]
+[typeset? any-number!]
 #r3
-[typeset? to-typeset number!]
+[typeset? to-typeset any-number!]
 #r3
-[typeset? scalar!]
+[typeset? any-scalar!]
 #r3
-[typeset? to-typeset scalar!]
+[typeset? to-typeset any-scalar!]
 #r2only
-[datatype? series!]
+[datatype? any-series!]
 #r3only
-[typeset? series!]
+[typeset? any-series!]
 #r3
-[typeset? to-typeset series!]
+[typeset? to-typeset any-series!]
 #r3only
 [typeset? make typeset! [integer! none!]]
 #r3
@@ -3105,7 +3105,7 @@
 #r3
 [typeset? to-typeset [integer! none!]]
 #r3only
-[typeset! = type? series!]
+[typeset! = type? any-series!]
 ; bug#92
 [
     x: to typeset! []
@@ -3789,9 +3789,9 @@
 [not equal? decimal! integer!]
 [equal? equal? decimal! integer! equal? integer! decimal!]
 ; datatype! vs. typeset!
-[not equal? number! integer!]
+[not equal? any-number! integer!]
 ; datatype! vs. typeset! symmetry
-[equal? equal? number! integer! equal? integer! number!]
+[equal? equal? any-number! integer! equal? integer! any-number!]
 #r3only
 ; datatype! vs. typeset!
 [not equal? integer! make typeset! [integer!]]
@@ -3803,9 +3803,9 @@
 ; Supported by R2/Forward.
 [not equal? integer! to-typeset [integer!]]
 ; typeset! (or pseudo-type in R2)
-[equal? number! number!]
+[equal? any-number! any-number!]
 ; typeset! (or pseudo-type in R2)
-[not equal? number! series!]
+[not equal? any-number! any-series!]
 #r3only
 [equal? make typeset! [integer!] make typeset! [integer!]]
 #r3only
@@ -4545,10 +4545,10 @@
 #r3
 [equal? equiv? decimal! integer! equiv? integer! decimal!]
 #r3
-[not equiv? number! integer!]
+[not equiv? any-number! integer!]
 ; symmetry
 #r3
-[equal? equiv? number! integer! equiv? integer! number!]
+[equal? equiv? any-number! integer! equiv? integer! any-number!]
 #r3only
 [not equiv? integer! make typeset! [integer!]]
 #r3only
@@ -5110,9 +5110,9 @@
 	parse :a-value [b-value:]
 	equal? same? :a-value :b-value same? :b-value :a-value
 ]
-[not same? number! integer!]
+[not same? any-number! integer!]
 ; symmetry
-[equal? same? number! integer! same? integer! number!]
+[equal? same? any-number! integer! same? integer! any-number!]
 ; reflexivity
 [same? -1 -1]
 ; reflexivity
@@ -5586,9 +5586,9 @@
 	parse :a-value [b-value:]
 	equal? strict-equal? :a-value :b-value strict-equal? :b-value :a-value
 ]
-[not strict-equal? number! integer!]
+[not strict-equal? any-number! integer!]
 ; symmetry
-[equal? strict-equal? number! integer! strict-equal? integer! number!]
+[equal? strict-equal? any-number! integer! strict-equal? integer! any-number!]
 ; reflexivity
 [strict-equal? -1 -1]
 ; reflexivity
@@ -8155,7 +8155,7 @@
 ; datatype
 [if none! [true]]
 ; typeset
-[if number! [true]]
+[if any-number! [true]]
 ; date
 [if 1/1/0000 [true]]
 ; decimal
