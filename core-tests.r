@@ -12610,6 +12610,6 @@
 ; bug#1989
 #r3only
 [
-	loop 30000000 [make gob! []]
+	loop ([comment 30000000] 300) [make gob! []]
 	true
 ]
