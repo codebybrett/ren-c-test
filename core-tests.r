@@ -6882,10 +6882,10 @@
 ]
 [not case []]
 #r2only
-[logic! = case type? [true []]
+[logic! = case type? [true []]]
 #r3only
 ;-- CC#2246
-[none? case [true []]]]
+[none? case [true []]]
 ; case results
 [case [true [true]]]
 [not case [true [false]]]
