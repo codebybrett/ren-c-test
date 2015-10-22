@@ -6109,7 +6109,7 @@
 ]
 [0:00 == all [0:00]]
 [0.0.0 == all [0.0.0]]
-[unset? all [()]]
+[true == all [()]] ;-- Ren/C change
 ['a == all ['a]]
 ; two values
 [:abs = all [true :abs]]
@@ -6205,7 +6205,7 @@
 ]
 [0:00 == all [true 0:00]]
 [0.0.0 == all [true 0.0.0]]
-[unset? all [true ()]]
+[true == all [1020 ()]] ;-- Ren/C change
 ['a == all [true 'a]]
 [true = all [:abs true]]
 [
