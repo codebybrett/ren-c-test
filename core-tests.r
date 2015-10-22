@@ -3115,8 +3115,6 @@
 [unset? ()]
 [unset! == type? ()]
 [not unset? 1]
-; bug#836
-[unset? #[unset!]]
 #r3only
 [unset? make unset! none]
 ; bug#68
@@ -4187,7 +4185,6 @@
 		]
 ]
 ; unset! comparison fails
-; Evaluates () to get unset! value, in case #[unset!] constructor fails.
 #r2only
 [error? try [equal? () ()]]
 #r3only
@@ -6840,7 +6837,6 @@
 ; just testing return values, but written as if break could fail altogether
 ; in case that becomes an issue. break failure tests are with the functions
 ; that they are failing to break from.
-; break should return #[unset!]
 [unset? loop 1 [break 2]]
 ; break/return should return argument
 [none? loop 1 [break/return none 2]]
@@ -12352,7 +12348,7 @@
 [[1 2 3] = sort/compare [1 3 2] :<]
 [[3 2 1] = sort/compare [1 3 2] :>]
 ; bug#1516: SORT/compare ignores the typespec of its function argument
-[error? try [sort/compare [1 2 #[unset!]] :>]]
+[error? try [sort/compare reduce [1 2 #[none!]] :>]]
 ; functions/series/split.r
 ; Tests taken from bug#1886.
 #r3
