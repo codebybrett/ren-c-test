@@ -6763,27 +6763,27 @@
 [1 == eval does [apply :also [return 1 2]]]
 ; bug#1760
 [1 == eval does [apply :also [2 return 1]]]
-[unset? apply func [x [any-type!]] [get/any 'x] [()]]
-[unset? apply func ['x [any-type!]] [get/any 'x] [()]]
-[unset? apply func [:x [any-type!]] [get/any 'x] [()]]
-[unset? apply func [x [any-type!]] [return get/any 'x] [()]]
-[unset? apply func ['x [any-type!]] [return get/any 'x] [()]]
-[unset? apply func [:x [any-type!]] [return get/any 'x] [()]]
+[unset? apply func [x [any-value!]] [get/any 'x] [()]]
+[unset? apply func ['x [any-value!]] [get/any 'x] [()]]
+[unset? apply func [:x [any-value!]] [get/any 'x] [()]]
+[unset? apply func [x [any-value!]] [return get/any 'x] [()]]
+[unset? apply func ['x [any-value!]] [return get/any 'x] [()]]
+[unset? apply func [:x [any-value!]] [return get/any 'x] [()]]
 [error? apply :make [error! ""]]
 #r3only
-[error? apply func [:x [any-type!]] [return get/any 'x] [make error! ""]]
+[error? apply func [:x [any-value!]] [return get/any 'x] [make error! ""]]
 [
-	error? apply/only func [x [any-type!]] [
+	error? apply/only func [x [any-value!]] [
 		return get/any 'x
 	] head insert copy [] make error! ""
 ]
 [
-	error? apply/only func ['x [any-type!]] [
+	error? apply/only func ['x [any-value!]] [
 		return get/any 'x
 	] head insert copy [] make error! ""
 ]
 [
-	error? apply/only func [:x [any-type!]] [
+	error? apply/only func [:x [any-value!]] [
 		return get/any 'x
 	] head insert copy [] make error! ""
 ]
@@ -6792,7 +6792,7 @@
 [
 	use [x] [
 		unset 'x
-		strict-equal? first [:x] apply/only func ['x [any-type!]] [
+		strict-equal? first [:x] apply/only func ['x [any-value!]] [
 			return get/any 'x
 		] [:x]
 	]
@@ -6804,7 +6804,7 @@
 [
 	use [x] [
 		unset 'x
-		strict-equal? 'x apply/only func [:x [any-type!]] [
+		strict-equal? 'x apply/only func [:x [any-value!]] [
 			return get/any 'x
 		] [x]
 	]
