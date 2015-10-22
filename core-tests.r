@@ -853,7 +853,7 @@
 #r2only
 [error? make error! [script else-gone]]
 #r2only
-[error? make error! [script bad-press]]
+[error? make error! [script bad-compression]]
 #r2only
 [error? make error! [script bad-prompt]]
 #r2only
@@ -1005,7 +1005,7 @@
 #r3only
 [error? make error! [type: 'script id: 'need-value]]
 #r3only
-[error? make error! [type: 'script id: 'not-defined]]
+[error? make error! [type: 'script id: 'not-bound]]
 #r3only
 [error? make error! [type: 'script id: 'not-in-context]]
 #r3only
@@ -1097,7 +1097,7 @@
 #r3only
 [error? make error! [type: 'script id: 'wrong-denom]]
 #r3only
-[error? make error! [type: 'script id: 'bad-press]]
+[error? make error! [type: 'script id: 'bad-compression]]
 #r3only
 [error? make error! [type: 'script id: 'dialect]]
 #r3only
@@ -1598,13 +1598,13 @@
 [
 	; context-less get-word
 	e: disarm try [do to block! ":a"]
-	e/id = 'not-defined
+	e/id = 'not-bound
 ]
 #r3only
 [
 	; context-less get-word
 	e: try [do to block! ":a"]
-	e/id = 'not-defined
+	e/id = 'not-bound
 ]
 #r2only
 ; behaviour for REBOL datatypes; unset
