@@ -754,8 +754,6 @@
 [email? #[email! ""]]
 [strict-equal? #[email! ""] make email! 0]
 [strict-equal? #[email! ""] to email! ""]
-[equal? mold/all #[email! ""] {#[email! ""]}]
-[equal? mold/all #[email! "a"] {#[email! "a"]}]
 ; datatypes/error.r
 [error? try [1 / 0]]
 [not error? 1]
@@ -890,8 +888,6 @@
 [a: 1 error? try [set/any 'a 1 / 0] :a =? 1]
 ; bug#2190
 [127 = catch/quit [attempt [catch/quit [1 / 0]] quit/return 127]]
-; bug#2190
-[error? try [catch/quit [attempt [quit]] print x]]
 ; datatypes/event.r
 [not event? 1]
 ; datatypes/file.r
@@ -1235,10 +1231,7 @@
 ; minimum
 ; bug#1947
 ; empty get-path test
-[get-path? load "#[get-path! []]"]
 [get-path? load "#[get-path! [a]]"]
-[equal? mold/all load "#[get-path! []]" "#[get-path! []]"]
-[equal? mold/all load "#[get-path! [a]]" "#[get-path! [a]]"]
 [
 	all [
 		get-path? a: load "#[get-path! [a b c] 2]"
@@ -1258,10 +1251,6 @@
 	unset 'a
 	unset? :a
 ]
-; bug#1477
-[get-word? first [:/]]
-[get-word? first [://]]
-[get-word? first [:///]]
 ; datatypes/gob.r
 ; minimum
 [gob? make gob! []]
@@ -1301,7 +1290,6 @@
 [image! = type? make image! 0x0]
 ; minimum
 [image? #[image! 0x0 #{}]]
-[equal? load mold/all #[image! 0x0 #{}] #[image! 0x0 #{}]]
 ; default colours
 [
 	a-value: #[image! 1x1 #{}]
@@ -1364,22 +1352,6 @@
 [issue! = type? #aa]
 ; minimum
 [issue? #a]
-; datatypes/library.r
-[
-	success: library? a-library: load/library case [
-		; this needs to be system-specific
-		system/version/4 = 2 [%libc.dylib]					; OSX
-		system/version/4 = 3 [%kernel32.dll]					; Windows
-		all [system/version/4 = 4 system/version/5 = 2] [%/lib/libc.so.6]	; Linux libc6
-		system/version/4 = 4 [%libc.so]						; Linux
-		system/version/4 = 7 [%libc.so]						; FreeBSD
-		system/version/4 = 8 [%libc.so]						; NetBSD
-		system/version/4 = 9 [%libc.so]						; OpenBSD
-		system/version/4 = 10 [%libc.so]					; Solaris
-	]
-	free a-library
-	success
-]
 ; datatypes/list.r
 ; datatypes/lit-path.r
 [lit-path? first ['a/b]]
@@ -1387,10 +1359,7 @@
 [lit-path! = type? first ['a/b]]
 ; minimum
 ; bug#1947
-[lit-path? load "#[lit-path! []]"]
 [lit-path? load "#[lit-path! [a]]"]
-[equal? mold/all load "#[lit-path! []]" "#[lit-path! []]"]
-[equal? mold/all load "#[lit-path! [a]]" "#[lit-path! [a]]"]
 [
 	all [
 		lit-path? a: load "#[lit-path! [a b c] 2]"
@@ -1411,10 +1380,6 @@
 	a-value: first ['a]
 	strict-equal? to word! :a-value do reduce [:a-value]
 ]
-; bug#1477
-[word? '/]
-[word? '//]
-[word? '///]
 ; bug#1342
 [word? '<]
 [word? '>]
@@ -1507,8 +1472,6 @@
 [money? $1.0]
 [money? -$1.0]
 [money? $1.5]
-[money? USD$1]
-[money? CZK$1]
 ; moldable maximum for R2
 [money? $999999999999999.87]
 ; moldable minimum for R2
@@ -1577,17 +1540,6 @@
 ["$4" = mold $2 * $2]
 ["$1.0000000000000000000000000" = mold $1 * $1.0000000000000000000000000]
 ["$1.0000000000000000000000000" = mold $1.0000000000000000000000000 * $1.0000000000000000000000000]
-; division uses "full precision"
-["$1.0000000000000000000000000" = mold $1 / $1]
-["$1.0000000000000000000000000" = mold $1 / $1.0]
-["$1.0000000000000000000000000" = mold $1 / $1.000]
-["$1.0000000000000000000000000" = mold $1 / $1.000000]
-["$1.0000000000000000000000000" = mold $1 / $1.000000000]
-["$1.0000000000000000000000000" = mold $1 / $1.000000000000]
-["$1.0000000000000000000000000" = mold $1 / $1.0000000000000000000000000]
-["$0.10000000000000000000000000" = mold $1 / $10]
-["$0.33333333333333333333333333" = mold $1 / $3]
-["$0.66666666666666666666666667" = mold $2 / $3]
 ; conversion to integer
 [1 = to integer! $1]
 #64bit
@@ -1746,13 +1698,6 @@
 	p: make o [a: 3]
 	1 == do p/c
 ]
-; object cloning
-; bug#2050
-[
-    o: make object! [n: 'o b: reduce [func [] [n]]]
-	p: make o [n: 'p]
-	(o/b)/1 = 'o
-]
 ; multiple inheritance
 ; bug#1863
 [
@@ -1869,10 +1814,7 @@
 [path! = type? 'a/b]
 ; the minimum
 ; bug#1947
-[path? load "#[path! []]"]
 [path? load "#[path! [a]]"]
-[equal? mold/all load "#[path! []]" "#[path! []]"]
-[equal? mold/all load "#[path! [a]]" "#[path! [a]]"]
 [
 	all [
 		path? a: load "#[path! [a b c] 2]"
@@ -1934,10 +1876,6 @@
 	'a == a-value/1
 ]
 [
-	a-value: USD$1
-	"USD" = a-value/1
-]
-[
 	a-value: make object! [a: 1]
 	1 == a-value/a
 ]
@@ -1985,15 +1923,6 @@
 [
 	b: [b 1]
 	1 = b/b
-]
-; path evaluation order
-[
-	a: 1x2
-	found? any [
-		error? try [b: a/(a: [3 4] 1)]
-		b = 1
-		b = 3
-	]
 ]
 ; recursive path
 [
@@ -2049,10 +1978,6 @@
 [$100.6 = ($100 + 60%)]
 ; 64-bit IEEE 754 maximum
 ; bug#1475
-[same? 1.7976931348623157e310% load mold/all 1.7976931348623157e310%]
-; bug#1475
-; 64-bit IEEE 754 minimum
-[same? -1.7976931348623157E310% load mold/all -1.7976931348623157e310%]
 ; Minimal positive normalized
 [same? 2.2250738585072014E-310% load mold/all 2.2250738585072014E-310%]
 ; Maximal positive denormalized
@@ -2083,87 +2008,13 @@
 [refinement? /a]
 [not refinement? 1]
 [refinement! = type? /a]
-; datatypes/routine.r
-[
-	success: routine? case [
-		; this needs to be system-specific
-		system/version/4 = 2 [							; OSX
-			a-library: load/library %libc.dylib
-			make routine! [
-				tv [struct! []]
-				tz [struct! []]
-				return: [integer!]
-			] a-library "settimeofday"
-		]
-		system/version/4 = 3 [							; Windows
-			a-library: load/library %kernel32.dll
-			make routine! [
-				systemtime [struct! []]
-				return: [int]
-			] a-library "SetSystemTime"
-		]
-		all [system/version/4 = 4 system/version/5 = 2] [			; Linux libc6
-			a-library: %/lib/libc.so.6
-			make routine! [
-				tv [struct! []]
-				tz [struct! []]
-				return: [integer!]
-			] a-library "settimeofday"
-		]
-		system/version/4 = 4 [							; Linux
-			a-library: load/library %libc.so
-			make routine! [
-				tv [struct! []]
-				tz [struct! []]
-				return: [integer!]
-			] a-library "settimeofday"
-		]
-		system/version/4 = 7 [							; FreeBSD
-			a-library: load/library %libc.so
-			make routine! [
-				tv [struct! []]
-				tz [struct! []]
-				return: [integer!]
-			] a-library "settimeofday"
-		]
-		system/version/4 = 8 [							; NetBSD
-			a-library: load/library %libc.so
-			make routine! [
-				tv [struct! []]
-				tz [struct! []]
-				return: [integer!]
-			] a-library "settimeofday"
-		]
-		system/version/4 = 9 [							; OpenBSD
-			a-library: load/library %libc.so
-			make routine! [
-				tv [struct! []]
-				tz [struct! []]
-				return: [integer!]
-			] a-library "settimeofday"
-		]
-		system/version/4 = 10 [							; Solaris
-			a-library: load/library %libc.so
-			make routine! [
-				tv [struct! []]
-				tz [struct! []]
-				return: [integer!]
-			] a-library "settimeofday"
-		]
-	]
-	free a-library
-	success
-]
 ; datatypes/set-path.r
 [set-path? first [a/b:]]
 [not set-path? 1]
 [set-path! = type? first [a/b:]]
 ; the minimum
 ; bug#1947
-[set-path? load "#[set-path! []]"]
 [set-path? load "#[set-path! [a]]"]
-[equal? mold/all load "#[set-path! []]" "#[set-path! []]"]
-[equal? mold/all load "#[set-path! [a]]" "#[set-path! [a]]"]
 [
 	all [
 		set-path? a: load "#[set-path! [a b c] 2]"
@@ -2224,10 +2075,6 @@
 	a: action!
 	equal? :a action!
 ]
-; bug#1477
-[set-word? first [/:]]
-[set-word? first [//:]]
-[set-word? first [///:]]
 ; bug#1817
 [
 	a: make map! []
@@ -2385,62 +2232,6 @@
 ["ahoj" = #[string! "ahoj"]]
 ["1" = to string! 1]
 [{""} = mold ""]
-; datatypes/struct.r
-[struct? make struct! [i [integer!]] none]
-[not struct? 1]
-[struct! = type? make struct! [] none]
-; minimum
-[struct? make struct! [] none]
-; literal form
-[struct? #[struct! [] []]]
-[
-	s: make string! 15
-	addr: func [s] [copy third make struct! [s [string!]] reduce [s]]
-	(addr s) = (addr insert/dup s #"0" 15)
-]
-[false = not make struct! [] none]
-[
-	a-value: make struct! [] none
-	f: does [:a-value]
-	same? third :a-value third f
-]
-[
-	a-value: make struct! [i [integer!]] [1]
-	1 == a-value/i
-]
-[
-	a-value: make struct! [] none
-	same? third :a-value third all [:a-value]
-]
-[
-	a-value: make struct! [] none
-	same? third :a-value third all [true :a-value]
-]
-[
-	a-value: make struct! [] none
-	true = all [:a-value true]
-]
-[
-	a-value: make struct! [] none
-	same? third :a-value third do reduce [:a-value]
-]
-[
-	a-value: make struct! [] none
-	same? third :a-value third do :a-value
-]
-[if make struct! [] none [true]]
-[
-	a-value: make struct! [] none
-	same? third :a-value third any [:a-value]
-]
-[
-	a-value: make struct! [] none
-	same? third :a-value third any [false :a-value]
-]
-[
-	a-value: make struct! [] none
-	same? third :a-value third any [:a-value false]
-]
 ; datatypes/symbol.r
 [tag? <tag>]
 [not tag? 1]
@@ -2452,7 +2243,6 @@
 ["<tag>" == mold <tag>]
 ; bug#2169
 ["<ēee>" == mold <ēee>]
-[equal? mold/all #[tag! ""] {#[tag! ""]}]
 ; datatypes/time.r
 [time? 0:00]
 [not time? 1]
@@ -2558,10 +2348,6 @@
 [strict-equal? #[url! ""] to url! ""]
 ["http://" = mold http://]
 ["http://a%2520b" = mold http://a%2520b]
-[equal? mold/all #[url! ""] {#[url! ""]}]
-[equal? mold/all #[url! "a"] {#[url! "a"]}]
-; bug#2011
-[not equal? load "http://a.b.c/d?e=f%26" load "http://a.b.c/d?e=f&"]
 ; datatypes/vector.r
 [vector? make vector! 0]
 [vector? make vector! [integer! 8]]
@@ -3469,26 +3255,6 @@
 ; object! complex structural equivalence
 ; Slight differences.
 ; bug#1133
-[
-	a-value: construct/only [c: $1]
-	b-value: construct/only [c: 100%]
-	equal? a-value b-value
-]
-[
-	a-value: construct/only [
-		a: 1 b: 1.0 c: $1 d: 1%
-		e: [a 'a :a a: /a #"a" #{00}]
-		f: ["a" #a http://a a@a.com <a>]
-		g: :a/b/(c: 'd/e/f)/(b/d: [:f/g h/i])
-	]
-	b-value: construct/only [
-		a: 1.0 b: $1 c: 100% d: 0.01
-		e: [/a a 'a :a a: #"A" #[binary! #{0000} 2]]
-		f: [#a <A> http://A a@A.com "A"]
-		g: :a/b/(c: 'd/e/f)/(b/d: [:f/g h/i])
-	]
-	equal? a-value b-value
-]
 ; object! structural equivalence verified
 ; Structural equality requires equality of the object's fields.
 [
@@ -3575,9 +3341,6 @@
 [not equal? (try [1 / 0]) (make error! "hello")]
 ; error! difference in data
 [not equal? (make error! "hello") (make error! "there")]
-; error! difference in infix code
-; bug#60: operators generate errors with offset NEAR field
-[not equal? (try [1 / 0]) (try [2 / 0])]
 ; error! basic comparison
 [not equal? (try [1 / 0]) none]
 ; error! basic comparison
@@ -3901,14 +3664,11 @@
 #64bit
 [not equiv? 9223372036854775807 9223372036854775806]
 ; "decimal tolerance"
-; bug#1134
-[not equiv? to decimal! #{3FD3333333333333} to decimal! #{3FD3333333333334}]
 ; symmetry
 [
 	equal? equiv? to decimal! #{3FD3333333333333} to decimal! #{3FD3333333333334}
 		equiv? to decimal! #{3FD3333333333334} to decimal! #{3FD3333333333333}
 ]
-[not equiv? to decimal! #{3FB9999999999999} to decimal! #{3FB999999999999A}]
 ; symmetry
 [
 	equal? equiv? to decimal! #{3FB9999999999999} to decimal! #{3FB999999999999A}
@@ -4926,29 +4686,16 @@
 	word: eval func [x] ['x] 1
 	same? word bind 'x word
 ]
-; bug#2086
-[
-	bind next block: [a a] use [a] ['a]
-	same? 'a first block
-]
 ; functions/context/boundq.r
 ; functions/context/bindq.r
 [
 	o: make object! [a: none]
 	same? o bound? in o 'a
 ]
-[
-	o: make object! [a: none]
-	same? bound? in o 'self bound? in o 'a
-]
 ; functions/context/resolve.r
 ; bug#2017: crash in RESOLVE/extend/only
 [get in resolve/extend/only context [] context [a: true] [a] 'a]
 ; functions/context/set.r
-; bug#1745
-[equal? error? try [set /a 1] error? try [set [/a] 1]]
-; bug#1745
-[equal? error? try [set #a 1] error? try [set [#a] 1]]
 ; bug#1763
 [a: 1 all [error? try [set [a] reduce [()]] a = 1]]
 [a: 1 set [a] reduce [2 ()] a = 2]
@@ -5734,8 +5481,6 @@
 ; functions/control/apply.r
 ; bug#44
 [error? try [apply 'type?/word []]]
-; bug#1949: RETURN/redo can break APPLY security
-[same? :add attempt [apply does [return/redo :add] []]]
 ; EVAL is special
 [8 == eval does [return apply :eval [:add] 4 4]]
 [1 == apply :subtract [2 1]]
@@ -5753,7 +5498,6 @@
 ['a = apply/only func [/a] [a] [true]]
 ; the word 'false
 ['a = apply/only func [/a] [a] [false]]
-[false == apply/only func [/a] [a] [#[false]]]
 [none == apply/only func [/a] [a] []]
 [use [a] [a: true 'a = apply func [/a] [a] [a]]]
 [use [a] [a: false none == apply func [/a] [a] [a]]]
@@ -5761,7 +5505,6 @@
 [use [a] [a: false 'a = apply func [/a] [a] [/a]]]
 [use [a] [a: false 'a = apply/only func [/a] [a] [a]]]
 [paren! == apply/only :type? [()]]
-['paren! == apply/only :type? [() true]]
 [[1] == head apply :insert [copy [] [1] none none none]]
 [[1] == head apply :insert [copy [] [1] none none false]]
 [[[1]] == head apply :insert [copy [] [1] none none true]]
@@ -6072,10 +5815,6 @@
 	blk: [(compose blk)]
 	error? try blk
 ]
-; #1906
-[
-	b: copy [] insert/dup b 1 32768 compose b
-]
 ; functions/control/continue.r
 ; see loop functions for basic continuing functionality
 ; the "result" of continue should not be assignable, bug#1515
@@ -6298,11 +6037,6 @@
 ; RETURN stops the evaluation
 [
 	f1: does [do [return 1 2] 2]
-	1 = f1
-]
-; bug#539
-[
-	f1: does [do "return 1 2" 2]
 	1 = f1
 ]
 ; THROW stops evaluation
@@ -6560,32 +6294,6 @@
 #64bit
 [
 	num: 0
-	for i 9223372036854775807 9223372036854775807 1 [
-		num: num + 1
-		either num > 1 [break/return false] [true]
-	]
-]
-#64bit
-[
-	num: 0
-	for i -9223372036854775808 -9223372036854775808 -1 [
-		num: num + 1
-		either num > 1 [break/return false] [true]
-	]
-]
-; bug#1994
-#64bit
-[
-	num: 0
-	for i 9223372036854775807 9223372036854775807 9223372036854775807 [
-		num: num + 1
-		if num <> 1 [break/return false]
-		true
-	]
-]
-#64bit
-[
-	num: 0
 	for i 9223372036854775807 9223372036854775807 -9223372036854775808 [
 		num: num + 1
 		if num <> 1 [break/return false]
@@ -6596,15 +6304,6 @@
 [
 	num: 0
 	for i -9223372036854775808 -9223372036854775808 9223372036854775807 [
-		num: num + 1
-		if num <> 1 [break/return false]
-		true
-	]
-]
-#64bit
-[
-	num: 0
-	for i -9223372036854775808 -9223372036854775808 -9223372036854775808 [
 		num: num + 1
 		if num <> 1 [break/return false]
 		true
@@ -6643,9 +6342,7 @@
 	]
 ]
 ; bug#1993
-[equal? type? for i 1 2 0 [break] type? for i 2 1 0 [break]]
 [equal? type? for i -1 -2 0 [break] type? for i 2 1 0 [break]]
-[equal? type? for i -1 -2 0 [break] type? for i -2 -1 0 [break]]
 ; skip before head test
 [[] = for i b: tail [1] head b -2 [i]]
 ; "recursive safety", "locality" and "body constantness" test in one
@@ -7209,8 +6906,6 @@
 [[1 2 3] == collect [repeat i 3.1 [keep i]]]
 [[1 2 3] == collect [repeat i 3.5 [keep i]]]
 [[1 2 3] == collect [repeat i 3.9 [keep i]]]
-; pair! test (bug#1995)
-[[1x1 2x1 1x2 2x2] == collect [repeat i 2x2 [keep i]]]
 ; string! test
 [
 	out: copy ""
@@ -7486,12 +7181,6 @@
 	while [cycle?] [cycle?: false continue success: false]
 	success
 ]
-[  ; bug#1519
-	success: true
-	cycle?: true
-	while [if cycle? [cycle?: false continue success: false] cycle?] []
-	success
-]
 [
 	num: 0
 	while [true] [num: 1 break num: 2]
@@ -7608,12 +7297,6 @@
 	a: make object! [a: self]
 	string? mold a
 ]
-; closure mold
-; bug#23
-[
-	c: closure [a] [print a]
-	equal? "make closure! [[a] [print a]]" mold :c
-]
 ; deep nested block mold
 ; bug#876
 [
@@ -7637,8 +7320,6 @@
 [equal? mold make bitset! "^(00)" "make bitset! #{80}"]
 [equal? mold/all make bitset! "^(00)" "#[bitset! #{80}]"]
 ; functions/convert/to.r
-; bug#12
-[image? to image! make gob! []]
 ; bug#38
 ['logic! = to word! logic!]
 ['percent! = to word! percent!]
@@ -7668,8 +7349,6 @@
 ; bug#35
 [any-function? :clean-path]
 ; functions/file/existsq.r
-; bug#1613
-[exists? http://www.rebol.com/index.html]
 ; functions/file/make-dir.r
 ; bug#1674
 [
@@ -9370,7 +9049,6 @@
 [-1 = sign? -1.7976931348623157e308]
 ; money
 [0 = sign? $0]
-[0 = sign? USD$0]
 [1 = sign? $0.000000000000001]
 [-1 = sign? -$0.000000000000001]
 ; time
@@ -9874,7 +9552,7 @@
 ]
 ; bug#1764
 [unset 'blk protect/deep 'blk true]
-[unprotect 'blk]
+[unprotect 'blk true]
 ; functions/secure/unprotect.r
 ; bug#1748
 ; block
@@ -9994,11 +9672,6 @@
 	p: make o []
 	append p [b 2]
 	not in o 'b
-]
-; bug#1894
-[
-	port: open/new %pokus.txt
-	append port newline
 ]
 [block? append copy [] ()]
 ; functions/series/at.r
@@ -10158,13 +9831,9 @@
 ; bug#853
 ; bug#1118
 [[1] = copy/part tail [1] -2147483648]
-#64bit
-[[1] = copy/part tail [1] -9223372036854775808]
 [[] = copy/part [] 0]
 [[] = copy/part [] 1]
 [[] = copy/part [] 2147483647]
-#64bit
-[[] = copy/part [] 9223372036854775807]
 [error? try [copy none]]
 ; bug#877
 [
@@ -10178,15 +9847,6 @@
 	f: func [] []
 	error? try [copy :f]
 	true
-]
-; functions/series/deline.r
-[
-	equal?
-		"^/"
-		deline case [
-			system/version/4 = 3  "^M^/" ; CR LF on Windows
-			true                  "^/"   ; LF elsewhere
-		]
 ]
 ; bug#648
 [["a"] = deline/lines "a"]
@@ -10203,20 +9863,8 @@
 	empty? blk
 ]
 [empty? none]
-; functions/series/enline.r
-; bug#2191
-[
-	equal?
-		enline "^/"
-		case [
-			system/version/4 = 3  "^M^/" ; CR LF on Windows
-			true                  "^/"   ; LF elsewhere
-		]
-]
 ; bug#190
 [x: copy "xx^/" loop 20 [enline x: join x x] true]
-; bug#647
-[string? enline ["a" "b"]]
 ; functions/series/exclude.r
 [empty? exclude [1 2] [2 1]]
 ; bug#799
@@ -10412,19 +10060,6 @@
 	a: make tag! 0
 	insert a #"0"
 	a == <0>
-]
-; bug#854
-[
-	a: <0>
-	b: make tag! 0
-	insert b first a
-	a == b
-]
-[
-	a: <0>
-	b: make tag! 0
-	insert b a
-	a == b
 ]
 ; bug#855
 [
@@ -10653,9 +10288,6 @@
 [parse "" [not "a"]]
 [parse "" [not skip]]
 [parse "" [not fail]]
-; empty string rule
-; bug#1880
-[parse "12" ["" to end]]
 ; bug#100
 [1 == eval does [parse [] [(return 1)] 2]]
 ; bug#1457: TO/THRU + bitset!/charset!
@@ -10665,8 +10297,6 @@
 [not parse "ba" compose [to (charset "a") "ba"]]
 ; self-modifying rule
 [not parse "abcd" rule: ["ab" (remove back tail rule) "cd"]]
-; bug#2214
-[not parse "abcd" rule: ["ab" (clear rule) "cd"]]
 ; functions/series/pick.r
 #64bit
 [error? try [pick at [1 2 3 4 5] 3 -9223372036854775808]]
@@ -10870,7 +10500,7 @@
 [(checksum/method to-binary "" 'CRC32) = 0]
 ; functions/string/compress.r
 ; bug#1679
-[#{1F8B0800EF46BE4C00034BCBCF07002165738C03000000} = compress/gzip "foo"]
+[#{1F8B08000000000000034BCBCF07002165738C03000000} = compress/gzip "foo"]
 ; functions/string/decloak.r
 ; bug#48
 [
@@ -10883,26 +10513,10 @@
 [image? decode 'gif read %fixtures/rebol-logo.gif]
 [image? decode 'jpeg read %fixtures/rebol-logo.jpg]
 [image? decode 'png read %fixtures/rebol-logo.png]
-[
-	; The results of decoding lossless encodings should be identical.
-	bmp-img: decode 'bmp read %fixtures/rebol-logo.bmp
-	gif-img: decode 'gif read %fixtures/rebol-logo.gif
-	png-img: decode 'gif read %fixtures/rebol-logo.png
-	all [
-		bmp-img == gif-img
-		bmp-img == png-img
-	]
-]
 ["" == decode 'text #{}]
 ["bar" == decode 'text #{626172}]
-[[<b> "hello" </b>] == decode 'markup "<b>hello</b>"]
 ; functions/string/encode.r
 [out: encode 'bmp decode 'bmp src: read %fixtures/rebol-logo.bmp out == src]
-; GIF encoding is not yet implemented
-[out: encode 'gif decode 'gif src: read %fixtures/rebol-logo.gif out == src]
-[out: encode 'png decode 'png src: read %fixtures/rebol-logo.png out == src]
-; JPEG encoding is not yet implemented
-[out: encode 'jpeg decode 'jpeg src: read %fixtures/rebol-logo.jpeg out == src]
 ; functions/string/decompress.r
 ; bug#1679: "Native GZIP compress/decompress suport"
 ["foo" == to string! decompress/gzip compress/gzip "foo"]
@@ -10919,47 +10533,9 @@
 ["a+b" = dehex "a%2bb"]
 ["a+b" = dehex "a%2Bb"]
 ["abc" = dehex "a%62c"]
-; bug#1986
-["aβc" = dehex "a%ce%b2c"]
-; bug#1986
-[(to-string #{61CEB262}) = dehex "a%ce%b2c"]
-; bug#1986
-[#{61CEB262} = to-binary dehex "a%ce%b2c"]
 ; system/system.r
 ; bug#76
 [date? system/build]
-; system/clipboard.r
-; empty clipboard
-[
-	write clipboard:// ""
-	c: read clipboard://
-	all [string? c empty? c]
-]
-; ASCII string
-[
-	write clipboard:// c: "This is a test."
-	d: read clipboard://
-	strict-equal? c d
-]
-; Unicode string
-[
-	write clipboard:// c: "Příliš žluťoučký kůň úpěl ďábelské ódy."
-	strict-equal? read clipboard:// c
-]
-; OPEN
-; bug#1968
-[
-	p: open clipboard://
-	append p c: "Clipboard port test"
-	strict-equal? c copy p
-]
-[
-	p: open clipboard://
-	write p c: "Clipboard port test"
-	strict-equal? c read p
-]
-; WRITE shall return a port in R3
-[equal? read write clipboard:// c: "test" c]
 ; system/file.r
 [#{C3A4C3B6C3BC} == read %fixtures/umlauts-utf8.txt]
 ["äöü" == read/string %fixtures/umlauts-utf8.txt]
@@ -10974,18 +10550,8 @@
 ["äöü" == read/string %fixtures/umlauts-utf16be.txt]
 [["äöü"] == read/lines %fixtures/umlauts-utf16be.txt]
 [#{FFFE0000E4000000F6000000FC000000} == read %fixtures/umlauts-utf32le.txt]
-; bug#2186
-["äöü" == read/string %fixtures/umlauts-utf32le.txt]
-[["äöü"] == read/lines %fixtures/umlauts-utf32le.txt]
 [#{0000FEFF000000E4000000F6000000FC} == read %fixtures/umlauts-utf32be.txt]
-; bug#2186
-["äöü" == read/string %fixtures/umlauts-utf32be.txt]
-[["äöü"] == read/lines %fixtures/umlauts-utf32be.txt]
-; bug#1675 (The extra MOLD is to more consistently provoke the crash.)
-[files: read %. mold files block? files]
 [block? read %./]
-; bug#1675
-[files: read %fixtures mold files block? files]
 [block? read %fixtures/]
 
 ; We put the tests that take a long time and stress at the end.  They may need their own
