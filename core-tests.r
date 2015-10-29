@@ -2336,7 +2336,8 @@
 ; bug#68
 [unset? to unset! none]
 [unset? to unset! 1]
-[error? try [a: ()]]
+[unset? try [a: ()]]
+[error? try [a: () a]]
 [not error? try [set/any 'a ()]]
 ; datatypes/url.r
 [url? http://www.fm.tul.cz/~ladislav/rebol]
@@ -5637,9 +5638,9 @@
 	case [false [success: false]]
 	success
 ]
-[not case []]
+[unset? case []]
 ;-- CC#2246
-[none? case [true []]]
+[unset? case [true []]]
 ; case results
 [case [true [true]]]
 [not case [true [false]]]
@@ -6726,10 +6727,10 @@
 [if first ['a/b] [true]]
 [if first ['a] [true]]
 [if true [true]]
-[none? if false [true]]
+[unset? if false [true]]
 [if $1 [true]]
 [if :type? [true]]
-[none? if none [true]]
+[unset? if none [true]]
 [if make object! [] [true]]
 [if get '+ [true]]
 [if 0x0 [true]]
@@ -6746,7 +6747,7 @@
 [if  http:// [true]]
 [if 'a [true]]
 ; recursive behaviour
-[none? if true [if false [1]]]
+[unset? if true [if false [1]]]
 [1 = if true [if true [1]]]
 ; infinite recursion
 [
@@ -7077,7 +7078,7 @@
 	success
 ]
 [1 = unless false [1]]
-[none? unless true [1]]
+[unset? unless true [1]]
 [unset? unless false []]
 [error? unless false [try [1 / 0]]]
 ; RETURN stops the evaluation
@@ -7142,7 +7143,7 @@
 	num: 0
 	1 = while [num < 1] [num: num + 1]
 ]
-[none? while [false] []]
+[unset? while [false] []]
 ; zero repetition
 [
 	success: true
@@ -10236,7 +10237,7 @@
 ; THRU advances the input position correctly.
 [
 	i: 0
-	parse "a." [any [thru "a" (i: i + 1 j: if i > 1 [[end skip]]) j]]
+	parse "a." [any [thru "a" (i: i + 1 j: relax if i > 1 [[end skip]]) j]]
 	i == 1
 ]
 ; bug#1959: THRU fails to to match at end
@@ -10266,7 +10267,7 @@
 ]
 [
 	i: 0
-	parse "a" [while [(i: i + 1 j: if i = 2 [[fail]]) j]]
+	parse "a" [while [(i: i + 1 j: relax if i = 2 [[fail]]) j]]
 	i == 2
 ]
 ; THEN rule
