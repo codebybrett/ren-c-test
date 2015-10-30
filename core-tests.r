@@ -513,12 +513,15 @@
 [slf: 'self eval closure [x] [same? slf 'self] 1]
 ; bug#1528
 [closure? closure [self] []]
-; bug#2048
 [
 	f: make closure! reduce [[x] f-body: [x + x]]
-	change f-body 'x
+	change f-body 'x ;-- makes copies now
 	x: 1
-	3 == f 2
+	4 == f 2 ; #2048 said this should be 3, but it should not.
+	; function and closure bodies are not "swappable", because keeping the
+	; original series would mean that the original formation would always
+	; drop the index position (there is no index slot in the body series).
+	; A copy must be made -or- series forced to be at their head.
 ]
 ; datatypes/datatype.r
 [not datatype? 1]
@@ -2902,6 +2905,9 @@
 ]
 ; bug#1049
 ; Comparison of cyclic blocks
+; NOTE: The stackoverflow will likely trigger in valgrind an error such as:
+; "Warning: client switching stacks?  SP change: 0xffec17f68 --> 0xffefff860"
+; "         to suppress, use: --max-stackframe=4094200 or greater"
 [
 	a-value: copy []
 	insert/only a-value a-value
