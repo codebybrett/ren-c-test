@@ -1748,16 +1748,6 @@
 	o: make object! []
 	error? try [append o [self: 1]]
 ]
-; bug#2076
-[
-	o: bound? use [x] ['x]
-	3 == length? words-of append o 'self ; !!! weird test, includes /local
-]
-; bug#2076
-[
-	o: bound? use [x] ['x]
-	3 == length? words-of append o [self: 1] ; weird test, includes /local
-]
 ; datatypes/op.r
 [infix? get '+]
 [error? try [infix? 1]]
@@ -1865,10 +1855,6 @@
 [
 	a-value: make error! ""
 	a-value/type = 'user
-]
-[
-	a-value: func [/local a] [a]
-	1 == a-value/local 1
 ]
 [
 	a-value: make image! 1x1
@@ -4774,15 +4760,6 @@
 	]
 	1 = f
 ]
-; bug#539
-; EXIT out of USE
-[
-	f: func [] [
-		use [] [exit]
-		42
-	]
-	unset? f
-]
 ; functions/context/valueq.r
 [false == value? 'nonsense]
 [true == value? 'value?]
@@ -6202,8 +6179,6 @@
 [eval does [values-of exit] true]
 ; bug#1945
 [eval does [spec-of exit] true]
-; exit should not be caught by try
-[a: 1 eval does [a: error? try [exit]] :a =? 1]
 ; functions/control/for.r
 [
 	success: true
