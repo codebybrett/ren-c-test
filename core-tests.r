@@ -10552,3 +10552,7 @@
 	loop ([comment 30000000] 300) [make gob! []]
 	true
 ]
+
+; http protocol
+[not error? try [ read http://rebol.com ]]
+[not error? try [ read https://github.com ]] 
