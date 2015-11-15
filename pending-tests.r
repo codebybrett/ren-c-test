@@ -94,9 +94,21 @@
 [equal? mold/all load "#[lit-path! []]" "#[lit-path! []]"]
 [equal? mold/all load "#[lit-path! [a]]" "#[lit-path! [a]]"]
 
+; this worked in Rebol2 but Rebol3 never had the denomination feature
 [money? USD$1]
 [money? CZK$1]
 
+; The "throw" category of error had previously been used by Rebol when throws
+; were errors.  Now any value can be thrown, and it is disjoint from the
+; error machinery.  So that released the "throw" WORD! from the reserved
+; categories from the system.  The broader question to review is how the
+; reservation of system errors should work.
+[try/except [make error! [type: 'throw id: 'break]] [true]]
+[try/except [make error! [type: 'throw id: 'return]] [true]]
+[try/except [make error! [type: 'throw id: 'throw]] [true]]
+[try/except [make error! [type: 'throw id: 'continue]] [true]]
+[try/except [make error! [type: 'throw id: 'halt]] [true]]
+[try/except [make error! [type: 'throw id: 'quit]] [true]]
 
 ; division uses "full precision"
 ["$1.0000000000000000000000000" = mold $1 / $1]

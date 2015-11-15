@@ -763,15 +763,10 @@
 [error! = type? try [1 / 0]]
 ; error evaluation
 [error? do head insert copy [] try [1 / 0]]
-; error that does not exist
-[try/except [make error! [type: 'script id: 'set-self]] [true]]
-; throw errors cannot be made
-[try/except [make error! [type: 'throw id: 'break]] [true]]
-[try/except [make error! [type: 'throw id: 'return]] [true]]
-[try/except [make error! [type: 'throw id: 'throw]] [true]]
-[try/except [make error! [type: 'throw id: 'continue]] [true]]
-[try/except [make error! [type: 'throw id: 'halt]] [true]]
-[try/except [make error! [type: 'throw id: 'quit]] [true]]
+; error that does not exist in the SCRIPT category--all of whose ids are
+; reserved by the system and must be formed from mezzanine/user code in
+; accordance with the structure the system would form.  Hence, illegal.
+[try/except [make error! [type: 'script id: 'nonexistent-id]] [true]]
 ; error types that should be predefined
 [error? make error! [type: 'syntax id: 'invalid]]
 [error? make error! [type: 'syntax id: 'missing]]
