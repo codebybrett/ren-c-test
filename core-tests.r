@@ -4728,8 +4728,8 @@
 	error? try [use 'a [a: 2]]
 	a = 1
 ]
-; initialization
-[use [a] [none? :a]]
+; initialization (lack of)
+[a: 10 all [use [a] [unset? :a] a = 10]]
 ; BREAK out of USE
 [
 	1 = loop 1 [
@@ -10218,7 +10218,7 @@
 ; THRU advances the input position correctly.
 [
 	i: 0
-	parse "a." [any [thru "a" (i: i + 1 j: relax if i > 1 [[end skip]]) j]]
+	parse "a." [any [thru "a" (i: i + 1 j: to-value if i > 1 [[end skip]]) j]]
 	i == 1
 ]
 ; bug#1959: THRU fails to to match at end
@@ -10248,7 +10248,7 @@
 ]
 [
 	i: 0
-	parse "a" [while [(i: i + 1 j: relax if i = 2 [[fail]]) j]]
+	parse "a" [while [(i: i + 1 j: to-value if i = 2 [[fail]]) j]]
 	i == 2
 ]
 ; THEN rule
