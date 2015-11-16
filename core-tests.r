@@ -10548,6 +10548,14 @@
 	true
 ]
 
-; http protocol
-[not error? try [ read http://rebol.com ]]
-[not error? try [ read https://github.com ]] 
+; !!! simplest possible LOAD/SAVE smoke test, expand!
+[
+	file: %simple-save-test.r
+	data: "Simple save test produced by %core-tests.r"
+	save file data
+	(load file) = data
+]
+
+; !!! simplest possible HTTP and HTTPS protocol smoke test, expand!
+[not error? trap [ read http://example.com ]]
+[not error? trap [ read https://example.com ]]
