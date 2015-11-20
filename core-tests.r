@@ -5461,9 +5461,11 @@
 ; bug#44
 [error? try [apply 'type?/word []]]
 ; EVAL is special
-[8 == eval does [return apply :eval [:add] 4 4]]
+[8 == eval does [return apply :eval [:add 4 4]]]
 [1 == apply :subtract [2 1]]
-[1 == apply :- [2 1]]
+; Infix OP! is not supported by user-mode APPLY, as it is a legacy concept
+; in the first place and this is likely to be uncommon.
+[error? trap [apply :- [2 1]]]
 [error? try [apply func [a] [a] []]]
 [error? try [apply/only func [a] [a] []]]
 
@@ -5524,11 +5526,12 @@
     ] head insert copy [] make error! ""
 ]
 [use [x] [x: 1 strict-equal? 1 apply func ['x] [:x] [:x]]]
-[use [x] [x: 1 strict-equal? first [:x] apply/only func ['x] [:x] [:x]]]
+[use [x] [x: 1 strict-equal? 1 apply func ['x] [:x] [:x]]]
+[use [x] [x: 1 strict-equal? first [:x] apply/only func [:x] [:x] [:x]]]
 [
     use [x] [
         unset 'x
-        strict-equal? first [:x] apply/only func ['x [any-value!]] [
+        strict-equal? first [:x] apply/only func [:x [any-value!]] [
             return get/any 'x
         ] [:x]
     ]
