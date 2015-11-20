@@ -31,16 +31,16 @@
 [not binary? 1]
 [binary! = type? #{00}]
 [
-	system/options/binary-base: 2
-	"2#{00000000}" == mold #{00}
+    system/options/binary-base: 2
+    "2#{00000000}" == mold #{00}
 ]
 [
-	system/options/binary-base: 64
-	"64#{AAAA}" == mold #{000000}
+    system/options/binary-base: 64
+    "64#{AAAA}" == mold #{000000}
 ]
 [
-	system/options/binary-base: 16
-	"#{00}" == mold #{00}
+    system/options/binary-base: 16
+    "#{00}" == mold #{00}
 ]
 [#{00} == 2#{00000000}]
 [#{000000} == 64#{AAAA}]
@@ -52,13 +52,13 @@
 [#{} == #[binary! #{}]]
 ; access symmetry
 [
-	b: #{0b}
-	not error? try [b/1: b/1]
+    b: #{0b}
+    not error? try [b/1: b/1]
 ]
 ; bug#42
 [
-	b: #{0b}
-	b/1 == 11
+    b: #{0b}
+    b/1 == 11
 ]
 ; case sensitivity
 ; bug#1459
@@ -241,287 +241,287 @@
 [closure? first [#[closure! [[] []]]]]
 ; return-less return value tests
 [
-	f: closure [] []
-	unset? f
+    f: closure [] []
+    unset? f
 ]
 [
-	f: closure [] [:abs]
-	:abs = f
+    f: closure [] [:abs]
+    :abs = f
 ]
 [
-	a-value: #{}
-	f: closure [] [a-value]
-	same? a-value f
+    a-value: #{}
+    f: closure [] [a-value]
+    same? a-value f
 ]
 [
-	a-value: charset ""
-	f: closure [] [a-value]
-	same? a-value f
+    a-value: charset ""
+    f: closure [] [a-value]
+    same? a-value f
 ]
 [
-	a-value: []
-	f: closure [] [a-value]
-	same? a-value f
+    a-value: []
+    f: closure [] [a-value]
+    same? a-value f
 ]
 [
-	a-value: none!
-	f: closure [] [a-value]
-	same? a-value f
+    a-value: none!
+    f: closure [] [a-value]
+    same? a-value f
 ]
 [
-	f: closure [] [1/Jan/0000]
-	1/Jan/0000 = f
+    f: closure [] [1/Jan/0000]
+    1/Jan/0000 = f
 ]
 [
-	f: closure [] [0.0]
-	0.0 == f
+    f: closure [] [0.0]
+    0.0 == f
 ]
 [
-	f: closure [] [1.0]
-	1.0 == f
+    f: closure [] [1.0]
+    1.0 == f
 ]
 [
-	a-value: me@here.com
-	f: closure [] [a-value]
-	same? a-value f
+    a-value: me@here.com
+    f: closure [] [a-value]
+    same? a-value f
 ]
 [
-	f: closure [] [try [1 / 0]]
-	error? f
+    f: closure [] [try [1 / 0]]
+    error? f
 ]
 [
-	a-value: %""
-	f: closure [] [a-value]
-	same? a-value f
+    a-value: %""
+    f: closure [] [a-value]
+    same? a-value f
 ]
 [
-	a-value: does []
-	f: closure [] [:a-value]
-	same? :a-value f
+    a-value: does []
+    f: closure [] [:a-value]
+    same? :a-value f
 ]
 [
-	a-value: first [:a]
-	f: closure [] [:a-value]
-	(same? :a-value f) and* (:a-value == f)
+    a-value: first [:a]
+    f: closure [] [:a-value]
+    (same? :a-value f) and* (:a-value == f)
 ]
 [
-	f: closure [] [#"^@"]
-	#"^@" == f
+    f: closure [] [#"^@"]
+    #"^@" == f
 ]
 [
-	a-value: make image! 0x0
-	f: closure [] [a-value]
-	same? a-value f
+    a-value: make image! 0x0
+    f: closure [] [a-value]
+    same? a-value f
 ]
 [
-	f: closure [] [0]
-	0 == f
+    f: closure [] [0]
+    0 == f
 ]
 [
-	f: closure [] [1]
-	1 == f
+    f: closure [] [1]
+    1 == f
 ]
 [
-	f: closure [] [#a]
-	#a == f
+    f: closure [] [#a]
+    #a == f
 ]
 [
-	a-value: first ['a/b]
-	f: closure [] [:a-value]
-	:a-value == f
+    a-value: first ['a/b]
+    f: closure [] [:a-value]
+    :a-value == f
 ]
 [
-	a-value: first ['a]
-	f: closure [] [:a-value]
-	:a-value == f
+    a-value: first ['a]
+    f: closure [] [:a-value]
+    :a-value == f
 ]
 [
-	f: closure [] [true]
-	true = f
+    f: closure [] [true]
+    true = f
 ]
 [
-	f: closure [] [false]
-	false = f
+    f: closure [] [false]
+    false = f
 ]
 [
-	f: closure [] [$1]
-	$1 == f
+    f: closure [] [$1]
+    $1 == f
 ]
 [
-	f: closure [] [:type?]
-	same? :type? f
+    f: closure [] [:type?]
+    same? :type? f
 ]
 [
-	f: closure [] [#[none]]
-	none? f
+    f: closure [] [#[none]]
+    none? f
 ]
 [
-	a-value: make object! []
-	f: closure [] [:a-value]
-	same? :a-value f
+    a-value: make object! []
+    f: closure [] [:a-value]
+    same? :a-value f
 ]
 [
-	a-value: first [()]
-	f: closure [] [:a-value]
-	same? :a-value f
+    a-value: first [()]
+    f: closure [] [:a-value]
+    same? :a-value f
 ]
 [
-	f: closure [] [get '+]
-	same? get '+ f
+    f: closure [] [get '+]
+    same? get '+ f
 ]
 [
-	f: closure [] [0x0]
-	0x0 == f
+    f: closure [] [0x0]
+    0x0 == f
 ]
 [
-	a-value: 'a/b
-	f: closure [] [:a-value]
-	:a-value == f
+    a-value: 'a/b
+    f: closure [] [:a-value]
+    :a-value == f
 ]
 [
-	a-value: make port! http://
-	f: closure [] [:a-value]
-	port? f
+    a-value: make port! http://
+    f: closure [] [:a-value]
+    port? f
 ]
 [
-	f: closure [] [/a]
-	/a == f
+    f: closure [] [/a]
+    /a == f
 ]
 [
-	a-value: first [a/b:]
-	f: closure [] [:a-value]
-	:a-value == f
+    a-value: first [a/b:]
+    f: closure [] [:a-value]
+    :a-value == f
 ]
 [
-	a-value: first [a:]
-	f: closure [] [:a-value]
-	:a-value == all [:a-value]
+    a-value: first [a:]
+    f: closure [] [:a-value]
+    :a-value == all [:a-value]
 ]
 [
-	a-value: ""
-	f: closure [] [:a-value]
-	same? :a-value f
+    a-value: ""
+    f: closure [] [:a-value]
+    same? :a-value f
 ]
 [
-	a-value: make tag! ""
-	f: closure [] [:a-value]
-	same? :a-value f
+    a-value: make tag! ""
+    f: closure [] [:a-value]
+    same? :a-value f
 ]
 [
-	f: closure [] [0:00]
-	0:00 == f
+    f: closure [] [0:00]
+    0:00 == f
 ]
 [
-	f: closure [] [0.0.0]
-	0.0.0 == f
+    f: closure [] [0.0.0]
+    0.0.0 == f
 ]
 [
-	f: closure [] [()]
-	unset? f
+    f: closure [] [()]
+    unset? f
 ]
 [
-	f: closure [] ['a]
-	'a == f
+    f: closure [] ['a]
+    'a == f
 ]
 ; basic test for recursive closure! invocation
 [i: 0 countdown: closure [n] [if n > 0 [++ i countdown n - 1]] countdown 10 i = 10]
 ; bug#21
 [
-	c: closure [a] [return a]
-	1 == c 1
+    c: closure [a] [return a]
+    1 == c 1
 ]
 ; two-function return test
 [
-	g: closure [f [any-function!]] [f [return 1] 2]
-	1 = g :do
+    g: closure [f [any-function!]] [f [return 1] 2]
+    1 = g :do
 ]
 ; BREAK out of a closure
 [
-	1 = loop 1 [
-		f: closure [] [break/return 1]
-		f
-		2
-	]
+    1 = loop 1 [
+        f: closure [] [break/return 1]
+        f
+        2
+    ]
 ]
 ; THROW out of a closure
 [
-	1 = catch [
-		f: closure [] [throw 1]
-		f
-		2
-	]
+    1 = catch [
+        f: closure [] [throw 1]
+        f
+        2
+    ]
 ]
 ; "error out" of a closure
 [
-	error? try [
-		f: closure [] [1 / 0 2]
-		f
-		2
-	]
+    error? try [
+        f: closure [] [1 / 0 2]
+        f
+        2
+    ]
 ]
 ; BREAK out leaves a "running" closure in a "clean" state
 [
-	1 = loop 1 [
-		f: closure [x] [
-			either x = 1 [
-				loop 1 [f 2]
-				x
-			] [break/return 1]
-		]
-		f 1
-	]
+    1 = loop 1 [
+        f: closure [x] [
+            either x = 1 [
+                loop 1 [f 2]
+                x
+            ] [break/return 1]
+        ]
+        f 1
+    ]
 ]
 ; THROW out leaves a "running" closure in a "clean" state
 [
-	1 = catch [
-		f: closure [x] [
-			either x = 1 [
-				catch [f 2]
-				x
-			] [throw 1]
-		]
-		f 1
-	]
+    1 = catch [
+        f: closure [x] [
+            either x = 1 [
+                catch [f 2]
+                x
+            ] [throw 1]
+        ]
+        f 1
+    ]
 ]
 ; "error out" leaves a "running" closure in a "clean" state
 [
-	f: closure [x] [
-		either x = 1 [
-			error? try [f 2]
-			x = 1
-		] [1 / 0]
-	]
-	f 1
+    f: closure [x] [
+        either x = 1 [
+            error? try [f 2]
+            x = 1
+        ] [1 / 0]
+    ]
+    f 1
 ]
 ; bug#1659
 ; inline closure test
 [
-	f: closure [] reduce [closure [] [true]]
-	f
+    f: closure [] reduce [closure [] [true]]
+    f
 ]
 ; rebind test
 [
-	a: closure [b] [does [b]]
-	b: a 1
-	c: a 2
-	all [
-		1 = b
-		2 = c
-	]
+    a: closure [b] [does [b]]
+    b: a 1
+    c: a 2
+    all [
+        1 = b
+        2 = c
+    ]
 ]
 ; bug#447
 [slf: 'self eval closure [x] [same? slf 'self] 1]
 ; bug#1528
 [closure? closure [self] []]
 [
-	f: make closure! reduce [[x] f-body: [x + x]]
-	change f-body 'x ;-- makes copies now
-	x: 1
-	4 == f 2 ; #2048 said this should be 3, but it should not.
-	; function and closure bodies are not "swappable", because keeping the
-	; original series would mean that the original formation would always
-	; drop the index position (there is no index slot in the body series).
-	; A copy must be made -or- series forced to be at their head.
+    f: make closure! reduce [[x] f-body: [x + x]]
+    change f-body 'x ;-- makes copies now
+    x: 1
+    4 == f 2 ; #2048 said this should be 3, but it should not.
+    ; function and closure bodies are not "swappable", because keeping the
+    ; original series would mean that the original formation would always
+    ; drop the index position (there is no index slot in the body series).
+    ; A copy must be made -or- series forced to be at their head.
 ]
 ; datatypes/datatype.r
 [not datatype? 1]
@@ -595,16 +595,16 @@
 [date? 1/Jan/0000/0:00]
 ; extreme behaviour
 [
-	found? any [
-		error? try [date-d: 1/Jan/0000 - 1]
-		date-d = load mold date-d
-	]
+    found? any [
+        error? try [date-d: 1/Jan/0000 - 1]
+        date-d = load mold date-d
+    ]
 ]
 [
-	found? any [
-		error? try [date-d: 31-Dec-16383 + 1]
-		date-d = load mold date-d
-	]
+    found? any [
+        error? try [date-d: 31-Dec-16383 + 1]
+        date-d = load mold date-d
+    ]
 ]
 ; datatypes/decimal.r
 [decimal? 0.0]
@@ -637,8 +637,8 @@
 ; bug#729
 ; MOLD decimal accuracy tests
 [
-	system/options/decimal-digits: 17
-	system/options/decimal-digits = 17
+    system/options/decimal-digits: 17
+    system/options/decimal-digits = 17
 ]
 ; 64-bit IEEE 754 maximum
 [zero? 1.7976931348623157e308 - load mold 1.7976931348623157e308]
@@ -680,8 +680,8 @@
 [same? 9.9999999999999926e152 load mold 9.9999999999999926e152]
 ; bug#718
 [
-	a: 9.9999999999999926e152 * 1e-138
-	zero? a - load mold a
+    a: 9.9999999999999926e152 * 1e-138
+    zero? a - load mold a
 ]
 ; bug#897
 ; MOLD/ALL decimal accuracy tests
@@ -910,250 +910,250 @@
 [function? first [#[function! [[] []]]]]
 ; return-less return value tests
 [
-	f: does []
-	unset? f
+    f: does []
+    unset? f
 ]
 [
-	f: does [:abs]
-	:abs = f
+    f: does [:abs]
+    :abs = f
 ]
 [
-	a-value: #{}
-	f: does [a-value]
-	same? a-value f
+    a-value: #{}
+    f: does [a-value]
+    same? a-value f
 ]
 [
-	a-value: charset ""
-	f: does [a-value]
-	same? a-value f
+    a-value: charset ""
+    f: does [a-value]
+    same? a-value f
 ]
 [
-	a-value: []
-	f: does [a-value]
-	same? a-value f
+    a-value: []
+    f: does [a-value]
+    same? a-value f
 ]
 [
-	a-value: none!
-	f: does [a-value]
-	same? a-value f
+    a-value: none!
+    f: does [a-value]
+    same? a-value f
 ]
 [
-	f: does [1/Jan/0000]
-	1/Jan/0000 = f
+    f: does [1/Jan/0000]
+    1/Jan/0000 = f
 ]
 [
-	f: does [0.0]
-	0.0 == f
+    f: does [0.0]
+    0.0 == f
 ]
 [
-	f: does [1.0]
-	1.0 == f
+    f: does [1.0]
+    1.0 == f
 ]
 [
-	a-value: me@here.com
-	f: does [a-value]
-	same? a-value f
+    a-value: me@here.com
+    f: does [a-value]
+    same? a-value f
 ]
 [
-	f: does [try [1 / 0]]
-	error? f
+    f: does [try [1 / 0]]
+    error? f
 ]
 [
-	a-value: %""
-	f: does [a-value]
-	same? a-value f
+    a-value: %""
+    f: does [a-value]
+    same? a-value f
 ]
 [
-	a-value: does []
-	f: does [:a-value]
-	same? :a-value f
+    a-value: does []
+    f: does [:a-value]
+    same? :a-value f
 ]
 [
-	a-value: first [:a]
-	f: does [:a-value]
-	(same? :a-value f) and* (:a-value == f)
+    a-value: first [:a]
+    f: does [:a-value]
+    (same? :a-value f) and* (:a-value == f)
 ]
 [
-	f: does [#"^@"]
-	#"^@" == f
+    f: does [#"^@"]
+    #"^@" == f
 ]
 [
-	a-value: make image! 0x0
-	f: does [a-value]
-	same? a-value f
+    a-value: make image! 0x0
+    f: does [a-value]
+    same? a-value f
 ]
 [
-	f: does [0]
-	0 == f
+    f: does [0]
+    0 == f
 ]
 [
-	f: does [1]
-	1 == f
+    f: does [1]
+    1 == f
 ]
 [
-	f: does [#a]
-	#a == f
+    f: does [#a]
+    #a == f
 ]
 [
-	a-value: first ['a/b]
-	f: does [:a-value]
-	:a-value == f
+    a-value: first ['a/b]
+    f: does [:a-value]
+    :a-value == f
 ]
 [
-	a-value: first ['a]
-	f: does [:a-value]
-	:a-value == f
+    a-value: first ['a]
+    f: does [:a-value]
+    :a-value == f
 ]
 [
-	f: does [true]
-	true = f
+    f: does [true]
+    true = f
 ]
 [
-	f: does [false]
-	false = f
+    f: does [false]
+    false = f
 ]
 [
-	f: does [$1]
-	$1 == f
+    f: does [$1]
+    $1 == f
 ]
 [
-	f: does [:type?]
-	same? :type? f
+    f: does [:type?]
+    same? :type? f
 ]
 [
-	f: does [#[none]]
-	none? f
+    f: does [#[none]]
+    none? f
 ]
 [
-	a-value: make object! []
-	f: does [:a-value]
-	same? :a-value f
+    a-value: make object! []
+    f: does [:a-value]
+    same? :a-value f
 ]
 [
-	a-value: first [()]
-	f: does [:a-value]
-	same? :a-value f
+    a-value: first [()]
+    f: does [:a-value]
+    same? :a-value f
 ]
 [
-	f: does [get '+]
-	same? get '+ f
+    f: does [get '+]
+    same? get '+ f
 ]
 [
-	f: does [0x0]
-	0x0 == f
+    f: does [0x0]
+    0x0 == f
 ]
 [
-	a-value: 'a/b
-	f: does [:a-value]
-	:a-value == f
+    a-value: 'a/b
+    f: does [:a-value]
+    :a-value == f
 ]
 [
-	a-value: make port! http://
-	f: does [:a-value]
-	port? f
+    a-value: make port! http://
+    f: does [:a-value]
+    port? f
 ]
 [
-	f: does [/a]
-	/a == f
+    f: does [/a]
+    /a == f
 ]
 [
-	a-value: first [a/b:]
-	f: does [:a-value]
-	:a-value == f
+    a-value: first [a/b:]
+    f: does [:a-value]
+    :a-value == f
 ]
 [
-	a-value: first [a:]
-	f: does [:a-value]
-	:a-value == all [:a-value]
+    a-value: first [a:]
+    f: does [:a-value]
+    :a-value == all [:a-value]
 ]
 [
-	a-value: ""
-	f: does [:a-value]
-	same? :a-value f
+    a-value: ""
+    f: does [:a-value]
+    same? :a-value f
 ]
 [
-	a-value: make tag! ""
-	f: does [:a-value]
-	same? :a-value f
+    a-value: make tag! ""
+    f: does [:a-value]
+    same? :a-value f
 ]
 [
-	f: does [0:00]
-	0:00 == f
+    f: does [0:00]
+    0:00 == f
 ]
 [
-	f: does [0.0.0]
-	0.0.0 == f
+    f: does [0.0.0]
+    0.0.0 == f
 ]
 [
-	f: does [()]
-	unset? f
+    f: does [()]
+    unset? f
 ]
 [
-	f: does ['a]
-	'a == f
+    f: does ['a]
+    'a == f
 ]
 ; two-function return tests
 [
-	g: func [f [any-function!]] [f [return 1] 2]
-	1 = g :do
+    g: func [f [any-function!]] [f [return 1] 2]
+    1 = g :do
 ]
 ; BREAK out of a function
 [
-	1 = loop 1 [
-		f: does [break/return 1]
-		f
-		2
-	]
+    1 = loop 1 [
+        f: does [break/return 1]
+        f
+        2
+    ]
 ]
 ; THROW out of a function
 [
-	1 = catch [
-		f: does [throw 1]
-		f
-		2
-	]
+    1 = catch [
+        f: does [throw 1]
+        f
+        2
+    ]
 ]
 ; "error out" of a function
 [
-	error? try [
-		f: does [1 / 0 2]
-		f
-		2
-	]
+    error? try [
+        f: does [1 / 0 2]
+        f
+        2
+    ]
 ]
 ; BREAK out leaves a "running" function in a "clean" state
 [
-	1 = loop 1 [
-		f: func [x] [
-			either x = 1 [
-				loop 1 [f 2]
-				x
-			] [break/return 1]
-		]
-		f 1
-	]
+    1 = loop 1 [
+        f: func [x] [
+            either x = 1 [
+                loop 1 [f 2]
+                x
+            ] [break/return 1]
+        ]
+        f 1
+    ]
 ]
 ; THROW out leaves a "running" function in a "clean" state
 [
-	1 = catch [
-		f: func [x] [
-			either x = 1 [
-				catch [f 2]
-				x
-			] [throw 1]
-		]
-		f 1
-	]
+    1 = catch [
+        f: func [x] [
+            either x = 1 [
+                catch [f 2]
+                x
+            ] [throw 1]
+        ]
+        f 1
+    ]
 ]
 ; "error out" leaves a "running" function in a "clean" state
 [
-	f: func [x] [
-		either x = 1 [
-			error? try [f 2]
-			x = 1
-		] [1 / 0]
-	]
-	f 1
+    f: func [x] [
+        either x = 1 [
+            error? try [f 2]
+            x = 1
+        ] [1 / 0]
+    ]
+    f 1
 ]
 ; Argument passing of "get arguments" ("get-args")
 [gf: func [:x] [:x] 10 == gf 10]
@@ -1176,37 +1176,37 @@
 ; a function-local word that escapes the function's dynamic extent still works
 ; when re-entering the dynamic extent of the same function later.
 [
-	f: func [code value] [either none? code ['value] [do code]]
-	f-value: f none none
-	42 == f compose [2 * (f-value)] 21  ; re-entering same function
+    f: func [code value] [either none? code ['value] [do code]]
+    f-value: f none none
+    42 == f compose [2 * (f-value)] 21  ; re-entering same function
 ]
 [
-	f: func [code value] [either none? code ['value] [do code]]
-	g: func [code value] [either none? code ['value] [do code]]
-	f-value: f none none
-	error? try [g compose [2 * (f-value)] 21]  ; re-entering different function
+    f: func [code value] [either none? code ['value] [do code]]
+    g: func [code value] [either none? code ['value] [do code]]
+    f-value: f none none
+    error? try [g compose [2 * (f-value)] 21]  ; re-entering different function
 ]
 ; bug#19
 [
-	f: func [/r x] [x]
-	2 == f/r/r 1 2
+    f: func [/r x] [x]
+    2 == f/r/r 1 2
 ]
 ; bug#27
 [error? try [(type?) 1]]
 ; bug#1659
 ; inline function test
 [
-	f: does reduce [does [true]]
-	f
+    f: does reduce [does [true]]
+    f
 ]
 ; no-rebind test
 [
-	a: func [b] [a: none c: b]
-	f: func [d] [a [d] do c]
-	all [
-		1 = f 1
-		2 = f 2
-	]
+    a: func [b] [a: none c: b]
+    f: func [d] [a [d] do c]
+    all [
+        1 = f 1
+        2 = f 2
+    ]
 ]
 ; bug#1528
 [function? func [self] []]
@@ -1214,16 +1214,16 @@
 [eval does [reduce reduce [:self] true]]
 ; bug#2025
 [
-	body: [x + y]
-	f: make function! reduce [[x] body]
-	g: make function! reduce [[y] body]
-	error? try [f 1]
+    body: [x + y]
+    f: make function! reduce [[x] body]
+    g: make function! reduce [[y] body]
+    error? try [f 1]
 ]
 ; bug#2044
 [
-	o: make object! [f: func [x] ['x]]
-	p: make o []
-	not same? o/f 1 p/f 1
+    o: make object! [f: func [x] ['x]]
+    p: make o []
+    not same? o/f 1 p/f 1
 ]
 ; datatypes/get-path.r
 ; minimum
@@ -1231,23 +1231,23 @@
 ; empty get-path test
 [get-path? load "#[get-path! [a]]"]
 [
-	all [
-		get-path? a: load "#[get-path! [a b c] 2]"
-		2 == index? a
-	]
+    all [
+        get-path? a: load "#[get-path! [a b c] 2]"
+        2 == index? a
+    ]
 ]
 ; datatypes/get-word.r
 [get-word? first [:a]]
 [not get-word? 1]
 [get-word! = type? first [:a]]
 [
-	; context-less get-word
-	e: try [do to block! ":a"]
-	e/id = 'not-bound
+    ; context-less get-word
+    e: try [do to block! ":a"]
+    e/id = 'not-bound
 ]
 [
-	unset 'a
-	unset? :a
+    unset 'a
+    unset? :a
 ]
 ; datatypes/gob.r
 ; minimum
@@ -1255,31 +1255,31 @@
 [gob! = type? make gob! []]
 ; bug#62
 [
-	g: make gob! []
-	1x1 == g/offset: 1x1
+    g: make gob! []
+    1x1 == g/offset: 1x1
 ]
 ; bug#1969
 [
-	g1: make gob! []
-	g2: make gob! []
-	insert g1 g2
-	same? g1 g2/parent
-	do "g1: none"
-	do "recycle"
-	g3: make gob! []
-	insert g2/parent g3
-	true
+    g1: make gob! []
+    g2: make gob! []
+    insert g1 g2
+    same? g1 g2/parent
+    do "g1: none"
+    do "recycle"
+    g3: make gob! []
+    insert g2/parent g3
+    true
 ]
 [
-	main: make gob! []
-	foreach i [31 325 1] [
-		clear main
-		recycle
-		loop i [
-			append main make gob! []
-		]
-	]
-	true
+    main: make gob! []
+    foreach i [31 325 1] [
+        clear main
+        recycle
+        loop i [
+            append main make gob! []
+        ]
+    ]
+    true
 ]
 ; datatypes/hash.r
 ; datatypes/image.r
@@ -1290,8 +1290,8 @@
 [image? #[image! 0x0 #{}]]
 ; default colours
 [
-	a-value: #[image! 1x1 #{}]
-	equal? pick a-value 0x0 0.0.0.255
+    a-value: #[image! 1x1 #{}]
+    equal? pick a-value 0x0 0.0.0.255
 ]
 ; datatypes/integer.r
 [integer? 0]
@@ -1359,15 +1359,15 @@
 ; bug#1947
 [lit-path? load "#[lit-path! [a]]"]
 [
-	all [
-		lit-path? a: load "#[lit-path! [a b c] 2]"
-		2 == index? a
-	]
+    all [
+        lit-path? a: load "#[lit-path! [a b c] 2]"
+        2 == index? a
+    ]
 ]
 ; lit-paths are active
 [
-	a-value: first ['a/b]
-	strict-equal? to path! :a-value do reduce [:a-value]
+    a-value: first ['a/b]
+    strict-equal? to path! :a-value do reduce [:a-value]
 ]
 ; datatypes/lit-word.r
 [lit-word? first ['a]]
@@ -1375,8 +1375,8 @@
 [lit-word! = type? first ['a]]
 ; lit-words are active
 [
-	a-value: first ['a]
-	strict-equal? to word! :a-value do reduce [:a-value]
+    a-value: first ['a]
+    strict-equal? to word! :a-value do reduce [:a-value]
 ]
 ; bug#1342
 [word? '<]
@@ -1424,44 +1424,44 @@
 [not module? 1]
 [module! = type? make module! [[] []]]
 [
-	a-module: make module! [
-		[]
-		[
-			; 'var will be in the module
-			var: 1
-		]
-	]
-	var: 2
-	1 == a-module/var
+    a-module: make module! [
+        []
+        [
+            ; 'var will be in the module
+            var: 1
+        ]
+    ]
+    var: 2
+    1 == a-module/var
 ]
 ; import test
 [
-	a-module: make module! [
-		[
-			exports: [var]
-		]
+    a-module: make module! [
+        [
+            exports: [var]
+        ]
 
-		[
-			var: 2
-		]
-	]
-	import a-module
-	2 == var
+        [
+            var: 2
+        ]
+    ]
+    import a-module
+    2 == var
 ]
 ; import test
 [
-	var: 1
-	a-module: make module! [
-		[
-			exports: [var]
-		]
+    var: 1
+    a-module: make module! [
+        [
+            exports: [var]
+        ]
 
-		[
-			var: 2
-		]
-	]
-	import a-module
-	1 == var
+        [
+            var: 2
+        ]
+    ]
+    import a-module
+    1 == var
 ]
 ; datatypes/money.r
 [money? $0.0]
@@ -1476,26 +1476,26 @@
 [money? -$999999999999999.87]
 ; check, whether these are moldable
 [
-	x: $999999999999999
-	found? any [
-		error? try [x: x + $1]
-		not error? try [mold x]
-	]
+    x: $999999999999999
+    found? any [
+        error? try [x: x + $1]
+        not error? try [mold x]
+    ]
 ]
 [
-	x: -$999999999999999
-	found? any [
-		error? try [x: x - $1]
-		not error? try [mold x]
-	]
+    x: -$999999999999999
+    found? any [
+        error? try [x: x - $1]
+        not error? try [mold x]
+    ]
 ]
 ; alternative form
 [$1.1 == $1,1]
 [
-	found? any [
-		error? try [x: $1234567890123456]
-		not error? try [mold x]
-	]
+    found? any [
+        error? try [x: $1234567890123456]
+        not error? try [mold x]
+    ]
 ]
 [$11 = make money! 11]
 [$1.1 = make money! "1.1"]
@@ -1549,60 +1549,60 @@
 [zero? 0.3 - to decimal! $0.3]
 [zero? 0.1 - to decimal! $0.1]
 [
-	x: 9.9999999999999981e152
-	zero? x - to decimal! to money! x
+    x: 9.9999999999999981e152
+    zero? x - to decimal! to money! x
 ]
 [
-	x: -9.9999999999999981e152
-	zero? x - to decimal! to money! x
+    x: -9.9999999999999981e152
+    zero? x - to decimal! to money! x
 ]
 [
-	x: 9.9999999999999926E152
-	zero? x - to decimal! to money! x
+    x: 9.9999999999999926E152
+    zero? x - to decimal! to money! x
 ]
 [
-	x: -9.9999999999999926E152
-	zero? x - to decimal! to money! x
+    x: -9.9999999999999926E152
+    zero? x - to decimal! to money! x
 ]
 [
-	x: 9.9999999999999293E152
-	zero? x - to decimal! to money! x
+    x: 9.9999999999999293E152
+    zero? x - to decimal! to money! x
 ]
 [
-	x: -9.9999999999999293E152
-	zero? x - to decimal! to money! x
+    x: -9.9999999999999293E152
+    zero? x - to decimal! to money! x
 ]
 [
-	x: to decimal! $1e-128
-	zero? x - to decimal! to money! x
+    x: to decimal! $1e-128
+    zero? x - to decimal! to money! x
 ]
 [
-	x: to decimal! -$1e-128
-	zero? x - to decimal! to money! x
+    x: to decimal! -$1e-128
+    zero? x - to decimal! to money! x
 ]
 [
-	x: 9.2233720368547758E18
-	zero? x - to decimal! to money! x
+    x: 9.2233720368547758E18
+    zero? x - to decimal! to money! x
 ]
 [
-	x: -9.2233720368547758E18
-	zero? x - to decimal! to money! x
+    x: -9.2233720368547758E18
+    zero? x - to decimal! to money! x
 ]
 [
-	x: 9.2233720368547748E18
-	zero? x - to decimal! to money! x
+    x: 9.2233720368547748E18
+    zero? x - to decimal! to money! x
 ]
 [
-	x: -9.2233720368547748E18
-	zero? x - to decimal! to money! x
+    x: -9.2233720368547748E18
+    zero? x - to decimal! to money! x
 ]
 [
-	x: 9.2233720368547779E18
-	zero? x - to decimal! to money! x
+    x: 9.2233720368547779E18
+    zero? x - to decimal! to money! x
 ]
 [
-	x: -9.2233720368547779E18
-	zero? x - to decimal! to money! x
+    x: -9.2233720368547779E18
+    zero? x - to decimal! to money! x
 ]
 ; datatypes/native.r
 [native? :reduce]
@@ -1627,8 +1627,8 @@
 ; bug#1666
 ; bug#1650
 [
-	f: does [#]
-	# == f
+    f: does [#]
+    # == f
 ]
 ; datatypes/object.r
 [object? make object! [x: 1]]
@@ -1640,108 +1640,108 @@
 [object? #[object! []]]
 ; local words
 [
-	x: 1
-	make object! [x: 2]
-	x = 1
+    x: 1
+    make object! [x: 2]
+    x = 1
 ]
 ; BREAK out of make object!
 ; bug#846
 [
-	1 = loop 1 [
-		make object! [break/return 1]
-		2
-	]
+    1 = loop 1 [
+        make object! [break/return 1]
+        2
+    ]
 ]
 ; THROW out of make object!
 ; bug#847
 [
-	1 = catch [
-		make object! [throw 1]
-		2
-	]
+    1 = catch [
+        make object! [throw 1]
+        2
+    ]
 ]
 ; "error out" of make object!
 [
-	error? try [
-		make object! [1 / 0]
-		2
-	]
+    error? try [
+        make object! [1 / 0]
+        2
+    ]
 ]
 ; RETURN out of make object!
 ; bug#848
 [
-	f: func [] [
-		make object! [return 1]
-		2
-	]
-	1 = f
+    f: func [] [
+        make object! [return 1]
+        2
+    ]
+    1 = f
 ]
 ; object cloning
 ; bug#2045
 [
-	a: 1
-	f: func [] [a]
-	g: :f
-	o: make object! [a: 2 g: :f]
-	p: make o [a: 3]
-	1 == p/g
+    a: 1
+    f: func [] [a]
+    g: :f
+    o: make object! [a: 2 g: :f]
+    p: make o [a: 3]
+    1 == p/g
 ]
 ; object cloning
 ; bug#2045
 [
-	a: 1
-	b: [a]
-	c: b
-	o: make object! [a: 2 c: b]
-	p: make o [a: 3]
-	1 == do p/c
+    a: 1
+    b: [a]
+    c: b
+    o: make object! [a: 2 c: b]
+    p: make o [a: 3]
+    1 == do p/c
 ]
 ; multiple inheritance
 ; bug#1863
 [
-	o1: make object! [a: 1 f: does [a]]
-	o2: make object! [a: 2]
-	o3: make o1 o2
-	2 == o3/f
+    o1: make object! [a: 1 f: does [a]]
+    o2: make object! [a: 2]
+    o3: make o1 o2
+    2 == o3/f
 ]
 ; object cloning
 ; bug#2049
 [
-	o: make object! [n: 'o f: closure [] [n]]
-	p: make o [n: 'p]
-	'p = p/f
+    o: make object! [n: 'o f: closure [] [n]]
+    p: make o [n: 'p]
+    'p = p/f
 ]
 ; appending to objects
 ; bug#1979
 [
-	o: make object! []
-	append o [b: 1 b: 2]
-	1 == length? words-of o
+    o: make object! []
+    append o [b: 1 b: 2]
+    1 == length? words-of o
 ]
 [
-	o: make object! [b: 0]
-	append o [b: 1 b: 2]
-	1 == length? words-of o
+    o: make object! [b: 0]
+    append o [b: 1 b: 2]
+    1 == length? words-of o
 ]
 [
-	o: make object! []
-	c: "c"
-	append o compose [b: "b" b: (c)]
-	same? c o/b
+    o: make object! []
+    c: "c"
+    append o compose [b: "b" b: (c)]
+    same? c o/b
 ]
 [
-	o: make object! [b: "a"]
-	c: "c"
-	append o compose [b: "b" b: (c)]
-	same? c o/b
+    o: make object! [b: "a"]
+    c: "c"
+    append o compose [b: "b" b: (c)]
+    same? c o/b
 ]
 [
-	o: make object! []
-	error? try [append o 'self]
+    o: make object! []
+    error? try [append o 'self]
 ]
 [
-	o: make object! []
-	error? try [append o [self: 1]]
+    o: make object! []
+    error? try [append o [self: 1]]
 ]
 ; datatypes/op.r
 [infix? get '+]
@@ -1777,23 +1777,23 @@
 ["()" == mold first [()]]
 ; parens are active
 [
-	a-value: first [(1)]
-	1 == do reduce [:a-value]
+    a-value: first [(1)]
+    1 == do reduce [:a-value]
 ]
 ; finite recursion
 [
-	num1: 4
-	num2: 1
-	fact: to paren! [either num1 = 1 [num2] [num2: num1 * num2 num1: num1 - 1]]
-	insert/only tail last fact fact
-	24 = do fact
+    num1: 4
+    num2: 1
+    fact: to paren! [either num1 = 1 [num2] [num2: num1 * num2 num1: num1 - 1]]
+    insert/only tail last fact fact
+    24 = do fact
 ]
 ; bug#1665
 ; infinite recursion
 [
-	fact: to paren! []
-	insert/only fact fact
-	error? try [do fact]
+    fact: to paren! []
+    insert/only fact fact
+    error? try [do fact]
 ]
 ; datatypes/path.r
 [path? 'a/b]
@@ -1804,127 +1804,127 @@
 ; bug#1947
 [path? load "#[path! [a]]"]
 [
-	all [
-		path? a: load "#[path! [a b c] 2]"
-		2 == index? a
-	]
+    all [
+        path? a: load "#[path! [a b c] 2]"
+        2 == index? a
+    ]
 ]
 ["a/b" = mold 'a/b]
 [
-	a-word: 1
-	data: #{0201}
-	2 = data/:a-word
+    a-word: 1
+    data: #{0201}
+    2 = data/:a-word
 ]
 [
-	blk: reduce [:abs 2]
-	2 == blk/:abs
+    blk: reduce [:abs 2]
+    2 == blk/:abs
 ]
 [
-	blk: [#{} 2]
-	2 == blk/#{}
+    blk: [#{} 2]
+    2 == blk/#{}
 ]
 [
-	blk: reduce [charset "a" 3]
-	3 == do reduce [to path! reduce ['blk charset "a"]]
+    blk: reduce [charset "a" 3]
+    3 == do reduce [to path! reduce ['blk charset "a"]]
 ]
 [
-	blk: [[] 3]
-	3 == blk/#[block! []]
+    blk: [[] 3]
+    3 == blk/#[block! []]
 ]
 [
-	blk: [#[none] 3]
-	3 == do [blk/#[none]]
+    blk: [#[none] 3]
+    3 == do [blk/#[none]]
 ]
 [
-	blk: [none 3]
-	3 == do [blk/none]
+    blk: [none 3]
+    3 == do [blk/none]
 ]
 [
-	a-value: 1/Jan/0000
-	0 == a-value/1
+    a-value: 1/Jan/0000
+    0 == a-value/1
 ]
 [
-	a-value: me@here.com
-	#"m" == a-value/1
+    a-value: me@here.com
+    #"m" == a-value/1
 ]
 [
-	a-value: make error! ""
-	a-value/type = 'user
+    a-value: make error! ""
+    a-value/type = 'user
 ]
 [
-	a-value: make image! 1x1
-	0.0.0.255 == a-value/1
+    a-value: make image! 1x1
+    0.0.0.255 == a-value/1
 ]
 [
-	a-value: first ['a/b]
-	'a == a-value/1
+    a-value: first ['a/b]
+    'a == a-value/1
 ]
 [
-	a-value: make object! [a: 1]
-	1 == a-value/a
+    a-value: make object! [a: 1]
+    1 == a-value/a
 ]
 [
-	a-value: 2x3
-	2 = a-value/1
+    a-value: 2x3
+    2 = a-value/1
 ]
 [
-	a-value: first [(2)]
-	2 == a-value/1
+    a-value: first [(2)]
+    2 == a-value/1
 ]
 [
-	a-value: 'a/b
-	'a == a-value/1
+    a-value: 'a/b
+    'a == a-value/1
 ]
 [
-	a-value: make port! http://
-	none? a-value/data
+    a-value: make port! http://
+    none? a-value/data
 ]
 [
-	a-value: first [a/b:]
-	'a == a-value/1
+    a-value: first [a/b:]
+    'a == a-value/1
 ]
 [
-	a-value: "12"
-	#"1" == a-value/1
+    a-value: "12"
+    #"1" == a-value/1
 ]
 [
-	a-value: <tag>
-	#"t" == a-value/1
+    a-value: <tag>
+    #"t" == a-value/1
 ]
 [
-	a-value: 2:03
-	2 == a-value/1
+    a-value: 2:03
+    2 == a-value/1
 ]
 [
-	a-value: 1.2.3
-	1 == a-value/1
+    a-value: 1.2.3
+    1 == a-value/1
 ]
 [
-	a-value: file://a
-	file://a/1 = a-value/1
+    a-value: file://a
+    file://a/1 = a-value/1
 ]
 ; bug#26
 [
-	b: [b 1]
-	1 = b/b
+    b: [b 1]
+    1 = b/b
 ]
 ; recursive path
 [
-	a: make object! []
-	path: 'a/a
-	change/only back tail path path
-	error? try [do path]
-	true
+    a: make object! []
+    path: 'a/a
+    change/only back tail path path
+    error? try [do path]
+    true
 ]
 ; bug#71
 [
-	a: "abcd"
-	error? try [a/x]
+    a: "abcd"
+    error? try [a/x]
 ]
 ; bug#1820: Word USER can't be selected with path syntax
 [
-	b: [user 1 _user 2]
-	1 = b/user
+    b: [user 1 _user 2]
+    1 = b/user
 ]
 ; bug#1977
 [f: func [/r] [1] error? try [f/r/%]]
@@ -2000,39 +2000,39 @@
 ; bug#1947
 [set-path? load "#[set-path! [a]]"]
 [
-	all [
-		set-path? a: load "#[set-path! [a b c] 2]"
-		2 == index? a
-	]
+    all [
+        set-path? a: load "#[set-path! [a b c] 2]"
+        2 == index? a
+    ]
 ]
 ["a/b:" = mold first [a/b:]]
 ; set-paths are active
 [
-	a: make object! [b: none]
-	a/b: 5
-	5 == a/b
+    a: make object! [b: none]
+    a/b: 5
+    5 == a/b
 ]
 ; bug#1
 [
-	o: make object! [a: 0x0]
+    o: make object! [a: 0x0]
     o/a/x: 71830
-	o/a/x = 71830
+    o/a/x = 71830
 ]
 ; set-path evaluation order
 [
-	a: 1x2
-	a/x: (a: [x 4] 3)
-	any [
-		a == 3x2
-		a == [x 3]
-	]
+    a: 1x2
+    a/x: (a: [x 4] 3)
+    any [
+        a == 3x2
+        a == [x 3]
+    ]
 ]
 ; bug#64
 [
-	blk: [1]
-	i: 1
-	blk/:i: 2
-	blk = [2]
+    blk: [1]
+    i: 1
+    blk/:i: 2
+    blk = [2]
 ]
 ; datatypes/set-word.r
 [set-word? first [a:]]
@@ -2040,32 +2040,32 @@
 [set-word! = type? first [a:]]
 ; set-word is active
 [
-	a: :abs
-	equal? :a :abs
+    a: :abs
+    equal? :a :abs
 ]
 [
-	a: #{}
-	equal? :a #{}
+    a: #{}
+    equal? :a #{}
 ]
 [
-	a: charset ""
-	equal? :a charset ""
+    a: charset ""
+    equal? :a charset ""
 ]
 [
-	a: []
-	equal? a []
+    a: []
+    equal? a []
 ]
 [
-	a: action!
-	equal? :a action!
+    a: action!
+    equal? :a action!
 ]
 ; bug#1817
 [
-	a: make map! []
-	a/b: make object! [
-		c: make map! []
-	]
-	integer? a/b/c/d: 1
+    a: make map! []
+    a/b: make object! [
+        c: make map! []
+    ]
+    integer? a/b/c/d: 1
 ]
 ; datatypes/string.r
 [string? "ahoj"]
@@ -2237,17 +2237,17 @@
 ["0:00" = mold 0:00]
 ; small value
 [
-	found? any [
-		error? try [t: -596522:0:0 - 1:00]
-		t = load mold t
-	]
+    found? any [
+        error? try [t: -596522:0:0 - 1:00]
+        t = load mold t
+    ]
 ]
 ; big value
 [
-	found? any [
-		error? try [t: 596522:0:0 + 1:00]
-		t = load mold t
-	]
+    found? any [
+        error? try [t: 596522:0:0 + 1:00]
+        t = load mold t
+    ]
 ]
 ; strange value
 [error? try [load "--596523:-14:-07.772224"]]
@@ -2351,11 +2351,11 @@
 [0 = first make vector! [integer! 32]]
 [all map-each x make vector! [integer! 32 16] [zero? x]]
 [
-	v: make vector! [integer! 32 3]
-	v/1: 10
-	v/2: 20
-	v/3: 30
-	v = make vector! [integer! 32 [10 20 30]]
+    v: make vector! [integer! 32 3]
+    v/1: 10
+    v/2: 20
+    v/3: 30
+    v = make vector! [integer! 32 [10 20 30]]
 ]
 ; datatypes/word.r
 [word? 'a]
@@ -2366,155 +2366,155 @@
 ; words are active; actions are word-active
 [1 == abs -1]
 [
-	a-value: #{}
-	same? :a-value a-value
+    a-value: #{}
+    same? :a-value a-value
 ]
 [
-	a-value: charset ""
-	same? :a-value a-value
+    a-value: charset ""
+    same? :a-value a-value
 ]
 [
-	a-value: []
-	same? :a-value a-value
+    a-value: []
+    same? :a-value a-value
 ]
 [
-	a-value: none!
-	same? :a-value a-value
+    a-value: none!
+    same? :a-value a-value
 ]
 [
-	a-value: 1/Jan/0000
-	same? :a-value a-value
+    a-value: 1/Jan/0000
+    same? :a-value a-value
 ]
 [
-	a-value: 0.0
-	:a-value == a-value
+    a-value: 0.0
+    :a-value == a-value
 ]
 [
-	a-value: 1.0
-	:a-value == a-value
+    a-value: 1.0
+    :a-value == a-value
 ]
 [
-	a-value: me@here.com
-	same? :a-value a-value
+    a-value: me@here.com
+    same? :a-value a-value
 ]
 [
-	error? a-value: try [1 / 0]
-	same? :a-value a-value
+    error? a-value: try [1 / 0]
+    same? :a-value a-value
 ]
 [
-	a-value: %""
-	same? :a-value a-value
+    a-value: %""
+    same? :a-value a-value
 ]
 ; functions are word-active
 [
-	a-value: does [1]
-	1 == a-value
+    a-value: does [1]
+    1 == a-value
 ]
 [
-	a-value: first [:a]
-	:a-value == a-value
+    a-value: first [:a]
+    :a-value == a-value
 ]
 [
-	a-value: #"^@"
-	:a-value == a-value
+    a-value: #"^@"
+    :a-value == a-value
 ]
 [
-	a-value: make image! 0x0
-	same? :a-value a-value
+    a-value: make image! 0x0
+    same? :a-value a-value
 ]
 [
-	a-value: 0
-	:a-value == a-value
+    a-value: 0
+    :a-value == a-value
 ]
 [
-	a-value: 1
-	:a-value == a-value
+    a-value: 1
+    :a-value == a-value
 ]
 [
-	a-value: #
-	same? :a-value a-value
+    a-value: #
+    same? :a-value a-value
 ]
 ; lit-paths aren't word-active
 [
-	a-value: first ['a/b]
-	a-value == :a-value
+    a-value: first ['a/b]
+    a-value == :a-value
 ]
 ; lit-words aren't word-active
 [
-	a-value: first ['a]
-	a-value == :a-value
+    a-value: first ['a]
+    a-value == :a-value
 ]
 [:true == true]
 [:false == false]
 [
-	a-value: $1
-	:a-value == a-value
+    a-value: $1
+    :a-value == a-value
 ]
 ; natives are word-active
 [native! == type? :reduce]
 [:none == none]
 ; library test?
 [
-	a-value: make object! []
-	same? :a-value a-value
+    a-value: make object! []
+    same? :a-value a-value
 ]
 [
-	a-value: first [()]
-	same? :a-value a-value
+    a-value: first [()]
+    same? :a-value a-value
 ]
 [
-	a-value: get '+
-	1 a-value 2 == 3
+    a-value: get '+
+    1 a-value 2 == 3
 ]
 [
-	a-value: 0x0
-	:a-value == a-value
+    a-value: 0x0
+    :a-value == a-value
 ]
 [
-	a-value: 'a/b
-	:a-value == a-value
+    a-value: 'a/b
+    :a-value == a-value
 ]
 [
-	a-value: make port! http://
-	port? a-value
+    a-value: make port! http://
+    port? a-value
 ]
 [
-	a-value: /a
-	:a-value == a-value
+    a-value: /a
+    :a-value == a-value
 ]
 ; routine test?
 [
-	a-value: first [a/b:]
-	:a-value == a-value
+    a-value: first [a/b:]
+    :a-value == a-value
 ]
 [
-	a-value: first [a:]
-	:a-value == a-value
+    a-value: first [a:]
+    :a-value == a-value
 ]
 [
-	a-value: ""
-	same? :a-value a-value
+    a-value: ""
+    same? :a-value a-value
 ]
 [
-	a-value: make tag! ""
-	same? :a-value a-value
+    a-value: make tag! ""
+    same? :a-value a-value
 ]
 [
-	a-value: 0:00
-	same? :a-value a-value
+    a-value: 0:00
+    same? :a-value a-value
 ]
 [
-	a-value: 0.0.0
-	same? :a-value a-value
+    a-value: 0.0.0
+    same? :a-value a-value
 ]
 [
-	unset 'a-value
-	e: try [a-value]
-	e/id = 'no-value
+    unset 'a-value
+    e: try [a-value]
+    e/id = 'no-value
 ]
 [
-	a-value: 'a
-	:a-value == a-value
+    a-value: 'a
+    :a-value == a-value
 ]
 ; functions/comparison/lesserq.r
 ; integer -9223372036854775808 < x tests
@@ -2759,24 +2759,24 @@
 ; email! vs. string!
 ; RAMBO #3518
 [
-	a-value: to email! ""
-	equal? a-value to string! a-value
+    a-value: to email! ""
+    equal? a-value to string! a-value
 ]
 ; email! vs. string! symmetry
 [
-	a-value: to email! ""
-	equal? equal? to string! a-value a-value equal? a-value to string! a-value
+    a-value: to email! ""
+    equal? equal? to string! a-value a-value equal? a-value to string! a-value
 ]
 ; file! vs. string!
 ; RAMBO #3518
 [
-	a-value: %""
-	equal? a-value to string! a-value
+    a-value: %""
+    equal? a-value to string! a-value
 ]
 ; file! vs. string! symmetry
 [
-	a-value: %""
-	equal? equal? a-value to string! a-value equal? to string! a-value a-value
+    a-value: %""
+    equal? equal? a-value to string! a-value equal? to string! a-value a-value
 ]
 ; image! same contents
 [equal? a-value: #[image! 1x1 #{000000}] a-value]
@@ -2797,8 +2797,8 @@
 ; Literal offset not supported in R2.
 [not equal? #[image! 1x1 #{000000} 2] #[image! 1x1 #{000000}]]
 [
-	a-value: #[image! 1x1 #{000000}]
-	not equal? a-value next a-value
+    a-value: #[image! 1x1 #{000000}]
+    not equal? a-value next a-value
 ]
 ; image! offset + structural equivalence
 [equal? #[image! 0x0 #{}] next #[image! 1x1 #{000000}]]
@@ -2829,21 +2829,21 @@
 ; RAMBO #3518
 [not-equal? a-value: #a to string! a-value]
 [
-	a-value: #a
-	equal? equal? a-value to string! a-value equal? to string! a-value a-value
+    a-value: #a
+    equal? equal? a-value to string! a-value equal? to string! a-value a-value
 ]
 ; No implicit to binary! from string!
 [not equal? a-value: "" to binary! a-value]
 [
-	a-value: ""
-	equal? equal? a-value to binary! a-value equal? to binary! a-value a-value
+    a-value: ""
+    equal? equal? a-value to binary! a-value equal? to binary! a-value a-value
 ]
 ; tag! vs. string!
 ; RAMBO #3518
 [equal? a-value: to tag! "" to string! a-value]
 [
-	a-value: to tag! ""
-	equal? equal? a-value to string! a-value equal? to string! a-value a-value
+    a-value: to tag! ""
+    equal? equal? a-value to string! a-value equal? to string! a-value a-value
 ]
 [equal? 0.0.0 0.0.0]
 [not equal? 0.0.1 0.0.0]
@@ -2855,12 +2855,12 @@
 [not equal? 1.0.0 0.0.0.0.0.0.0.1.0.0]
 ; No implicit to binary! from tuple!
 [
-	a-value: 0.0.0.0
-	not equal? to binary! a-value a-value
+    a-value: 0.0.0.0
+    not equal? to binary! a-value a-value
 ]
 [
-	a-value: 0.0.0.0
-	equal? equal? to binary! a-value a-value equal? a-value to binary! a-value
+    a-value: 0.0.0.0
+    equal? equal? to binary! a-value a-value equal? a-value to binary! a-value
 ]
 [equal? #[bitset! #{00}] #[bitset! #{00}]]
 ; bitset! with no bits set does not equal empty bitset
@@ -2874,15 +2874,15 @@
 ; Reflexivity for past-tail blocks
 ; Error in R2.
 [
-	a-value: tail [1]
-	clear head a-value
-	equal? a-value a-value
+    a-value: tail [1]
+    clear head a-value
+    equal? a-value a-value
 ]
 ; Reflexivity for cyclic blocks
 [
-	a-value: copy []
-	insert/only a-value a-value
-	equal? a-value a-value
+    a-value: copy []
+    insert/only a-value a-value
+    equal? a-value a-value
 ]
 ; bug#1049
 ; Comparison of cyclic blocks
@@ -2890,12 +2890,12 @@
 ; "Warning: client switching stacks?  SP change: 0xffec17f68 --> 0xffefff860"
 ; "         to suppress, use: --max-stackframe=4094200 or greater"
 [
-	a-value: copy []
-	insert/only a-value a-value
-	b-value: copy []
-	insert/only b-value b-value
-	error? try [equal? a-value b-value]
-	true
+    a-value: copy []
+    insert/only a-value a-value
+    b-value: copy []
+    insert/only b-value b-value
+    error? try [equal? a-value b-value]
+    true
 ]
 [not equal? [] none]
 [equal? equal? [] none equal? none []]
@@ -2907,33 +2907,33 @@
 [not equal? [a b] 'a/b]
 ; block! vs. path! symmetry
 [
-	a-value: 'a/b
-	b-value: [a b]
-	equal? equal? :a-value :b-value equal? :b-value :a-value
+    a-value: 'a/b
+    b-value: [a b]
+    equal? equal? :a-value :b-value equal? :b-value :a-value
 ]
 ; block! vs. lit-path!
 [not equal? [a b] first ['a/b]]
 ; block! vs. lit-path! symmetry
 [
-	a-value: first ['a/b]
-	b-value: [a b]
-	equal? equal? :a-value :b-value equal? :b-value :a-value
+    a-value: first ['a/b]
+    b-value: [a b]
+    equal? equal? :a-value :b-value equal? :b-value :a-value
 ]
 ; block! vs. set-path!
 [not equal? [a b] first [a/b:]]
 ; block! vs. set-path! symmetry
 [
-	a-value: first [a/b:]
-	b-value: [a b]
-	equal? equal? :a-value :b-value equal? :b-value :a-value
+    a-value: first [a/b:]
+    b-value: [a b]
+    equal? equal? :a-value :b-value equal? :b-value :a-value
 ]
 ; block! vs. get-path!
 [not equal? [a b] first [:a/b]]
 ; block! vs. get-path! symmetry
 [
-	a-value: first [:a/b]
-	b-value: [a b]
-	equal? equal? :a-value :b-value equal? :b-value :a-value
+    a-value: first [:a/b]
+    b-value: [a b]
+    equal? equal? :a-value :b-value equal? :b-value :a-value
 ]
 [equal? decimal! decimal!]
 [not equal? decimal! integer!]
@@ -3071,20 +3071,20 @@
 [equal? 1.0 tangent 45]
 [equal? equal? 1.0 tangent 45 equal? tangent 45 1.0]
 [
-	num: square-root 2.0
-	equal? 2.0 num * num
+    num: square-root 2.0
+    equal? 2.0 num * num
 ]
 [
-	num: square-root 2.0
-	equal? equal? 2.0 num * num equal? num * num 2.0
+    num: square-root 2.0
+    equal? equal? 2.0 num * num equal? num * num 2.0
 ]
 [
-	num: square-root 3.0
-	equal? 3.0 num * num
+    num: square-root 3.0
+    equal? 3.0 num * num
 ]
 [
-	num: square-root 3.0
-	equal? equal? 3.0 num * num equal? num * num 3.0
+    num: square-root 3.0
+    equal? equal? 3.0 num * num equal? num * num 3.0
 ]
 ; integer! vs. decimal!
 [equal? 0 0.0]
@@ -3226,19 +3226,19 @@
 [not equal? make object! [a: 1] make object! []]
 ; object! complex structural equivalence
 [
-	a-value: construct/only [
-		a: 1 b: 1.0 c: $1 d: 1%
-		e: [a 'a :a a: /a #"a" #{00}]
-		f: ["a" #a http://a a@a.com <a>]
-		g: :a/b/(c: 'd/e/f)/(b/d: [:f/g h/i])
-	]
-	b-value: construct/only [
-		a: 1 b: 1.0 c: $1 d: 1%
-		e: [a 'a :a a: /a #"a" #{00}]
-		f: ["a" #a http://a a@a.com <a>]
-		g: :a/b/(c: 'd/e/f)/(b/d: [:f/g h/i])
-	]
-	equal? a-value b-value
+    a-value: construct/only [
+        a: 1 b: 1.0 c: $1 d: 1%
+        e: [a 'a :a a: /a #"a" #{00}]
+        f: ["a" #a http://a a@a.com <a>]
+        g: :a/b/(c: 'd/e/f)/(b/d: [:f/g h/i])
+    ]
+    b-value: construct/only [
+        a: 1 b: 1.0 c: $1 d: 1%
+        e: [a 'a :a a: /a #"a" #{00}]
+        f: ["a" #a http://a a@a.com <a>]
+        g: :a/b/(c: 'd/e/f)/(b/d: [:f/g h/i])
+    ]
+    equal? a-value b-value
 ]
 ; object! complex structural equivalence
 ; Slight differences.
@@ -3246,48 +3246,48 @@
 ; object! structural equivalence verified
 ; Structural equality requires equality of the object's fields.
 [
-	a-value: construct/only [
-		a: 1 b: 1.0 c: $1 d: 1%
-		e: [a 'a :a a: /a #"a" #{00}]
-		f: ["a" #a http://a a@a.com <a>]
-		g: :a/b/(c: 'd/e/f)/(b/d: [:f/g h/i])
-	]
-	b-value: construct/only [
-		a: 1 b: 1.0 c: $1 d: 1%
-		e: [a 'a :a a: /a #"a" #{00}]
-		f: ["a" #a http://a a@a.com <a>]
-		g: :a/b/(c: 'd/e/f)/(b/d: [:f/g h/i])
-	]
-	test: :equal?
-	equal?
-		test a-value b-value
-		foreach [w v] a-value [
-			unless test :v select b-value w [break/return false]
-			true
-		]
+    a-value: construct/only [
+        a: 1 b: 1.0 c: $1 d: 1%
+        e: [a 'a :a a: /a #"a" #{00}]
+        f: ["a" #a http://a a@a.com <a>]
+        g: :a/b/(c: 'd/e/f)/(b/d: [:f/g h/i])
+    ]
+    b-value: construct/only [
+        a: 1 b: 1.0 c: $1 d: 1%
+        e: [a 'a :a a: /a #"a" #{00}]
+        f: ["a" #a http://a a@a.com <a>]
+        g: :a/b/(c: 'd/e/f)/(b/d: [:f/g h/i])
+    ]
+    test: :equal?
+    equal?
+        test a-value b-value
+        foreach [w v] a-value [
+            unless test :v select b-value w [break/return false]
+            true
+        ]
 ]
 ; object! structural equivalence verified
 ; Structural equality requires equality of the object's fields.
 [
-	a-value: construct/only [
-		a: 1 b: 1.0 c: $1 d: 1%
-		e: [a 'a :a a: /a #"a" #{00}]
-		f: ["a" #a http://a a@a.com <a>]
-		g: :a/b/(c: 'd/e/f)/(b/d: [:f/g h/i])
-	]
-	b-value: construct/only [
-		a: 1.0 b: $1 c: 100% d: 0.01
-		e: [/a a 'a :a a: #"A" #[binary! #{0000} 2]]
-		f: [#a <A> http://A a@A.com "A"]
-		g: :a/b/(c: 'd/e/f)/(b/d: [:f/g h/i])
-	]
-	test: :equal?
-	equal?
-		test a-value b-value
-		foreach [w v] a-value [
-			unless test :v select b-value w [break/return false]
-			true
-		]
+    a-value: construct/only [
+        a: 1 b: 1.0 c: $1 d: 1%
+        e: [a 'a :a a: /a #"a" #{00}]
+        f: ["a" #a http://a a@a.com <a>]
+        g: :a/b/(c: 'd/e/f)/(b/d: [:f/g h/i])
+    ]
+    b-value: construct/only [
+        a: 1.0 b: $1 c: 100% d: 0.01
+        e: [/a a 'a :a a: #"A" #[binary! #{0000} 2]]
+        f: [#a <A> http://A a@A.com "A"]
+        g: :a/b/(c: 'd/e/f)/(b/d: [:f/g h/i])
+    ]
+    test: :equal?
+    equal?
+        test a-value b-value
+        foreach [w v] a-value [
+            unless test :v select b-value w [break/return false]
+            true
+        ]
 ]
 ; unset! comparison fails
 [equal? () ()]
@@ -3316,9 +3316,9 @@
 ; error! reflexivity
 ; Evaluates (try [1 / 0]) to get error! value.
 [
-	a-value: none
-	set/any 'a-value (try [1 / 0])
-	equal? a-value a-value
+    a-value: none
+    set/any 'a-value (try [1 / 0])
+    equal? a-value a-value
 ]
 ; error! structural equivalence
 ; Evaluates (try [1 / 0]) to get error! value.
@@ -3355,9 +3355,9 @@
 [not equal? make port! http:// make port! http://]
 ; bug#859
 [
-	a: copy quote ()
-	insert/only a a
-	error? try [do a]
+    a: copy quote ()
+    insert/only a a
+    error? try [do a]
 ]
 ; functions/comparison/equivq.r
 ; reflexivity test for native!
@@ -3398,24 +3398,24 @@
 [not-equiv? #{0141} #{0161}]
 ; email versus string; RAMBO #3518
 [
-	a-value: to email! ""
-	equiv? a-value to string! a-value
+    a-value: to email! ""
+    equiv? a-value to string! a-value
 ]
 ; symmetry
 [
-	a-value: to email! ""
-	equal? equiv? to string! a-value a-value equiv? a-value to string! a-value
+    a-value: to email! ""
+    equal? equiv? to string! a-value a-value equiv? a-value to string! a-value
 ]
 ; file! vs. string!
 ; RAMBO #3518
 [
-	a-value: %""
-	equiv? a-value to string! a-value
+    a-value: %""
+    equiv? a-value to string! a-value
 ]
 ; symmetry
 [
-	a-value: %""
-	equal? equiv? a-value to string! a-value equiv? to string! a-value a-value
+    a-value: %""
+    equal? equiv? a-value to string! a-value equiv? to string! a-value a-value
 ]
 ; image! same contents
 [equiv? a-value: #[image! 1x1 #{000000}] a-value]
@@ -3429,43 +3429,43 @@
 [equal? equiv? #{00} to integer! #{00} equiv? to integer! #{00} #{00}]
 ; RAMBO #3518
 [
-	a-value: #a
-	not-equiv? a-value to string! a-value
+    a-value: #a
+    not-equiv? a-value to string! a-value
 ]
 ; symmetry
 [
-	a-value: #a
-	equal? equiv? a-value to string! a-value equiv? to string! a-value a-value
+    a-value: #a
+    equal? equiv? a-value to string! a-value equiv? to string! a-value a-value
 ]
 ; symmetry
 [equal? equiv? #{} none equiv? none #{}]
 [
-	a-value: ""
-	not equiv? a-value to binary! a-value
+    a-value: ""
+    not equiv? a-value to binary! a-value
 ]
 ; symmetry
 [
-	a-value: ""
-	equal? equiv? a-value to binary! a-value equiv? to binary! a-value a-value
+    a-value: ""
+    equal? equiv? a-value to binary! a-value equiv? to binary! a-value a-value
 ]
 ; RAMBO #3518
 [
-	a-value: to tag! ""
-	equiv? a-value to string! a-value
+    a-value: to tag! ""
+    equiv? a-value to string! a-value
 ]
 ; symmetry
 [
-	a-value: to tag! ""
-	equal? equiv? a-value to string! a-value equiv? to string! a-value a-value
+    a-value: to tag! ""
+    equal? equiv? a-value to string! a-value equiv? to string! a-value a-value
 ]
 [
-	a-value: 0.0.0.0
-	not equiv? to binary! a-value a-value
+    a-value: 0.0.0.0
+    not equiv? to binary! a-value a-value
 ]
 ; symmetry
 [
-	a-value: 0.0.0.0
-	equal? equiv? to binary! a-value a-value equiv? a-value to binary! a-value
+    a-value: 0.0.0.0
+    equal? equiv? to binary! a-value a-value equiv? a-value to binary! a-value
 ]
 [equiv? #[bitset! #{00}] #[bitset! #{00}]]
 [not equiv? #[bitset! #{}] #[bitset! #{00}]]
@@ -3473,30 +3473,30 @@
 [equiv? [] []]
 ; reflexivity
 [
-	a-value: []
-	equiv? a-value a-value
+    a-value: []
+    equiv? a-value a-value
 ]
 ; reflexivity for past-tail blocks
 [
-	a-value: tail [1]
-	clear head a-value
-	equiv? a-value a-value
+    a-value: tail [1]
+    clear head a-value
+    equiv? a-value a-value
 ]
 ; reflexivity for cyclic blocks
 [
-	a-value: copy []
-	insert/only a-value a-value
-	equiv? a-value a-value
+    a-value: copy []
+    insert/only a-value a-value
+    equiv? a-value a-value
 ]
 ; comparison of cyclic blocks
 ; bug#1049
 [
-	a-value: copy []
-	insert/only a-value a-value
-	b-value: copy []
-	insert/only b-value b-value
-	error? try [equiv? a-value b-value]
-	true
+    a-value: copy []
+    insert/only a-value a-value
+    b-value: copy []
+    insert/only b-value b-value
+    error? try [equiv? a-value b-value]
+    true
 ]
 [not equiv? [] none]
 [equal? equiv? [] none equiv? none []]
@@ -3508,33 +3508,33 @@
 [not equiv? [a b] 'a/b]
 ; block! vs. path! symmetry
 [
-	a-value: 'a/b
-	b-value: [a b]
-	equal? equiv? :a-value :b-value equiv? :b-value :a-value
+    a-value: 'a/b
+    b-value: [a b]
+    equal? equiv? :a-value :b-value equiv? :b-value :a-value
 ]
 ; block! vs. lit-path!
 [not equiv? [a b] first ['a/b]]
 ; block! vs. lit-path! symmetry
 [
-	a-value: first ['a/b]
-	b-value: [a b]
-	equal? equiv? :a-value :b-value equiv? :b-value :a-value
+    a-value: first ['a/b]
+    b-value: [a b]
+    equal? equiv? :a-value :b-value equiv? :b-value :a-value
 ]
 ; block! vs. set-path!
 [not equiv? [a b] first [a/b:]]
 ; block! vs. set-path! symmetry
 [
-	a-value: first [a/b:]
-	b-value: [a b]
-	equal? equiv? :a-value :b-value equiv? :b-value :a-value
+    a-value: first [a/b:]
+    b-value: [a b]
+    equal? equiv? :a-value :b-value equiv? :b-value :a-value
 ]
 ; block! vs. get-path!
 [not equiv? [a b] first [:a/b]]
 ; block! vs. get-path! symmetry
 [
-	a-value: first [:a/b]
-	b-value: [a b]
-	equal? equiv? :a-value :b-value equiv? :b-value :a-value
+    a-value: first [:a/b]
+    b-value: [a b]
+    equal? equiv? :a-value :b-value equiv? :b-value :a-value
 ]
 [equiv? decimal! decimal!]
 [not equiv? decimal! integer!]
@@ -3654,13 +3654,13 @@
 ; "decimal tolerance"
 ; symmetry
 [
-	equal? equiv? to decimal! #{3FD3333333333333} to decimal! #{3FD3333333333334}
-		equiv? to decimal! #{3FD3333333333334} to decimal! #{3FD3333333333333}
+    equal? equiv? to decimal! #{3FD3333333333333} to decimal! #{3FD3333333333334}
+        equiv? to decimal! #{3FD3333333333334} to decimal! #{3FD3333333333333}
 ]
 ; symmetry
 [
-	equal? equiv? to decimal! #{3FB9999999999999} to decimal! #{3FB999999999999A}
-		equiv? to decimal! #{3FB999999999999A} to decimal! #{3FB9999999999999}
+    equal? equiv? to decimal! #{3FB9999999999999} to decimal! #{3FB999999999999A}
+        equiv? to decimal! #{3FB999999999999A} to decimal! #{3FB9999999999999}
 ]
 ; ignores datatype differences
 [equiv? 0 0.0]
@@ -3775,11 +3775,11 @@
 [not equiv? false true]
 ; port! values; reflexivity; in this case the error should not be generated, I think
 [
-	p: make port! http://
-	any [
-		error? try [equiv? p p]
-		equiv? p p
-	]
+    p: make port! http://
+    any [
+        error? try [equiv? p p]
+        equiv? p p
+    ]
 ]
 ; functions/comparison/sameq.r
 ; reflexivity test for action!
@@ -3790,15 +3790,15 @@
 [same? :+ :+]
 ; reflexivity test for function!
 [
-	a-value: func [] []
-	same? :a-value :a-value
+    a-value: func [] []
+    same? :a-value :a-value
 ]
 ; no structural equality for function!
 [not same? func [] [] func [] []]
 ; reflexivity test for closure!
 [
-	a-value: closure [] []
-	same? :a-value :a-value
+    a-value: closure [] []
+    same? :a-value :a-value
 ]
 ; no structural equality for closure!
 [not same? closure [] [] closure [] []]
@@ -3810,22 +3810,22 @@
 [equal? same? #[bitset! #{00}] #{00} same? #{00} #[bitset! #{00}]]
 ; email versus string
 [
-	a-value: to email! ""
-	not same? a-value to string! a-value
+    a-value: to email! ""
+    not same? a-value to string! a-value
 ]
 ; symmetry
 [
-	a-value: to email! ""
-	equal? same? to string! a-value a-value same? a-value to string! a-value
+    a-value: to email! ""
+    equal? same? to string! a-value a-value same? a-value to string! a-value
 ]
 [
-	a-value: %""
-	not same? a-value to string! a-value
+    a-value: %""
+    not same? a-value to string! a-value
 ]
 ; symmetry
 [
-	a-value: %""
-	equal? same? a-value to string! a-value same? to string! a-value a-value
+    a-value: %""
+    equal? same? a-value to string! a-value same? to string! a-value a-value
 ]
 [not same? #{00} #[image! 1x1 #{00}]]
 ; symmetry
@@ -3834,43 +3834,43 @@
 ; symmetry
 [equal? same? #{00} to integer! #{00} same? to integer! #{00} #{00}]
 [
-	a-value: #a
-	not same? a-value to string! a-value
+    a-value: #a
+    not same? a-value to string! a-value
 ]
 ; symmetry
 [
-	a-value: #a
-	equal? same? a-value to string! a-value same? to string! a-value a-value
+    a-value: #a
+    equal? same? a-value to string! a-value same? to string! a-value a-value
 ]
 [not same? #{} none]
 ; symmetry
 [equal? same? #{} none same? none #{}]
 [
-	a-value: ""
-	not same? a-value to binary! a-value
+    a-value: ""
+    not same? a-value to binary! a-value
 ]
 ; symmetry
 [
-	a-value: ""
-	equal? same? a-value to binary! a-value same? to binary! a-value a-value
+    a-value: ""
+    equal? same? a-value to binary! a-value same? to binary! a-value a-value
 ]
 [
-	a-value: to tag! ""
-	not same? a-value to string! a-value
-]
-; symmetry
-[
-	a-value: to tag! ""
-	equal? same? a-value to string! a-value same? to string! a-value a-value
-]
-[
-	a-value: 0.0.0.0
-	not same? to binary! a-value a-value
+    a-value: to tag! ""
+    not same? a-value to string! a-value
 ]
 ; symmetry
 [
-	a-value: 0.0.0.0
-	equal? same? to binary! a-value a-value same? a-value to binary! a-value
+    a-value: to tag! ""
+    equal? same? a-value to string! a-value same? to string! a-value a-value
+]
+[
+    a-value: 0.0.0.0
+    not same? to binary! a-value a-value
+]
+; symmetry
+[
+    a-value: 0.0.0.0
+    equal? same? to binary! a-value a-value same? a-value to binary! a-value
 ]
 [not same? #[bitset! #{00}] #[bitset! #{00}]]
 [not same? #[bitset! #{}] #[bitset! #{00}]]
@@ -3878,41 +3878,41 @@
 [not same? [] []]
 ; reflexivity
 [
-	a-value: []
-	same? a-value a-value
+    a-value: []
+    same? a-value a-value
 ]
 ; reflexivity for past-tail blocks
 [
-	a-value: tail [1]
-	clear head a-value
-	same? a-value a-value
+    a-value: tail [1]
+    clear head a-value
+    same? a-value a-value
 ]
 ; reflexivity for cyclic blocks
 [
-	a-value: copy []
-	insert/only a-value a-value
-	same? a-value a-value
+    a-value: copy []
+    insert/only a-value a-value
+    same? a-value a-value
 ]
 ; comparison of cyclic blocks
 [
-	a-value: copy []
-	insert/only a-value a-value
-	b-value: copy []
-	insert/only b-value b-value
-	not same? a-value b-value
+    a-value: copy []
+    insert/only a-value a-value
+    b-value: copy []
+    insert/only b-value b-value
+    not same? a-value b-value
 ]
 ; bug#1068
 ; bug#1066
 [
-	a-value: first ['a/b]
-	parse :a-value [b-value:]
-	same? :a-value :b-value
+    a-value: first ['a/b]
+    parse :a-value [b-value:]
+    same? :a-value :b-value
 ]
 ; symmetry
 [
-	a-value: first ['a/b]
-	parse :a-value [b-value:]
-	equal? same? :a-value :b-value same? :b-value :a-value
+    a-value: first ['a/b]
+    parse :a-value [b-value:]
+    equal? same? :a-value :b-value same? :b-value :a-value
 ]
 [not same? [] none]
 ; symmetry
@@ -3920,41 +3920,41 @@
 ; bug#1068
 ; bug#1066
 [
-	a-value: first [()]
-	parse a-value [b-value:]
-	same? a-value b-value
+    a-value: first [()]
+    parse a-value [b-value:]
+    same? a-value b-value
 ]
 ; symmetry
 [
-	a-value: first [()]
-	parse a-value [b-value:]
-	equal? same? a-value b-value same? b-value a-value
+    a-value: first [()]
+    parse a-value [b-value:]
+    equal? same? a-value b-value same? b-value a-value
 ]
 ; bug#1068
 ; bug#1066
 [
-	a-value: 'a/b
-	parse a-value [b-value:]
-	same? :a-value :b-value
+    a-value: 'a/b
+    parse a-value [b-value:]
+    same? :a-value :b-value
 ]
 ; symmetry
 [
-	a-value: 'a/b
-	parse a-value [b-value:]
-	equal? same? :a-value :b-value same? :b-value :a-value
+    a-value: 'a/b
+    parse a-value [b-value:]
+    equal? same? :a-value :b-value same? :b-value :a-value
 ]
 ; bug#1068
 ; bug#1066
 [
-	a-value: first [a/b:]
-	parse :a-value [b-value:]
-	same? :a-value :b-value
+    a-value: first [a/b:]
+    parse :a-value [b-value:]
+    same? :a-value :b-value
 ]
 ; symmetry
 [
-	a-value: first [a/b:]
-	parse :a-value [b-value:]
-	equal? same? :a-value :b-value same? :b-value :a-value
+    a-value: first [a/b:]
+    parse :a-value [b-value:]
+    equal? same? :a-value :b-value same? :b-value :a-value
 ]
 [not same? any-number! integer!]
 ; symmetry
@@ -4070,14 +4070,14 @@
 [not same? to decimal! #{3FD3333333333333} to decimal! #{3FD3333333333334}]
 ; symmetry
 [
-	equal? same? to decimal! #{3FD3333333333333} to decimal! #{3FD3333333333334}
-		same? to decimal! #{3FD3333333333334} to decimal! #{3FD3333333333333}
+    equal? same? to decimal! #{3FD3333333333333} to decimal! #{3FD3333333333334}
+        same? to decimal! #{3FD3333333333334} to decimal! #{3FD3333333333333}
 ]
 [not same? to decimal! #{3FB9999999999999} to decimal! #{3FB999999999999A}]
 ; symmetry
 [
-	equal? same? to decimal! #{3FB9999999999999} to decimal! #{3FB999999999999A}
-		same? to decimal! #{3FB999999999999A} to decimal! #{3FB9999999999999}
+    equal? same? to decimal! #{3FB9999999999999} to decimal! #{3FB999999999999A}
+        same? to decimal! #{3FB999999999999A} to decimal! #{3FB9999999999999}
 ]
 ; datatype differences
 [not same? 0 0.0]
@@ -4196,11 +4196,11 @@
 [not same? false true]
 ; port! values; reflexivity; in this case the error should not be generated, I think
 [
-	p: make port! http://
-	any [
-		error? try [same? p p]
-		same? p p
-	]
+    p: make port! http://
+    any [
+        error? try [same? p p]
+        same? p p
+    ]
 ]
 ; functions/comparison/strict-equalq.r
 [strict-equal? :abs :abs]
@@ -4210,15 +4210,15 @@
 [strict-equal? :+ :+]
 ; reflexivity test for function!
 [
-	a-value: func [] []
-	strict-equal? :a-value :a-value
+    a-value: func [] []
+    strict-equal? :a-value :a-value
 ]
 ; no structural equality for function!
 [not strict-equal? func [] [] func [] []]
 ; reflexivity test for closure!
 [
-	a-value: closure [] []
-	strict-equal? :a-value :a-value
+    a-value: closure [] []
+    strict-equal? :a-value :a-value
 ]
 ; no structural equality for closure!
 [not strict-equal? closure [] [] closure [] []]
@@ -4230,22 +4230,22 @@
 [equal? strict-equal? #[bitset! #{00}] #{00} strict-equal? #{00} #[bitset! #{00}]]
 ; email versus string
 [
-	a-value: to email! ""
-	not strict-equal? a-value to string! a-value
+    a-value: to email! ""
+    not strict-equal? a-value to string! a-value
 ]
 ; symmetry
 [
-	a-value: to email! ""
-	equal? strict-equal? to string! a-value a-value strict-equal? a-value to string! a-value
+    a-value: to email! ""
+    equal? strict-equal? to string! a-value a-value strict-equal? a-value to string! a-value
 ]
 [
-	a-value: %""
-	not strict-equal? a-value to string! a-value
+    a-value: %""
+    not strict-equal? a-value to string! a-value
 ]
 ; symmetry
 [
-	a-value: %""
-	equal? strict-equal? a-value to string! a-value strict-equal? to string! a-value a-value
+    a-value: %""
+    equal? strict-equal? a-value to string! a-value strict-equal? to string! a-value a-value
 ]
 [not strict-equal? #{00} #[image! 1x1 #{00}]]
 ; symmetry
@@ -4254,43 +4254,43 @@
 ; symmetry
 [equal? strict-equal? #{00} to integer! #{00} strict-equal? to integer! #{00} #{00}]
 [
-	a-value: #a
-	not strict-equal? a-value to string! a-value
+    a-value: #a
+    not strict-equal? a-value to string! a-value
 ]
 ; symmetry
 [
-	a-value: #a
-	equal? strict-equal? a-value to string! a-value strict-equal? to string! a-value a-value
+    a-value: #a
+    equal? strict-equal? a-value to string! a-value strict-equal? to string! a-value a-value
 ]
 [not strict-equal? #{} none]
 ; symmetry
 [equal? strict-equal? #{} none strict-equal? none #{}]
 [
-	a-value: ""
-	not strict-equal? a-value to binary! a-value
+    a-value: ""
+    not strict-equal? a-value to binary! a-value
 ]
 ; symmetry
 [
-	a-value: ""
-	equal? strict-equal? a-value to binary! a-value strict-equal? to binary! a-value a-value
+    a-value: ""
+    equal? strict-equal? a-value to binary! a-value strict-equal? to binary! a-value a-value
 ]
 [
-	a-value: to tag! ""
-	not strict-equal? a-value to string! a-value
-]
-; symmetry
-[
-	a-value: to tag! ""
-	equal? strict-equal? a-value to string! a-value strict-equal? to string! a-value a-value
-]
-[
-	a-value: 0.0.0.0
-	not strict-equal? to binary! a-value a-value
+    a-value: to tag! ""
+    not strict-equal? a-value to string! a-value
 ]
 ; symmetry
 [
-	a-value: 0.0.0.0
-	equal? strict-equal? to binary! a-value a-value strict-equal? a-value to binary! a-value
+    a-value: to tag! ""
+    equal? strict-equal? a-value to string! a-value strict-equal? to string! a-value a-value
+]
+[
+    a-value: 0.0.0.0
+    not strict-equal? to binary! a-value a-value
+]
+; symmetry
+[
+    a-value: 0.0.0.0
+    equal? strict-equal? to binary! a-value a-value strict-equal? a-value to binary! a-value
 ]
 [strict-equal? #[bitset! #{00}] #[bitset! #{00}]]
 [not strict-equal? #[bitset! #{}] #[bitset! #{00}]]
@@ -4298,43 +4298,43 @@
 [strict-equal? [] []]
 ; reflexivity
 [
-	a-value: []
-	strict-equal? a-value a-value
+    a-value: []
+    strict-equal? a-value a-value
 ]
 ; reflexivity for past-tail blocks
 [
-	a-value: tail [1]
-	clear head a-value
-	strict-equal? a-value a-value
+    a-value: tail [1]
+    clear head a-value
+    strict-equal? a-value a-value
 ]
 ; reflexivity for cyclic blocks
 [
-	a-value: copy []
-	insert/only a-value a-value
-	strict-equal? a-value a-value
+    a-value: copy []
+    insert/only a-value a-value
+    strict-equal? a-value a-value
 ]
 ; bug#1049
 ; comparison of cyclic blocks
 [
-	a-value: copy []
-	insert/only a-value a-value
-	b-value: copy []
-	insert/only b-value b-value
-	error? try [strict-equal? a-value b-value]
-	true
+    a-value: copy []
+    insert/only a-value a-value
+    b-value: copy []
+    insert/only b-value b-value
+    error? try [strict-equal? a-value b-value]
+    true
 ]
 ; bug#1068
 ; bug#1066
 [
-	a-value: first ['a/b]
-	parse :a-value [b-value:]
-	strict-equal? :a-value :b-value
+    a-value: first ['a/b]
+    parse :a-value [b-value:]
+    strict-equal? :a-value :b-value
 ]
 ; symmetry
 [
-	a-value: first ['a/b]
-	parse :a-value [b-value:]
-	equal? strict-equal? :a-value :b-value strict-equal? :b-value :a-value
+    a-value: first ['a/b]
+    parse :a-value [b-value:]
+    equal? strict-equal? :a-value :b-value strict-equal? :b-value :a-value
 ]
 [not strict-equal? [] none]
 ; symmetry
@@ -4342,41 +4342,41 @@
 ; bug#1068
 ; bug#1066
 [
-	a-value: first [()]
-	parse a-value [b-value:]
-	strict-equal? a-value b-value
+    a-value: first [()]
+    parse a-value [b-value:]
+    strict-equal? a-value b-value
 ]
 ; symmetry
 [
-	a-value: first [()]
-	parse a-value [b-value:]
-	equal? strict-equal? a-value b-value strict-equal? b-value a-value
+    a-value: first [()]
+    parse a-value [b-value:]
+    equal? strict-equal? a-value b-value strict-equal? b-value a-value
 ]
 ; bug#1068
 ; bug#1066
 [
-	a-value: 'a/b
-	parse a-value [b-value:]
-	strict-equal? :a-value :b-value
+    a-value: 'a/b
+    parse a-value [b-value:]
+    strict-equal? :a-value :b-value
 ]
 ; symmetry
 [
-	a-value: 'a/b
-	parse a-value [b-value:]
-	equal? strict-equal? :a-value :b-value strict-equal? :b-value :a-value
+    a-value: 'a/b
+    parse a-value [b-value:]
+    equal? strict-equal? :a-value :b-value strict-equal? :b-value :a-value
 ]
 ; bug#1068
 ; bug#1066
 [
-	a-value: first [a/b:]
-	parse :a-value [b-value:]
-	strict-equal? :a-value :b-value
+    a-value: first [a/b:]
+    parse :a-value [b-value:]
+    strict-equal? :a-value :b-value
 ]
 ; symmetry
 [
-	a-value: first [a/b:]
-	parse :a-value [b-value:]
-	equal? strict-equal? :a-value :b-value strict-equal? :b-value :a-value
+    a-value: first [a/b:]
+    parse :a-value [b-value:]
+    equal? strict-equal? :a-value :b-value strict-equal? :b-value :a-value
 ]
 [not strict-equal? any-number! integer!]
 ; symmetry
@@ -4492,14 +4492,14 @@
 [not strict-equal? to decimal! #{3FD3333333333333} to decimal! #{3FD3333333333334}]
 ; symmetry
 [
-	equal? strict-equal? to decimal! #{3FD3333333333333} to decimal! #{3FD3333333333334}
-		strict-equal? to decimal! #{3FD3333333333334} to decimal! #{3FD3333333333333}
+    equal? strict-equal? to decimal! #{3FD3333333333333} to decimal! #{3FD3333333333334}
+        strict-equal? to decimal! #{3FD3333333333334} to decimal! #{3FD3333333333333}
 ]
 [not strict-equal? to decimal! #{3FB9999999999999} to decimal! #{3FB999999999999A}]
 ; symmetry
 [
-	equal? strict-equal? to decimal! #{3FB9999999999999} to decimal! #{3FB999999999999A}
-		strict-equal? to decimal! #{3FB999999999999A} to decimal! #{3FB9999999999999}
+    equal? strict-equal? to decimal! #{3FB9999999999999} to decimal! #{3FB999999999999A}
+        strict-equal? to decimal! #{3FB999999999999A} to decimal! #{3FB9999999999999}
 ]
 ; datatype differences
 [not strict-equal? 0 0.0]
@@ -4614,11 +4614,11 @@
 [not strict-equal? false true]
 ; port! values; reflexivity; in this case the error should not be generated, I think
 [
-	p: make port! http://
-	any [
-		error? try [strict-equal? p p]
-		strict-equal? p p
-	]
+    p: make port! http://
+    any [
+        error? try [strict-equal? p p]
+        strict-equal? p p
+    ]
 ]
 ; functions/comparison/strict-not-equalq.r
 ; bug#32
@@ -4629,41 +4629,41 @@
 ; BIND works 'as expected' in object spec
 ; bug#1549
 [
-	b1: [self]
-	ob: make object! [
-	    b2: [self]
-	    set 'a same? first b2 first bind/copy b1 'b2
-	]
-	a
+    b1: [self]
+    ob: make object! [
+        b2: [self]
+        set 'a same? first b2 first bind/copy b1 'b2
+    ]
+    a
 ]
 ; bug#1549
 ; BIND works 'as expected' in function body
 [
-	b1: [self]
-	f: func [/local b2] [
-	    b2: [self]
-	    same? first b2 first bind/copy b1 'b2
-	]
-	f
+    b1: [self]
+    f: func [/local b2] [
+        b2: [self]
+        same? first b2 first bind/copy b1 'b2
+    ]
+    f
 ]
 ; bug#1549
 ; BIND works 'as expected' in closure body
 [
-	b1: [self]
-	f: closure [/local b2] [
-	    b2: [self]
-	    same? first b2 first bind/copy b1 'b2
-	]
-	f
+    b1: [self]
+    f: closure [/local b2] [
+        b2: [self]
+        same? first b2 first bind/copy b1 'b2
+    ]
+    f
 ]
 ; bug#1549
 ; BIND works 'as expected' in REPEAT body
 [
-	b1: [self]
-	repeat i 1 [
-	    b2: [self]
-	    same? first b2 first bind/copy b1 'i
-	]
+    b1: [self]
+    repeat i 1 [
+        b2: [self]
+        same? first b2 first bind/copy b1 'i
+    ]
 ]
 ; bug#1655
 [not head? bind next [1] 'rebol]
@@ -4671,14 +4671,14 @@
 [y: 'x eval has [x] [x: true get bind y 'x]]
 ; bug#1893
 [
-	word: eval func [x] ['x] 1
-	same? word bind 'x word
+    word: eval func [x] ['x] 1
+    same? word bind 'x word
 ]
 ; functions/context/boundq.r
 ; functions/context/bindq.r
 [
-	o: make object! [a: none]
-	same? o bound? in o 'a
+    o: make object! [a: none]
+    same? o bound? in o 'a
 ]
 ; functions/context/resolve.r
 ; bug#2017: crash in RESOLVE/extend/only
@@ -4701,59 +4701,59 @@
 [unset 'a b: none set/any [:b] [a] unset? get/any 'b]
 ; functions/context/unset.r
 [
-	a: none
-	unset 'a
-	not value? 'a
+    a: none
+    unset 'a
+    not value? 'a
 ]
 [
-	a: none
-	unset 'a
-	unset 'a
-	not value? 'a
+    a: none
+    unset 'a
+    unset 'a
+    not value? 'a
 ]
 ; functions/context/use.r
 ; local word test
 [
-	a: 1
-	use [a] [a: 2]
-	a = 1
+    a: 1
+    use [a] [a: 2]
+    a = 1
 ]
 [
-	a: 1
-	error? try [use 'a [a: 2]]
-	a = 1
+    a: 1
+    error? try [use 'a [a: 2]]
+    a = 1
 ]
 ; initialization (lack of)
 [a: 10 all [use [a] [unset? :a] a = 10]]
 ; BREAK out of USE
 [
-	1 = loop 1 [
-		use [a] [break/return 1]
-		2
-	]
+    1 = loop 1 [
+        use [a] [break/return 1]
+        2
+    ]
 ]
 ; THROW out of USE
 [
-	1 = catch [
-		use [a] [throw 1]
-		2
-	]
+    1 = catch [
+        use [a] [throw 1]
+        2
+    ]
 ]
 ; "error out" of USE
 [
-	error? try [
-		use [a] [1 / 0]
-		2
-	]
+    error? try [
+        use [a] [1 / 0]
+        2
+    ]
 ]
 ; bug#539
 ; RETURN out of USE
 [
-	f: func [] [
-		use [a] [return 1]
-		2
-	]
-	1 = f
+    f: func [] [
+        use [a] [return 1]
+        2
+    ]
+    1 = f
 ]
 ; functions/context/valueq.r
 [false == value? 'nonsense]
@@ -4766,56 +4766,56 @@
 ; one value
 [:abs = all [:abs]]
 [
-	a-value: #{}
-	same? a-value all [a-value]
+    a-value: #{}
+    same? a-value all [a-value]
 ]
 [
-	a-value: charset ""
-	same? a-value all [a-value]
+    a-value: charset ""
+    same? a-value all [a-value]
 ]
 [
-	a-value: []
-	same? a-value all [a-value]
+    a-value: []
+    same? a-value all [a-value]
 ]
 [
-	a-value: none!
-	same? a-value all [a-value]
+    a-value: none!
+    same? a-value all [a-value]
 ]
 [1/Jan/0000 = all [1/Jan/0000]]
 [0.0 == all [0.0]]
 [1.0 == all [1.0]]
 [
-	a-value: me@here.com
-	same? a-value all [a-value]
+    a-value: me@here.com
+    same? a-value all [a-value]
 ]
 [error? all [try [1 / 0]]]
 [
-	a-value: %""
-	same? a-value all [a-value]
+    a-value: %""
+    same? a-value all [a-value]
 ]
 [
-	a-value: does []
-	same? :a-value all [:a-value]
+    a-value: does []
+    same? :a-value all [:a-value]
 ]
 [
-	a-value: first [:a]
-	:a-value == all [:a-value]
+    a-value: first [:a]
+    :a-value == all [:a-value]
 ]
 [#"^@" == all [#"^@"]]
 [
-	a-value: make image! 0x0
-	same? a-value all [a-value]
+    a-value: make image! 0x0
+    same? a-value all [a-value]
 ]
 [0 == all [0]]
 [1 == all [1]]
 [#a == all [#a]]
 [
-	a-value: first ['a/b]
-	:a-value == all [:a-value]
+    a-value: first ['a/b]
+    :a-value == all [:a-value]
 ]
 [
-	a-value: first ['a]
-	:a-value == all [:a-value]
+    a-value: first ['a]
+    :a-value == all [:a-value]
 ]
 [true = all [true]]
 [none? all [false]]
@@ -4823,39 +4823,39 @@
 [same? :type? all [:type?]]
 [none? all [#[none]]]
 [
-	a-value: make object! []
-	same? :a-value all [:a-value]
+    a-value: make object! []
+    same? :a-value all [:a-value]
 ]
 [
-	a-value: first [()]
-	same? :a-value all [:a-value]
+    a-value: first [()]
+    same? :a-value all [:a-value]
 ]
 [same? get '+ all [get '+]]
 [0x0 == all [0x0]]
 [
-	a-value: 'a/b
-	:a-value == all [:a-value]
+    a-value: 'a/b
+    :a-value == all [:a-value]
 ]
 [
-	a-value: make port! http://
-	port? all [:a-value]
+    a-value: make port! http://
+    port? all [:a-value]
 ]
 [/a == all [/a]]
 [
-	a-value: first [a/b:]
-	:a-value == all [:a-value]
+    a-value: first [a/b:]
+    :a-value == all [:a-value]
 ]
 [
-	a-value: first [a:]
-	:a-value == all [:a-value]
+    a-value: first [a:]
+    :a-value == all [:a-value]
 ]
 [
-	a-value: ""
-	same? :a-value all [:a-value]
+    a-value: ""
+    same? :a-value all [:a-value]
 ]
 [
-	a-value: make tag! ""
-	same? :a-value all [:a-value]
+    a-value: make tag! ""
+    same? :a-value all [:a-value]
 ]
 [0:00 == all [0:00]]
 [0.0.0 == all [0.0.0]]
@@ -4864,94 +4864,94 @@
 ; two values
 [:abs = all [true :abs]]
 [
-	a-value: #{}
-	same? a-value all [true a-value]
+    a-value: #{}
+    same? a-value all [true a-value]
 ]
 [
-	a-value: charset ""
-	same? a-value all [true a-value]
+    a-value: charset ""
+    same? a-value all [true a-value]
 ]
 [
-	a-value: []
-	same? a-value all [true a-value]
+    a-value: []
+    same? a-value all [true a-value]
 ]
 [
-	a-value: none!
-	same? a-value all [true a-value]
+    a-value: none!
+    same? a-value all [true a-value]
 ]
 [1/Jan/0000 = all [true 1/Jan/0000]]
 [0.0 == all [true 0.0]]
 [1.0 == all [true 1.0]]
 [
-	a-value: me@here.com
-	same? a-value all [true a-value]
+    a-value: me@here.com
+    same? a-value all [true a-value]
 ]
 [error? all [true try [1 / 0]]]
 [
-	a-value: %""
-	same? a-value all [true a-value]
+    a-value: %""
+    same? a-value all [true a-value]
 ]
 [
-	a-value: does []
-	same? :a-value all [true :a-value]
+    a-value: does []
+    same? :a-value all [true :a-value]
 ]
 [
-	a-value: first [:a]
-	same? :a-value all [true :a-value]
+    a-value: first [:a]
+    same? :a-value all [true :a-value]
 ]
 [#"^@" == all [true #"^@"]]
 [
-	a-value: make image! 0x0
-	same? a-value all [true a-value]
+    a-value: make image! 0x0
+    same? a-value all [true a-value]
 ]
 [0 == all [true 0]]
 [1 == all [true 1]]
 [#a == all [true #a]]
 [
-	a-value: first ['a/b]
-	:a-value == all [true :a-value]
+    a-value: first ['a/b]
+    :a-value == all [true :a-value]
 ]
 [
-	a-value: first ['a]
-	:a-value == all [true :a-value]
+    a-value: first ['a]
+    :a-value == all [true :a-value]
 ]
 [$1 == all [true $1]]
 [same? :type? all [true :type?]]
 [none? all [true #[none]]]
 [
-	a-value: make object! []
-	same? :a-value all [true :a-value]
+    a-value: make object! []
+    same? :a-value all [true :a-value]
 ]
 [
-	a-value: first [()]
-	same? :a-value all [true :a-value]
+    a-value: first [()]
+    same? :a-value all [true :a-value]
 ]
 [same? get '+ all [true get '+]]
 [0x0 == all [true 0x0]]
 [
-	a-value: 'a/b
-	:a-value == all [true :a-value]
+    a-value: 'a/b
+    :a-value == all [true :a-value]
 ]
 [
-	a-value: make port! http://
-	port? all [true :a-value]
+    a-value: make port! http://
+    port? all [true :a-value]
 ]
 [/a == all [true /a]]
 [
-	a-value: first [a/b:]
-	:a-value == all [true :a-value]
+    a-value: first [a/b:]
+    :a-value == all [true :a-value]
 ]
 [
-	a-value: first [a:]
-	:a-value == all [true :a-value]
+    a-value: first [a:]
+    :a-value == all [true :a-value]
 ]
 [
-	a-value: ""
-	same? :a-value all [true :a-value]
+    a-value: ""
+    same? :a-value all [true :a-value]
 ]
 [
-	a-value: make tag! ""
-	same? :a-value all [true :a-value]
+    a-value: make tag! ""
+    same? :a-value all [true :a-value]
 ]
 [0:00 == all [true 0:00]]
 [0.0.0 == all [true 0.0.0]]
@@ -4959,56 +4959,56 @@
 ['a == all [true 'a]]
 [true = all [:abs true]]
 [
-	a-value: #{}
-	true = all [a-value true]
+    a-value: #{}
+    true = all [a-value true]
 ]
 [
-	a-value: charset ""
-	true = all [a-value true]
+    a-value: charset ""
+    true = all [a-value true]
 ]
 [
-	a-value: []
-	true = all [a-value true]
+    a-value: []
+    true = all [a-value true]
 ]
 [
-	a-value: none!
-	true = all [a-value true]
+    a-value: none!
+    true = all [a-value true]
 ]
 [true = all [1/Jan/0000 true]]
 [true = all [0.0 true]]
 [true = all [1.0 true]]
 [
-	a-value: me@here.com
-	true = all [a-value true]
+    a-value: me@here.com
+    true = all [a-value true]
 ]
 [true = all [try [1 / 0] true]]
 [
-	a-value: %""
-	true = all [a-value true]
+    a-value: %""
+    true = all [a-value true]
 ]
 [
-	a-value: does []
-	true = all [:a-value true]
+    a-value: does []
+    true = all [:a-value true]
 ]
 [
-	a-value: first [:a]
-	true = all [:a-value true]
+    a-value: first [:a]
+    true = all [:a-value true]
 ]
 [true = all [#"^@" true]]
 [
-	a-value: make image! 0x0
-	true = all [a-value true]
+    a-value: make image! 0x0
+    true = all [a-value true]
 ]
 [true = all [0 true]]
 [true = all [1 true]]
 [true = all [#a true]]
 [
-	a-value: first ['a/b]
-	true = all [:a-value true]
+    a-value: first ['a/b]
+    true = all [:a-value true]
 ]
 [
-	a-value: first ['a]
-	true = all [:a-value true]
+    a-value: first ['a]
+    true = all [:a-value true]
 ]
 [true = all [true true]]
 [none? all [false true]]
@@ -5017,39 +5017,39 @@
 [true = all [:type? true]]
 [none? all [#[none] true]]
 [
-	a-value: make object! []
-	true = all [:a-value true]
+    a-value: make object! []
+    true = all [:a-value true]
 ]
 [
-	a-value: first [()]
-	true = all [:a-value true]
+    a-value: first [()]
+    true = all [:a-value true]
 ]
 [true = all [get '+ true]]
 [true = all [0x0 true]]
 [
-	a-value: 'a/b
-	true = all [:a-value true]
+    a-value: 'a/b
+    true = all [:a-value true]
 ]
 [
-	a-value: make port! http://
-	true = all [:a-value true]
+    a-value: make port! http://
+    true = all [:a-value true]
 ]
 [true = all [/a true]]
 [
-	a-value: first [a/b:]
-	true = all [:a-value true]
+    a-value: first [a/b:]
+    true = all [:a-value true]
 ]
 [
-	a-value: first [a:]
-	true = all [:a-value true]
+    a-value: first [a:]
+    true = all [:a-value true]
 ]
 [
-	a-value: ""
-	true = all [:a-value true]
+    a-value: ""
+    true = all [:a-value true]
 ]
 [
-	a-value: make tag! ""
-	true = all [:a-value true]
+    a-value: make tag! ""
+    true = all [:a-value true]
 ]
 [true = all [0:00 true]]
 [true = all [0.0.0 true]]
@@ -5057,56 +5057,56 @@
 [true = all ['a true]]
 ; evaluation stops after encountering FALSE or NONE
 [
-	success: true
-	all [false success: false]
-	success
+    success: true
+    all [false success: false]
+    success
 ]
 [
-	success: true
-	all [none success: false]
-	success
+    success: true
+    all [none success: false]
+    success
 ]
 ; evaluation continues otherwise
 [
-	success: false
-	all [true success: true]
-	success
+    success: false
+    all [true success: true]
+    success
 ]
 [
-	success: false
-	all [1 success: true]
-	success
+    success: false
+    all [1 success: true]
+    success
 ]
 ; RETURN stops evaluation
 [
-	f1: does [all [return 1 2] 2]
-	1 = f1
+    f1: does [all [return 1 2] 2]
+    1 = f1
 ]
 ; THROW stops evaluation
 [
-	1 = catch [
-		all [
-			throw 1
-			2
-		]
-	]
+    1 = catch [
+        all [
+            throw 1
+            2
+        ]
+    ]
 ]
 ; BREAK stops evaluation
 [
-	1 = loop 1 [
-		all [
-			break/return 1
-			2
-		]
-	]
+    1 = loop 1 [
+        all [
+            break/return 1
+            2
+        ]
+    ]
 ]
 ; recursivity
 [all [true all [true]]]
 [not all [true all [false]]]
 ; infinite recursion
 [
-	blk: [all blk]
-	error? try blk
+    blk: [all blk]
+    error? try blk
 ]
 ; functions/control/any.r
 ; zero values
@@ -5114,56 +5114,56 @@
 ; one value
 [:abs = any [:abs]]
 [
-	a-value: #{}
-	same? a-value any [a-value]
+    a-value: #{}
+    same? a-value any [a-value]
 ]
 [
-	a-value: charset ""
-	same? a-value any [a-value]
+    a-value: charset ""
+    same? a-value any [a-value]
 ]
 [
-	a-value: []
-	same? a-value any [a-value]
+    a-value: []
+    same? a-value any [a-value]
 ]
 [
-	a-value: none!
-	same? a-value any [a-value]
+    a-value: none!
+    same? a-value any [a-value]
 ]
 [1/Jan/0000 = any [1/Jan/0000]]
 [0.0 == any [0.0]]
 [1.0 == any [1.0]]
 [
-	a-value: me@here.com
-	same? a-value any [a-value]
+    a-value: me@here.com
+    same? a-value any [a-value]
 ]
 [error? any [try [1 / 0]]]
 [
-	a-value: %""
-	same? a-value any [a-value]
+    a-value: %""
+    same? a-value any [a-value]
 ]
 [
-	a-value: does []
-	same? :a-value any [:a-value]
+    a-value: does []
+    same? :a-value any [:a-value]
 ]
 [
-	a-value: first [:a]
-	:a-value == any [:a-value]
+    a-value: first [:a]
+    :a-value == any [:a-value]
 ]
 [#"^@" == any [#"^@"]]
 [
-	a-value: make image! 0x0
-	same? a-value any [a-value]
+    a-value: make image! 0x0
+    same? a-value any [a-value]
 ]
 [0 == any [0]]
 [1 == any [1]]
 [#a == any [#a]]
 [
-	a-value: first ['a/b]
-	:a-value == any [:a-value]
+    a-value: first ['a/b]
+    :a-value == any [:a-value]
 ]
 [
-	a-value: first ['a]
-	:a-value == any [:a-value]
+    a-value: first ['a]
+    :a-value == any [:a-value]
 ]
 [true = any [true]]
 [none? any [false]]
@@ -5171,40 +5171,40 @@
 [same? :type? any [:type?]]
 [none? any [#[none]]]
 [
-	a-value: make object! []
-	same? :a-value any [:a-value]
+    a-value: make object! []
+    same? :a-value any [:a-value]
 ]
 [
-	a-value: first [()]
-	same? :a-value any [:a-value]
+    a-value: first [()]
+    same? :a-value any [:a-value]
 ]
 [same? get '+ any [get '+]]
 [0x0 == any [0x0]]
 [
-	a-value: 'a/b
-	:a-value == any [:a-value]
+    a-value: 'a/b
+    :a-value == any [:a-value]
 ]
 [
-	a-value: make port! http://
-	port? any [:a-value]
+    a-value: make port! http://
+    port? any [:a-value]
 ]
 [/a == any [/a]]
 ; routine test?
 [
-	a-value: first [a/b:]
-	:a-value == any [:a-value]
+    a-value: first [a/b:]
+    :a-value == any [:a-value]
 ]
 [
-	a-value: first [a:]
-	:a-value == any [:a-value]
+    a-value: first [a:]
+    :a-value == any [:a-value]
 ]
 [
-	a-value: ""
-	same? :a-value any [:a-value]
+    a-value: ""
+    same? :a-value any [:a-value]
 ]
 [
-	a-value: make tag! ""
-	same? :a-value any [:a-value]
+    a-value: make tag! ""
+    same? :a-value any [:a-value]
 ]
 [0:00 == any [0:00]]
 [0.0.0 == any [0.0.0]]
@@ -5213,56 +5213,56 @@
 ; two values
 [:abs = any [false :abs]]
 [
-	a-value: #{}
-	same? a-value any [false a-value]
+    a-value: #{}
+    same? a-value any [false a-value]
 ]
 [
-	a-value: charset ""
-	same? a-value any [false a-value]
+    a-value: charset ""
+    same? a-value any [false a-value]
 ]
 [
-	a-value: []
-	same? a-value any [false a-value]
+    a-value: []
+    same? a-value any [false a-value]
 ]
 [
-	a-value: none!
-	same? a-value any [false a-value]
+    a-value: none!
+    same? a-value any [false a-value]
 ]
 [1/Jan/0000 = any [false 1/Jan/0000]]
 [0.0 == any [false 0.0]]
 [1.0 == any [false 1.0]]
 [
-	a-value: me@here.com
-	same? a-value any [false a-value]
+    a-value: me@here.com
+    same? a-value any [false a-value]
 ]
 [error? any [false try [1 / 0]]]
 [
-	a-value: %""
-	same? a-value any [false a-value]
+    a-value: %""
+    same? a-value any [false a-value]
 ]
 [
-	a-value: does []
-	same? :a-value any [false :a-value]
+    a-value: does []
+    same? :a-value any [false :a-value]
 ]
 [
-	a-value: first [:a]
-	:a-value == any [false :a-value]
+    a-value: first [:a]
+    :a-value == any [false :a-value]
 ]
 [#"^@" == any [false #"^@"]]
 [
-	a-value: make image! 0x0
-	same? a-value any [false a-value]
+    a-value: make image! 0x0
+    same? a-value any [false a-value]
 ]
 [0 == any [false 0]]
 [1 == any [false 1]]
 [#a == any [false #a]]
 [
-	a-value: first ['a/b]
-	:a-value == any [false :a-value]
+    a-value: first ['a/b]
+    :a-value == any [false :a-value]
 ]
 [
-	a-value: first ['a]
-	:a-value == any [false :a-value]
+    a-value: first ['a]
+    :a-value == any [false :a-value]
 ]
 [true = any [false true]]
 [none? any [false false]]
@@ -5270,39 +5270,39 @@
 [same? :type? any [false :type?]]
 [none? any [false #[none]]]
 [
-	a-value: make object! []
-	same? :a-value any [false :a-value]
+    a-value: make object! []
+    same? :a-value any [false :a-value]
 ]
 [
-	a-value: first [()]
-	same? :a-value any [false :a-value]
+    a-value: first [()]
+    same? :a-value any [false :a-value]
 ]
 [same? get '+ any [false get '+]]
 [0x0 == any [false 0x0]]
 [
-	a-value: 'a/b
-	:a-value == any [false :a-value]
+    a-value: 'a/b
+    :a-value == any [false :a-value]
 ]
 [
-	a-value: make port! http://
-	port? any [false :a-value]
+    a-value: make port! http://
+    port? any [false :a-value]
 ]
 [/a == any [false /a]]
 [
-	a-value: first [a/b:]
-	:a-value == any [false :a-value]
+    a-value: first [a/b:]
+    :a-value == any [false :a-value]
 ]
 [
-	a-value: first [a:]
-	:a-value == any [false :a-value]
+    a-value: first [a:]
+    :a-value == any [false :a-value]
 ]
 [
-	a-value: ""
-	same? :a-value any [false :a-value]
+    a-value: ""
+    same? :a-value any [false :a-value]
 ]
 [
-	a-value: make tag! ""
-	same? :a-value any [false :a-value]
+    a-value: make tag! ""
+    same? :a-value any [false :a-value]
 ]
 [0:00 == any [false 0:00]]
 [0.0.0 == any [false 0.0.0]]
@@ -5310,95 +5310,95 @@
 ['a == any [false 'a]]
 [:abs = any [:abs false]]
 [
-	a-value: #{}
-	same? a-value any [a-value false]
+    a-value: #{}
+    same? a-value any [a-value false]
 ]
 [
-	a-value: charset ""
-	same? a-value any [a-value false]
+    a-value: charset ""
+    same? a-value any [a-value false]
 ]
 [
-	a-value: []
-	same? a-value any [a-value false]
+    a-value: []
+    same? a-value any [a-value false]
 ]
 [
-	a-value: none!
-	same? a-value any [a-value false]
+    a-value: none!
+    same? a-value any [a-value false]
 ]
 [1/Jan/0000 = any [1/Jan/0000 false]]
 [0.0 == any [0.0 false]]
 [1.0 == any [1.0 false]]
 [
-	a-value: me@here.com
-	same? a-value any [a-value false]
+    a-value: me@here.com
+    same? a-value any [a-value false]
 ]
 [error? any [try [1 / 0] false]]
 [
-	a-value: %""
-	same? a-value any [a-value false]
+    a-value: %""
+    same? a-value any [a-value false]
 ]
 [
-	a-value: does []
-	same? :a-value any [:a-value false]
+    a-value: does []
+    same? :a-value any [:a-value false]
 ]
 [
-	a-value: first [:a]
-	:a-value == any [:a-value false]
+    a-value: first [:a]
+    :a-value == any [:a-value false]
 ]
 [#"^@" == any [#"^@" false]]
 [
-	a-value: make image! 0x0
-	same? a-value any [a-value false]
+    a-value: make image! 0x0
+    same? a-value any [a-value false]
 ]
 [0 == any [0 false]]
 [1 == any [1 false]]
 [#a == any [#a false]]
 [
-	a-value: first ['a/b]
-	:a-value == any [:a-value false]
+    a-value: first ['a/b]
+    :a-value == any [:a-value false]
 ]
 [
-	a-value: first ['a]
-	:a-value == any [:a-value false]
+    a-value: first ['a]
+    :a-value == any [:a-value false]
 ]
 [true = any [true false]]
 [$1 == any [$1 false]]
 [same? :type? any [:type? false]]
 [none? any [#[none] false]]
 [
-	a-value: make object! []
-	same? :a-value any [:a-value false]
+    a-value: make object! []
+    same? :a-value any [:a-value false]
 ]
 [
-	a-value: first [()]
-	same? :a-value any [:a-value false]
+    a-value: first [()]
+    same? :a-value any [:a-value false]
 ]
 [same? get '+ any [get '+ false]]
 [0x0 == any [0x0 false]]
 [
-	a-value: 'a/b
-	:a-value == any [:a-value false]
+    a-value: 'a/b
+    :a-value == any [:a-value false]
 ]
 [
-	a-value: make port! http://
-	port? any [:a-value false]
+    a-value: make port! http://
+    port? any [:a-value false]
 ]
 [/a == any [/a false]]
 [
-	a-value: first [a/b:]
-	:a-value == any [:a-value false]
+    a-value: first [a/b:]
+    :a-value == any [:a-value false]
 ]
 [
-	a-value: first [a:]
-	:a-value == any [:a-value false]
+    a-value: first [a:]
+    :a-value == any [:a-value false]
 ]
 [
-	a-value: ""
-	same? :a-value any [:a-value false]
+    a-value: ""
+    same? :a-value any [:a-value false]
 ]
 [
-	a-value: make tag! ""
-	same? :a-value any [:a-value false]
+    a-value: make tag! ""
+    same? :a-value any [:a-value false]
 ]
 [0:00 == any [0:00 false]]
 [0.0.0 == any [0.0.0 false]]
@@ -5406,56 +5406,56 @@
 ['a == any ['a false]]
 ; evaluation stops after encountering something else than FALSE or NONE
 [
-	success: true
-	any [true success: false]
-	success
+    success: true
+    any [true success: false]
+    success
 ]
 [
-	success: true
-	any [1 success: false]
-	success
+    success: true
+    any [1 success: false]
+    success
 ]
 ; evaluation continues otherwise
 [
-	success: false
-	any [false success: true]
-	success
+    success: false
+    any [false success: true]
+    success
 ]
 [
-	success: false
-	any [none success: true]
-	success
+    success: false
+    any [none success: true]
+    success
 ]
 ; RETURN stops evaluation
 [
-	f1: does [any [return 1 2] 2]
-	1 = f1
+    f1: does [any [return 1 2] 2]
+    1 = f1
 ]
 ; THROW stops evaluation
 [
-	1 = catch [
-		any [
-			throw 1
-			2
-		]
-	]
+    1 = catch [
+        any [
+            throw 1
+            2
+        ]
+    ]
 ]
 ; BREAK stops evaluation
 [
-	1 = loop 1 [
-		any [
-			break/return 1
-			2
-		]
-	]
+    1 = loop 1 [
+        any [
+            break/return 1
+            2
+        ]
+    ]
 ]
 ; recursivity
 [any [false any [true]]]
 [none? any [false any [false]]]
 ; infinite recursion
 [
-	blk: [any blk]
-	error? try blk
+    blk: [any blk]
+    error? try blk
 ]
 ; functions/control/apply.r
 ; bug#44
@@ -5509,41 +5509,41 @@
 [error? apply :make [error! ""]]
 [error? apply func [:x [any-value!]] [return get/any 'x] [make error! ""]]
 [
-	error? apply/only func [x [any-value!]] [
-		return get/any 'x
-	] head insert copy [] make error! ""
+    error? apply/only func [x [any-value!]] [
+        return get/any 'x
+    ] head insert copy [] make error! ""
 ]
 [
-	error? apply/only func ['x [any-value!]] [
-		return get/any 'x
-	] head insert copy [] make error! ""
+    error? apply/only func ['x [any-value!]] [
+        return get/any 'x
+    ] head insert copy [] make error! ""
 ]
 [
-	error? apply/only func [:x [any-value!]] [
-		return get/any 'x
-	] head insert copy [] make error! ""
+    error? apply/only func [:x [any-value!]] [
+        return get/any 'x
+    ] head insert copy [] make error! ""
 ]
 [use [x] [x: 1 strict-equal? 1 apply func ['x] [:x] [:x]]]
 [use [x] [x: 1 strict-equal? first [:x] apply/only func ['x] [:x] [:x]]]
 [
-	use [x] [
-		unset 'x
-		strict-equal? first [:x] apply/only func ['x [any-value!]] [
-			return get/any 'x
-		] [:x]
-	]
+    use [x] [
+        unset 'x
+        strict-equal? first [:x] apply/only func ['x [any-value!]] [
+            return get/any 'x
+        ] [:x]
+    ]
 ]
 [use [x] [x: 1 strict-equal? 1 apply func [:x] [:x] [x]]]
 [use [x] [x: 1 strict-equal? 'x apply func [:x] [:x] ['x]]]
 [use [x] [x: 1 strict-equal? 'x apply/only func [:x] [:x] [x]]]
 [use [x] [x: 1 strict-equal? 'x apply/only func [:x] [return :x] [x]]]
 [
-	use [x] [
-		unset 'x
-		strict-equal? 'x apply/only func [:x [any-value!]] [
-			return get/any 'x
-		] [x]
-	]
+    use [x] [
+        unset 'x
+        strict-equal? 'x apply/only func [:x [any-value!]] [
+            return get/any 'x
+        ] [x]
+    ]
 ]
 ; functions/control/attempt.r
 ; bug#41
@@ -5552,8 +5552,8 @@
 [unset? attempt []]
 ; RETURN stops attempt evaluation
 [
-	f1: does [attempt [return 1 2] 2]
-	1 == f1
+    f1: does [attempt [return 1 2] 2]
+    1 == f1
 ]
 ; THROW stops attempt evaluation
 [1 == catch [attempt [throw 1 2] 2]]
@@ -5565,8 +5565,8 @@
 [none? attempt [attempt [1 / 0]]]
 ; infinite recursion
 [
-	blk: [attempt blk]
-	none? attempt blk
+    blk: [attempt blk]
+    none? attempt blk
 ]
 ; functions/control/break.r
 ; see loop functions for basic breaking functionality
@@ -5607,14 +5607,14 @@
 [a: 1 loop 1 [a: error? try [break]] :a =? 1]
 ; functions/control/case.r
 [
-	success: false
-	case [true [success: true]]
-	success
+    success: false
+    case [true [success: true]]
+    success
 ]
 [
-	success: true
-	case [false [success: false]]
-	success
+    success: true
+    case [false [success: false]]
+    success
 ]
 [unset? case []]
 ;-- CC#2246
@@ -5624,49 +5624,49 @@
 [not case [true [false]]]
 ; RETURN stops evaluation
 [
-	f1: does [case [return 1 2]]
-	1 = f1
+    f1: does [case [return 1 2]]
+    1 = f1
 ]
 ; THROW stops evaluation
 [
-	1 = catch [
-		case [throw 1 2]
-		2
-	]
+    1 = catch [
+        case [throw 1 2]
+        2
+    ]
 ]
 ; BREAK stops evaluation
 [
-	1 = loop 1 [
-		case [break/return 1 2]
-		2
-	]
+    1 = loop 1 [
+        case [break/return 1 2]
+        2
+    ]
 ]
 ; /all refinement
 ; bug#86
 [
-	s1: false
-	s2: false
-	case/all [
-		true [s1: true]
-		true [s2: true]
-	]
-	s1 and* s2
+    s1: false
+    s2: false
+    case/all [
+        true [s1: true]
+        true [s2: true]
+    ]
+    s1 and* s2
 ]
 ; recursivity
 [1 = case [true [case [true [1]]]]]
 ; infinite recursion
 [
-	blk: [case blk]
-	error? try blk
+    blk: [case blk]
+    error? try blk
 ]
 ; functions/control/catch.r
 ; see also functions/control/throw.r
 [
-	catch [
-		throw success: true
-		sucess: false
-	]
-	success
+    catch [
+        throw success: true
+        sucess: false
+    ]
+    success
 ]
 ; catch results
 [unset? catch []]
@@ -5686,57 +5686,57 @@
 [1 = catch/name [throw/name 1 'catch] 'catch]
 ; recursive cases
 [
-	num: 1
-	catch [
-		catch [throw 1]
-		num: 2
-	]
-	2 = num
+    num: 1
+    catch [
+        catch [throw 1]
+        num: 2
+    ]
+    2 = num
 ]
 [
-	num: 1
-	catch [
-		catch/name [
-			throw 1
-		] 'catch
-		num: 2
-	]
-	1 = num
+    num: 1
+    catch [
+        catch/name [
+            throw 1
+        ] 'catch
+        num: 2
+    ]
+    1 = num
 ]
 [
-	num: 1
-	catch/name [
-		catch [throw 1]
-		num: 2
-	] 'catch
-	2 = num
+    num: 1
+    catch/name [
+        catch [throw 1]
+        num: 2
+    ] 'catch
+    2 = num
 ]
 [
-	num: 1
-	catch/name [
-		catch/name [
-			throw/name 1 'name
-		] 'name
-		num: 2
-	] 'name
-	2 = num
+    num: 1
+    catch/name [
+        catch/name [
+            throw/name 1 'name
+        ] 'name
+        num: 2
+    ] 'name
+    2 = num
 ]
 ; CATCH and RETURN
 [
-	f: does [catch [return 1] 2]
-	1 = f
+    f: does [catch [return 1] 2]
+    1 = f
 ]
 ; CATCH and BREAK
 [
-	1 = loop 1 [
-		catch [break/return 1 2]
-		2
-	]
+    1 = loop 1 [
+        catch [break/return 1 2]
+        2
+    ]
 ]
 ; CATCH/QUIT
 [
-	catch/quit [quit]
-	true
+    catch/quit [quit]
+    true
 ]
 ; bug#851
 [error? try [catch/quit [] fail make error! ""]]
@@ -5744,23 +5744,23 @@
 [none? attempt [catch/quit [] fail make error! ""]]
 ; functions/control/compose.r
 [
-	num: 1
-	[1 num] = compose [(num) num]
+    num: 1
+    [1 num] = compose [(num) num]
 ]
 [[] = compose []]
 [
-	blk: []
-	append blk [try [1 / 0]]
-	blk = compose blk
+    blk: []
+    append blk [try [1 / 0]]
+    blk = compose blk
 ]
 [
-	blk: reduce [()]
-	blk = compose blk
+    blk: reduce [()]
+    blk = compose blk
 ]
 ; RETURN stops the evaluation
 [
-	f1: does [compose [(return 1)] 2]
-	1 = f1
+    f1: does [compose [(return 1)] 2]
+    1 = f1
 ]
 ; THROW stops the evaluation
 [1 = catch [compose [(throw 1 2)] 2]]
@@ -5769,30 +5769,30 @@
 ; Test that errors do not stop the evaluation:
 [block? compose [(try [1 / 0])]]
 [
-	blk: []
-	not same? blk compose blk
+    blk: []
+    not same? blk compose blk
 ]
 [
-	blk: [[]]
-	same? first blk first compose blk
+    blk: [[]]
+    same? first blk first compose blk
 ]
 [
-	blk: []
-	same? blk first compose [(reduce [blk])]
+    blk: []
+    same? blk first compose [(reduce [blk])]
 ]
 [
-	blk: []
-	same? blk first compose/only [(blk)]
+    blk: []
+    same? blk first compose/only [(blk)]
 ]
 ; recursion
 [
-	num: 1
-	[num 1] = compose [num (compose [(num)])]
+    num: 1
+    [num 1] = compose [num (compose [(num)])]
 ]
 ; infinite recursion
 [
-	blk: [(compose blk)]
-	error? try blk
+    blk: [(compose blk)]
+    error? try blk
 ]
 ; functions/control/continue.r
 ; see loop functions for basic continuing functionality
@@ -5812,70 +5812,70 @@
 ; functions/control/disarm.r
 ; functions/control/do.r
 [
-	success: false
-	do [success: true]
-	success
+    success: false
+    do [success: true]
+    success
 ]
 [1 == eval :abs -1]
 [
-	a-value: to binary! "1 + 1"
-	2 == do a-value
+    a-value: to binary! "1 + 1"
+    2 == do a-value
 ]
 [
-	a-value: charset ""
-	same? a-value eval a-value
+    a-value: charset ""
+    same? a-value eval a-value
 ]
 ; do block start
 [unset? do []]
 [:abs = do [:abs]]
 [
-	a-value: #{}
-	same? a-value do reduce [a-value]
+    a-value: #{}
+    same? a-value do reduce [a-value]
 ]
 [
-	a-value: charset ""
-	same? a-value do reduce [a-value]
+    a-value: charset ""
+    same? a-value do reduce [a-value]
 ]
 [
-	a-value: []
-	same? a-value do reduce [a-value]
+    a-value: []
+    same? a-value do reduce [a-value]
 ]
 [same? none! do reduce [none!]]
 [1/Jan/0000 = do [1/Jan/0000]]
 [0.0 == do [0.0]]
 [1.0 == do [1.0]]
 [
-	a-value: me@here.com
-	same? a-value do reduce [a-value]
+    a-value: me@here.com
+    same? a-value do reduce [a-value]
 ]
 [error? do [try [1 / 0]]]
 [
-	a-value: %""
-	same? a-value do reduce [a-value]
+    a-value: %""
+    same? a-value do reduce [a-value]
 ]
 [
-	a-value: does []
-	same? :a-value do [:a-value]
+    a-value: does []
+    same? :a-value do [:a-value]
 ]
 [
-	a-value: first [:a-value]
-	:a-value == do reduce [:a-value]
+    a-value: first [:a-value]
+    :a-value == do reduce [:a-value]
 ]
 [#"^@" == do [#"^@"]]
 [
-	a-value: make image! 0x0
-	same? a-value do reduce [a-value]
+    a-value: make image! 0x0
+    same? a-value do reduce [a-value]
 ]
 [0 == do [0]]
 [1 == do [1]]
 [#a == do [#a]]
 [
-	a-value: first ['a/b]
-	:a-value == do [:a-value]
+    a-value: first ['a/b]
+    :a-value == do [:a-value]
 ]
 [
-	a-value: first ['a]
-	:a-value == do [:a-value]
+    a-value: first ['a]
+    :a-value == do [:a-value]
 ]
 [#[true] == do [#[true]]]
 [#[false] == do [#[false]]]
@@ -5883,39 +5883,39 @@
 [same? :type? do [:type?]]
 [none? do [#[none]]]
 [
-	a-value: make object! []
-	same? :a-value do reduce [:a-value]
+    a-value: make object! []
+    same? :a-value do reduce [:a-value]
 ]
 [
-	a-value: first [()]
-	same? :a-value do [:a-value]
+    a-value: first [()]
+    same? :a-value do [:a-value]
 ]
 [same? get '+ do [get '+]]
 [0x0 == do [0x0]]
 [
-	a-value: 'a/b
-	:a-value == do [:a-value]
+    a-value: 'a/b
+    :a-value == do [:a-value]
 ]
 [
-	a-value: make port! http://
-	port? do reduce [:a-value]
+    a-value: make port! http://
+    port? do reduce [:a-value]
 ]
 [/a == do [/a]]
 [
-	a-value: first [a/b:]
-	:a-value == do [:a-value]
+    a-value: first [a/b:]
+    :a-value == do [:a-value]
 ]
 [
-	a-value: first [a:]
-	:a-value == do [:a-value]
+    a-value: first [a:]
+    :a-value == do [:a-value]
 ]
 [
-	a-value: ""
-	same? :a-value do reduce [:a-value]
+    a-value: ""
+    same? :a-value do reduce [:a-value]
 ]
 [
-	a-value: make tag! ""
-	same? :a-value do reduce [:a-value]
+    a-value: make tag! ""
+    same? :a-value do reduce [:a-value]
 ]
 [0:00 == do [0:00]]
 [0.0.0 == do [0.0.0]]
@@ -5923,50 +5923,50 @@
 ['a == do ['a]]
 ; do block end
 [
-	a-value: none!
-	same? a-value eval a-value
+    a-value: none!
+    same? a-value eval a-value
 ]
 [1/Jan/0000 == eval 1/Jan/0000]
 [0.0 == eval 0.0]
 [1.0 == eval 1.0]
 [
-	a-value: me@here.com
-	same? a-value eval a-value
+    a-value: me@here.com
+    same? a-value eval a-value
 ]
 [error? try [do try [1 / 0] 1]]
 [
-	a-value: does [5]
-	5 == eval :a-value
+    a-value: does [5]
+    5 == eval :a-value
 ]
 [
-	a: 12
-	a-value: first [:a]
-	:a == eval :a-value
+    a: 12
+    a-value: first [:a]
+    :a == eval :a-value
 ]
 [#"^@" == eval #"^@"]
 [
-	a-value: make image! 0x0
-	same? a-value eval a-value
+    a-value: make image! 0x0
+    same? a-value eval a-value
 ]
 [0 == eval 0]
 [1 == eval 1]
 [#a == eval #a]
 ;-- CC#2101, #1434
 [
-	a-value: first ['a/b]
-	all [
-		lit-path? a-value
-		path? eval :a-value
-		(to-path :a-value) == (eval :a-value)
-	]
+    a-value: first ['a/b]
+    all [
+        lit-path? a-value
+        path? eval :a-value
+        (to-path :a-value) == (eval :a-value)
+    ]
 ]
 [
-	a-value: first ['a]
-	all [
-		lit-word? a-value
-		word? eval :a-value
-		(to-word :a-value) == (eval :a-value)
-	]
+    a-value: first ['a]
+    all [
+        lit-word? a-value
+        word? eval :a-value
+        (to-word :a-value) == (eval :a-value)
+    ]
 ]
 [true = eval true]
 [false = eval false]
@@ -5974,87 +5974,87 @@
 [unset! = eval :type? ()]
 [none? do #[none]]
 [
-	a-value: make object! []
-	same? :a-value eval :a-value
+    a-value: make object! []
+    same? :a-value eval :a-value
 ]
 [
-	a-value: first [(2)]
-	2 == do :a-value
+    a-value: first [(2)]
+    2 == do :a-value
 ]
 [
-	a-value: 'a/b
-	a: make object! [b: 1]
-	1 == eval :a-value
+    a-value: 'a/b
+    a: make object! [b: 1]
+    1 == eval :a-value
 ]
 [
-	a-value: make port! http://
-	port? eval :a-value
+    a-value: make port! http://
+    port? eval :a-value
 ]
 [
-	a-value: first [a/b:]
-	all [
-		set-path? :a-value
-		error? try [eval :a-value] ;-- no value to assign after it...
-	]
+    a-value: first [a/b:]
+    all [
+        set-path? :a-value
+        error? try [eval :a-value] ;-- no value to assign after it...
+    ]
 ]
 [
-	a-value: "1"
-	1 == do :a-value
+    a-value: "1"
+    1 == do :a-value
 ]
 [unset? do ""]
 [
-	a-value: make tag! ""
-	same? :a-value eval :a-value
+    a-value: make tag! ""
+    same? :a-value eval :a-value
 ]
 [0:00 == eval 0:00]
 [0.0.0 == eval 0.0.0]
 [
-	a-value: 'b-value
-	b-value: 1
-	1 == eval :a-value
+    a-value: 'b-value
+    b-value: 1
+    1 == eval :a-value
 ]
 ; RETURN stops the evaluation
 [
-	f1: does [do [return 1 2] 2]
-	1 = f1
+    f1: does [do [return 1 2] 2]
+    1 = f1
 ]
 ; THROW stops evaluation
 [
-	1 = catch [
-		do [
-			throw 1
-			2
-		]
-		2
-	]
+    1 = catch [
+        do [
+            throw 1
+            2
+        ]
+        2
+    ]
 ]
 ; BREAK stops evaluation
 [
-	1 = loop 1 [
-		do [
-			break/return 1
-			2
-		]
-		2
-	]
+    1 = loop 1 [
+        do [
+            break/return 1
+            2
+        ]
+        2
+    ]
 ]
 ; do/next block tests
 [
-	success: false
-	do/next [success: true success: false] 'b
-	success
+    success: false
+    do/next [success: true success: false] 'b
+    success
 ]
 [
-	all [
-		1 = do/next [1 2] 'b
-		[2] = b
-	]
+    all [
+        1 = do/next [1 2] 'b
+        [2] = b
+    ]
 ]
 [unset? do/next [] 'b]
 [error? do/next [try [1 / 0]] 'b]
 [
-	f1: does [do/next [return 1 2] 'b 2]
-	1 = f1
+    f1: does [do/next [return 1 2] 'b 2]
+    1 = f1
 ]
 ; recursive behaviour
 [1 = do [do [1]]]
@@ -6063,33 +6063,33 @@
 [3 = eval :eval :add 1 2]
 ; infinite recursion for block
 [
-	blk: [do blk]
-	error? try blk
+    blk: [do blk]
+    error? try blk
 ]
 ; infinite recursion for string
 ; bug#1896
 [
-	str: "do str"
-	error? try [do str]
+    str: "do str"
+    error? try [do str]
 ]
 ; infinite recursion for do/next
 [
-	blk: [do/next blk 'b]
-	error? try blk
+    blk: [do/next blk 'b]
+    error? try blk
 ]
 [
-	val1: try [do [1 / 0]]
-	val2: try [do/next [1 / 0] 'b]
-	val1/near = val2/near
+    val1: try [do [1 / 0]]
+    val2: try [do/next [1 / 0] 'b]
+    val1/near = val2/near
 ]
 ; functions/control/either.r
 [
-	either true [success: true] [success: false]
-	success
+    either true [success: true] [success: false]
+    success
 ]
 [
-	either false [success: false] [success: true]
-	success
+    either false [success: false] [success: true]
+    success
 ]
 [1 = either true [1] [2]]
 [2 = either false [1] [2]]
@@ -6099,69 +6099,69 @@
 [error? either false [] [try [1 / 0]]]
 ; RETURN stops the evaluation
 [
-	f1: does [
-		either true [return 1 2] [2]
-		2
-	]
-	1 = f1
+    f1: does [
+        either true [return 1 2] [2]
+        2
+    ]
+    1 = f1
 ]
 [
-	f1: does [
-		either false [2] [return 1 2]
-		2
-	]
-	1 = f1
+    f1: does [
+        either false [2] [return 1 2]
+        2
+    ]
+    1 = f1
 ]
 ; THROW stops the evaluation
 [
-	1 == catch [
-		either true [throw 1 2] [2]
-		2
-	]
+    1 == catch [
+        either true [throw 1 2] [2]
+        2
+    ]
 ]
 [
-	1 == catch [
-		either false [2] [throw 1 2]
-		2
-	]
+    1 == catch [
+        either false [2] [throw 1 2]
+        2
+    ]
 ]
 ; BREAK stops the evaluation
 [
-	1 == loop 1 [
-		either true [break/return 1 2] [2]
-		2
-	]
+    1 == loop 1 [
+        either true [break/return 1 2] [2]
+        2
+    ]
 ]
 [
-	1 == loop 1 [
-		either false [2] [break/return 1 2]
-		2
-	]
+    1 == loop 1 [
+        either false [2] [break/return 1 2]
+        2
+    ]
 ]
 ; recursive behaviour
 [2 = either true [either false [1] [2]] []]
 [1 = either false [] [either true [1] [2]]]
 ; infinite recursion
 [
-	blk: [either true blk []]
-	error? try blk
+    blk: [either true blk []]
+    error? try blk
 ]
 [
-	blk: [either false [] blk]
-	error? try blk
+    blk: [either false [] blk]
+    error? try blk
 ]
 ; functions/control/else.r
 [error? err: try [else] c: err c/id = 'no-value]
 ; functions/control/exit.r
 [
-	success: true
-	f1: does [exit success: false]
-	f1
-	success
+    success: true
+    f1: does [exit success: false]
+    f1
+    success
 ]
 [
-	f1: does [exit]
-	unset? f1
+    f1: does [exit]
+    unset? f1
 ]
 ; the "result" of exit should not be assignable, bug#1515
 [a: 1 eval does [a: exit] :a =? 1]
@@ -6176,21 +6176,21 @@
 [eval does [spec-of exit] true]
 ; functions/control/for.r
 [
-	success: true
-	num: 0
-	for i 1 10 1 [
-		num: num + 1
-		success: i = num and* success
-	]
-	10 = num and* success
+    success: true
+    num: 0
+    for i 1 10 1 [
+        num: num + 1
+        success: i = num and* success
+    ]
+    10 = num and* success
 ]
 ; cycle return value
 [false = for i 1 1 1 [false]]
 ; break cycle
 [
-	num: 0
-	for i 1 10 1 [num: i break]
-	num = 1
+    num: 0
+    for i 1 10 1 [num: i break]
+    num = 1
 ]
 ; break return value
 [unset? for i 1 10 1 [break]]
@@ -6199,124 +6199,124 @@
 ; continue cycle
 ; bug#58
 [
-	success: true
-	for i 1 1 1 [continue success: false]
-	success
+    success: true
+    for i 1 1 1 [continue success: false]
+    success
 ]
 [
-	success: true
-	x: "a"
-	for i x tail x 1 [continue success: false]
-	success
+    success: true
+    x: "a"
+    for i x tail x 1 [continue success: false]
+    success
 ]
 ; string! test
 [
-	out: copy ""
-	for i s: "abc" back tail s 1 [append out i]
-	out = "abcbcc"
+    out: copy ""
+    for i s: "abc" back tail s 1 [append out i]
+    out = "abcbcc"
 ]
 ; block! test
 [
-	out: copy []
-	for i b: [1 2 3] back tail b 1 [append out i]
-	out = [1 2 3 2 3 3]
+    out: copy []
+    for i b: [1 2 3] back tail b 1 [append out i]
+    out = [1 2 3 2 3 3]
 ]
 ; zero repetition
 [
-	success: true
-	for i 1 0 1 [success: false]
-	success
+    success: true
+    for i 1 0 1 [success: false]
+    success
 ]
 ; zero repetition block test
 [
-	success: true
-	for i b: [1] tail :b -1 [success: false]
-	success
+    success: true
+    for i b: [1] tail :b -1 [success: false]
+    success
 ]
 ; Test that return stops the loop
 [
-	f1: does [for i 1 1 1 [return 1 2] 2]
-	1 = f1
+    f1: does [for i 1 1 1 [return 1 2] 2]
+    1 = f1
 ]
 ; Test that errors do not stop the loop and errors can be returned
 [
-	num: 0
-	e: for i 1 2 1 [num: i try [1 / 0]]
-	all [error? e num = 2]
+    num: 0
+    e: for i 1 2 1 [num: i try [1 / 0]]
+    all [error? e num = 2]
 ]
 ; infinite loop tests
 [
-	num: 0
-	for i b: [1] tail b 1 [
-		num: num + 1
-		if num > 2 [break]
-	]
-	num <= 2
+    num: 0
+    for i b: [1] tail b 1 [
+        num: num + 1
+        if num > 2 [break]
+    ]
+    num <= 2
 ]
 [
-	num: 0
-	for i 2147483647 2147483647 1 [
-		num: num + 1
-		either num > 1 [break/return false] [true]
-	]
+    num: 0
+    for i 2147483647 2147483647 1 [
+        num: num + 1
+        either num > 1 [break/return false] [true]
+    ]
 ]
 [
-	num: 0
-	for i -2147483648 -2147483648 -1 [
-		num: num + 1
-		either num > 1 [break/return false] [true]
-	]
+    num: 0
+    for i -2147483648 -2147483648 -1 [
+        num: num + 1
+        either num > 1 [break/return false] [true]
+    ]
 ]
 ; bug#1136
 #64bit
 [
-	num: 0
-	for i 9223372036854775807 9223372036854775807 -9223372036854775808 [
-		num: num + 1
-		if num <> 1 [break/return false]
-		true
-	]
+    num: 0
+    for i 9223372036854775807 9223372036854775807 -9223372036854775808 [
+        num: num + 1
+        if num <> 1 [break/return false]
+        true
+    ]
 ]
 #64bit
 [
-	num: 0
-	for i -9223372036854775808 -9223372036854775808 9223372036854775807 [
-		num: num + 1
-		if num <> 1 [break/return false]
-		true
-	]
+    num: 0
+    for i -9223372036854775808 -9223372036854775808 9223372036854775807 [
+        num: num + 1
+        if num <> 1 [break/return false]
+        true
+    ]
 ]
 [
-	num: 0
-	for i 2147483647 2147483647 2147483647 [
-		num: num + 1
-		if num <> 1 [break/return false]
-		true
-	]
+    num: 0
+    for i 2147483647 2147483647 2147483647 [
+        num: num + 1
+        if num <> 1 [break/return false]
+        true
+    ]
 ]
 [
-	num: 0
-	for i 2147483647 2147483647 -2147483648 [
-		num: num + 1
-		if num <> 1 [break/return false]
-		true
-	]
+    num: 0
+    for i 2147483647 2147483647 -2147483648 [
+        num: num + 1
+        if num <> 1 [break/return false]
+        true
+    ]
 ]
 [
-	num: 0
-	for i -2147483648 -2147483648 2147483647 [
-		num: num + 1
-		if num <> 1 [break/return false]
-		true
-	]
+    num: 0
+    for i -2147483648 -2147483648 2147483647 [
+        num: num + 1
+        if num <> 1 [break/return false]
+        true
+    ]
 ]
 [
-	num: 0
-	for i -2147483648 -2147483648 -2147483648 [
-		num: num + 1
-		if num <> 1 [break/return false]
-		true
-	]
+    num: 0
+    for i -2147483648 -2147483648 -2147483648 [
+        num: num + 1
+        if num <> 1 [break/return false]
+        true
+    ]
 ]
 ; bug#1993
 [equal? type? for i -1 -2 0 [break] type? for i 2 1 0 [break]]
@@ -6326,349 +6326,349 @@
 [for i 1 1 1 b: [not same? 'i b/3]]
 ; recursivity
 [
-	num: 0
-	for i 1 5 1 [
-		for i 1 2 1 [num: num + 1]
-	]
-	num = 10
+    num: 0
+    for i 1 5 1 [
+        for i 1 2 1 [num: num + 1]
+    ]
+    num = 10
 ]
 ; infinite recursion
 [
-	blk: [for i 1 1 1 blk]
-	error? try blk
+    blk: [for i 1 1 1 blk]
+    error? try blk
 ]
 ; local variable changeability - this is how it works in R3
 [
-	test: false
-	for i 1 3 1 [
-		if i = 2 [
-			if test [break/return true]
-			test: true
-			i: 1
-		]
-	]
+    test: false
+    for i 1 3 1 [
+        if i = 2 [
+            if test [break/return true]
+            test: true
+            i: 1
+        ]
+    ]
 ]
 ; local variable type safety
 [
-	test: false
-	error? try [
-		for i 1 2 [
-			either test [i == 2] [
-				test: true
-				i: false
-			]
-		]
-	]
+    test: false
+    error? try [
+        for i 1 2 [
+            either test [i == 2] [
+                test: true
+                i: false
+            ]
+        ]
+    ]
 ]
 ; FOR should not bind 'self
 ; bug#1529
 [same? 'self for i 1 1 1 ['self]]
 ; functions/control/forall.r
 [
-	str: "abcdef"
-	out: copy ""
-	forall str [append out first str]
-	all [
-		head? str
-		out = head str
-	]
+    str: "abcdef"
+    out: copy ""
+    forall str [append out first str]
+    all [
+        head? str
+        out = head str
+    ]
 ]
 [
-	blk: [1 2 3 4]
-	sum: 0
-	forall blk [sum: sum + first blk]
-	sum = 10
+    blk: [1 2 3 4]
+    sum: 0
+    forall blk [sum: sum + first blk]
+    sum = 10
 ]
 ; cycle return value
 [
-	blk: [1 2 3 4]
-	true = forall blk [true]
+    blk: [1 2 3 4]
+    true = forall blk [true]
 ]
 [
-	blk: [1 2 3 4]
-	false = forall blk [false]
+    blk: [1 2 3 4]
+    false = forall blk [false]
 ]
 ; break cycle
 [
-	str: "abcdef"
-	forall str [if #"c" = char: str/1 [break]]
-	char = #"c"
+    str: "abcdef"
+    forall str [if #"c" = char: str/1 [break]]
+    char = #"c"
 ]
 ; break return value
 [
-	blk: [1 2 3 4]
-	unset? forall blk [break]
+    blk: [1 2 3 4]
+    unset? forall blk [break]
 ]
 ; break/return return value
 [
-	blk: [1 2 3 4]
-	1 = forall blk [break/return 1]
+    blk: [1 2 3 4]
+    1 = forall blk [break/return 1]
 ]
 ; continue cycle
 [
-	success: true
-	x: "a"
-	forall x [continue success: false]
-	success
+    success: true
+    x: "a"
+    forall x [continue success: false]
+    success
 ]
 ; zero repetition
 [
-	success: true
-	blk: []
-	forall blk [success: false]
-	success
+    success: true
+    blk: []
+    forall blk [success: false]
+    success
 ]
 ; Test that return stops the loop
 [
-	blk: [1]
-	f1: does [forall blk [return 1 2]]
-	1 = f1
+    blk: [1]
+    f1: does [forall blk [return 1 2]]
+    1 = f1
 ]
 ; Test that errors do not stop the loop and errors can be returned
 [
-	num: 0
-	blk: [1 2]
-	e: forall blk [num: first blk try [1 / 0]]
-	all [error? e num = 2]
+    num: 0
+    blk: [1 2]
+    e: forall blk [num: first blk try [1 / 0]]
+    all [error? e num = 2]
 ]
 ; recursivity
 [
-	num: 0
-	blk1: [1 2 3 4 5]
-	blk2: [6 7]
-	forall blk1 [
-		num: num + first blk1
-		forall blk2 [num: num + first blk2]
-	]
-	num = 80
+    num: 0
+    blk1: [1 2 3 4 5]
+    blk2: [6 7]
+    forall blk1 [
+        num: num + first blk1
+        forall blk2 [num: num + first blk2]
+    ]
+    num = 80
 ]
 ; bug#81
 [
-	blk: [1]
-	1 == forall blk [blk/1]
+    blk: [1]
+    1 == forall blk [blk/1]
 ]
 ; functions/control/foreach.r
 [
-	out: copy ""
-	str: "abcdef"
-	foreach i str [append out i]
-	out = str
+    out: copy ""
+    str: "abcdef"
+    foreach i str [append out i]
+    out = str
 ]
 [
-	blk: [1 2 3 4]
-	sum: 0
-	foreach i blk [sum: sum + i]
-	sum = 10
+    blk: [1 2 3 4]
+    sum: 0
+    foreach i blk [sum: sum + i]
+    sum = 10
 ]
 ; cycle return value
 [
-	blk: [1 2 3 4]
-	true = foreach i blk [true]
+    blk: [1 2 3 4]
+    true = foreach i blk [true]
 ]
 [
-	blk: [1 2 3 4]
-	false = foreach i blk [false]
+    blk: [1 2 3 4]
+    false = foreach i blk [false]
 ]
 ; break cycle
 [
-	str: "abcdef"
-	foreach i str [
-		num: i
-		if i = #"c" [break]
-	]
-	num = #"c"
+    str: "abcdef"
+    foreach i str [
+        num: i
+        if i = #"c" [break]
+    ]
+    num = #"c"
 ]
 ; break return value
 [
-	blk: [1 2 3 4]
-	unset? foreach i blk [break]
+    blk: [1 2 3 4]
+    unset? foreach i blk [break]
 ]
 ; break/return return value
 [
-	blk: [1 2 3 4]
-	1 = foreach i blk [break/return 1]
+    blk: [1 2 3 4]
+    1 = foreach i blk [break/return 1]
 ]
 ; continue cycle
 [
-	success: true
-	foreach i [1] [continue success: false]
-	success
+    success: true
+    foreach i [1] [continue success: false]
+    success
 ]
 ; zero repetition
 [
-	success: true
-	blk: []
-	foreach i blk [success: false]
-	success
+    success: true
+    blk: []
+    foreach i blk [success: false]
+    success
 ]
 ; Test that return stops the loop
 [
-	blk: [1]
-	f1: does [foreach i blk [return 1 2]]
-	1 = f1
+    blk: [1]
+    f1: does [foreach i blk [return 1 2]]
+    1 = f1
 ]
 ; Test that errors do not stop the loop and errors can be returned
 [
-	num: 0
-	blk: [1 2]
-	e: foreach i blk [num: i try [1 / 0]]
-	all [error? e num = 2]
+    num: 0
+    blk: [1 2]
+    e: foreach i blk [num: i try [1 / 0]]
+    all [error? e num = 2]
 ]
 ; "recursive safety", "locality" and "body constantness" test in one
 [foreach i [1] b: [not same? 'i b/3]]
 ; recursivity
 [
-	num: 0
-	foreach i [1 2 3 4 5] [
-		foreach i [1 2] [num: num + 1]
-	]
-	num = 10
+    num: 0
+    foreach i [1 2 3 4 5] [
+        foreach i [1 2] [num: num + 1]
+    ]
+    num = 10
 ]
 ; functions/control/forever.r
 [
-	num: 0
-	forever [
-		num: num + 1
-		if num = 10 [break]
-	]
-	num = 10
+    num: 0
+    forever [
+        num: num + 1
+        if num = 10 [break]
+    ]
+    num = 10
 ]
 ; Test break, break/return and continue
 [unset? forever [break]]
 [1 = forever [break/return 1]]
 [
-	success: true
-	cycle?: true
-	forever [if cycle? [cycle?: false continue success: false] break]
-	success
+    success: true
+    cycle?: true
+    forever [if cycle? [cycle?: false continue success: false] break]
+    success
 ]
 ; Test that return stops the loop
 [
-	f1: does [forever [return 1]]
-	1 = f1
+    f1: does [forever [return 1]]
+    1 = f1
 ]
 ; Test that exit stops the loop
 [unset? eval does [forever [exit]]]
 ; Test that errors do not stop the loop and errors can be returned
 [
-	num: 0
-	e: forever [
-		num: num + 1
-		if num = 10 [break/return try [1 / 0]]
-		try [1 / 0]
-	]
-	all [error? e num = 10]
+    num: 0
+    e: forever [
+        num: num + 1
+        if num = 10 [break/return try [1 / 0]]
+        try [1 / 0]
+    ]
+    all [error? e num = 10]
 ]
 ; Recursion check
 [
-	num1: 0
-	num3: 0
-	forever [
-		if num1 = 5 [break]
-		num2: 0
-		forever [
-			if num2 = 2 [break]
-			num3: num3 + 1
-			num2: num2 + 1
-		]
-		num1: num1 + 1
-	]
-	10 = num3
+    num1: 0
+    num3: 0
+    forever [
+        if num1 = 5 [break]
+        num2: 0
+        forever [
+            if num2 = 2 [break]
+            num3: num3 + 1
+            num2: num2 + 1
+        ]
+        num1: num1 + 1
+    ]
+    10 = num3
 ]
 ; functions/control/forskip.r
 [
-	blk: copy out: copy []
-	for i 1 25 1 [append blk i]
-	forskip blk 3 [append out blk/1]
-	out = [1 4 7 10 13 16 19 22 25]
+    blk: copy out: copy []
+    for i 1 25 1 [append blk i]
+    forskip blk 3 [append out blk/1]
+    out = [1 4 7 10 13 16 19 22 25]
 ]
 ; cycle return value
 [
-	blk: [1 2 3 4]
-	true = forskip blk 1 [true]
+    blk: [1 2 3 4]
+    true = forskip blk 1 [true]
 ]
 [
-	blk: [1 2 3 4]
-	false = forskip blk 1 [false]
+    blk: [1 2 3 4]
+    false = forskip blk 1 [false]
 ]
 ; break cycle
 [
-	str: "abcdef"
-	forskip str 2 [if #"c" = char: str/1 [break]
-	]
-	char = #"c"
+    str: "abcdef"
+    forskip str 2 [if #"c" = char: str/1 [break]
+    ]
+    char = #"c"
 ]
 ; break return value
 [
-	blk: [1 2 3 4]
-	unset? forskip blk 2 [break]
+    blk: [1 2 3 4]
+    unset? forskip blk 2 [break]
 ]
 ; break/return return value
 [
-	blk: [1 2 3 4]
-	1 = forskip blk 2 [break/return 1]
+    blk: [1 2 3 4]
+    1 = forskip blk 2 [break/return 1]
 ]
 ; continue cycle
 [
-	success: true
-	x: "a"
-	forskip x 1 [continue success: false]
-	success
+    success: true
+    x: "a"
+    forskip x 1 [continue success: false]
+    success
 ]
 ; zero repetition
 [
-	success: true
-	blk: []
-	forskip blk 1 [success: false]
-	success
+    success: true
+    blk: []
+    forskip blk 1 [success: false]
+    success
 ]
 ; Test that return stops the loop
 [
-	blk: [1]
-	f1: does [forskip blk 2 [return 1 2]]
-	1 = f1
+    blk: [1]
+    f1: does [forskip blk 2 [return 1 2]]
+    1 = f1
 ]
 ; Test that errors do not stop the loop and errors can be returned
 [
-	num: 0
-	blk: [1 2]
-	e: forskip blk 1 [num: first blk try [1 / 0]]
-	all [error? e num = 2]
+    num: 0
+    blk: [1 2]
+    e: forskip blk 1 [num: first blk try [1 / 0]]
+    all [error? e num = 2]
 ]
 ; recursivity
 [
-	num: 0
-	blk1: [1 2 3 4 5]
-	blk2: [6 7]
-	forskip blk1 1 [
-		num: num + first blk1
-		forskip blk2 1 [num: num + first blk2]
-	]
-	num = 80
+    num: 0
+    blk1: [1 2 3 4 5]
+    blk2: [6 7]
+    forskip blk1 1 [
+        num: num + first blk1
+        forskip blk2 1 [num: num + first blk2]
+    ]
+    num = 80
 ]
 ; functions/control/halt.r
 [any-function? :halt]
 ; functions/control/if.r
 [
-	success: false
-	if true [success: true]
-	success
+    success: false
+    if true [success: true]
+    success
 ]
 [
-	success: true
-	if false [success: false]
-	success
+    success: true
+    if false [success: false]
+    success
 ]
 [1 = if true [1]]
 [unset? if true []]
 [error? if true [try [1 / 0]]]
 ; RETURN stops the evaluation
 [
-	f1: does [
-		if true [return 1 2]
-		2
-	]
-	1 = f1
+    f1: does [
+        if true [return 1 2]
+        2
+    ]
+    1 = f1
 ]
 ; condition datatype tests; action
 [if get 'abs [true]]
@@ -6727,22 +6727,22 @@
 [1 = if true [if true [1]]]
 ; infinite recursion
 [
-	blk: [if true blk]
-	error? try blk
+    blk: [if true blk]
+    error? try blk
 ]
 ; functions/control/loop.r
 [
-	num: 0
-	loop 10 [num: num + 1]
-	10 = num
+    num: 0
+    loop 10 [num: num + 1]
+    10 = num
 ]
 ; cycle return value
 [false = loop 1 [false]]
 ; break cycle
 [
-	num: 0
-	loop 10 [num: num + 1 break]
-	num = 1
+    num: 0
+    loop 10 [num: num + 1 break]
+    num = 1
 ]
 ; break return value
 [unset? loop 10 [break]]
@@ -6750,66 +6750,66 @@
 [2 = loop 10 [break/return 2]]
 ; continue cycle
 [
-	success: true
-	loop 1 [continue success: false]
-	success
+    success: true
+    loop 1 [continue success: false]
+    success
 ]
 ; zero repetition
 [
-	success: true
-	loop 0 [success: false]
-	success
+    success: true
+    loop 0 [success: false]
+    success
 ]
 [
-	success: true
-	loop -1 [success: false]
-	success
+    success: true
+    loop -1 [success: false]
+    success
 ]
 ; Test that return stops the loop
 [
-	f1: does [loop 1 [return 1 2]]
-	1 = f1
+    f1: does [loop 1 [return 1 2]]
+    1 = f1
 ]
 ; Test that errors do not stop the loop and errors can be returned
 [
-	num: 0
-	e: loop 2 [num: num + 1 try [1 / 0]]
-	all [error? e num = 2]
+    num: 0
+    e: loop 2 [num: num + 1 try [1 / 0]]
+    all [error? e num = 2]
 ]
 ; loop recursivity
 [
-	num: 0
-	loop 5 [
-		loop 2 [num: num + 1]
-	]
-	num = 10
+    num: 0
+    loop 5 [
+        loop 2 [num: num + 1]
+    ]
+    num = 10
 ]
 ; recursive use of 'break
 [
-	f: func [x] [
-		loop 1 [
-			if x = 1 [
-				use [break] [
-					break: 1
-					f 2
-					1 = get/any 'break
-				]
-			]
-		]
-	]
-	f 1
+    f: func [x] [
+        loop 1 [
+            if x = 1 [
+                use [break] [
+                    break: 1
+                    f 2
+                    1 = get/any 'break
+                ]
+            ]
+        ]
+    ]
+    f 1
 ]
 ; functions/control/map-each.r
 ; "return bug"
 [
-	integer? eval does [map-each v [] [] 1]
+    integer? eval does [map-each v [] [] 1]
 ]
 ; functions/control/reduce.r
 [[1 2] = reduce [1 1 + 1]]
 [
-	success: false
-	reduce [success: true]
-	success
+    success: false
+    reduce [success: true]
+    success
 ]
 [[] = reduce []]
 [unset? first reduce [()]]
@@ -6828,35 +6828,35 @@
 [1 = first reduce [first reduce [1]]]
 ; infinite recursion
 [
-	blk: [reduce blk]
-	error? try blk
+    blk: [reduce blk]
+    error? try blk
 ]
 ; functions/control/remove-each.r
 [
-	remove-each i s: [1 2] [true]
-	empty? s
+    remove-each i s: [1 2] [true]
+    empty? s
 ]
 [
-	remove-each i s: [1 2] [false]
-	[1 2] = s
+    remove-each i s: [1 2] [false]
+    [1 2] = s
 ]
 ; functions/control/repeat.r
 [
-	success: true
-	num: 0
-	repeat i 10 [
-		num: num + 1
-		success: i = num and* success
-	]
-	10 = num and* success
+    success: true
+    num: 0
+    repeat i 10 [
+        num: num + 1
+        success: i = num and* success
+    ]
+    10 = num and* success
 ]
 ; cycle return value
 [false = repeat i 1 [false]]
 ; break cycle
 [
-	num: 0
-	repeat i 10 [num: i break]
-	num = 1
+    num: 0
+    repeat i 10 [num: i break]
+    num = 1
 ]
 ; break return value
 [unset? repeat i 10 [break]]
@@ -6864,19 +6864,19 @@
 [2 = repeat i 10 [break/return 2]]
 ; continue cycle
 [
-	success: true
-	repeat i 1 [continue success: false]
-	success
+    success: true
+    repeat i 1 [continue success: false]
+    success
 ]
 [
-	success: true
-	repeat i "a" [continue success: false]
-	success
+    success: true
+    repeat i "a" [continue success: false]
+    success
 ]
 [
-	success: true
-	repeat i [a] [continue success: false]
-	success
+    success: true
+    repeat i [a] [continue success: false]
+    success
 ]
 ; decimal! test
 [[1 2 3] == collect [repeat i 3.0 [keep i]]]
@@ -6885,80 +6885,80 @@
 [[1 2 3] == collect [repeat i 3.9 [keep i]]]
 ; string! test
 [
-	out: copy ""
-	repeat i "abc" [append out i]
-	out = "abcbcc"
+    out: copy ""
+    repeat i "abc" [append out i]
+    out = "abcbcc"
 ]
 ; block! test
 [
-	out: copy []
-	repeat i [1 2 3] [append out i]
-	out = [1 2 3 2 3 3]
+    out: copy []
+    repeat i [1 2 3] [append out i]
+    out = [1 2 3 2 3 3]
 ]
 ; TODO: is hash! test and list! test needed too?
 ; zero repetition
 [
-	success: true
-	repeat i 0 [success: false]
-	success
+    success: true
+    repeat i 0 [success: false]
+    success
 ]
 [
-	success: true
-	repeat i -1 [success: false]
-	success
+    success: true
+    repeat i -1 [success: false]
+    success
 ]
 ; Test that return stops the loop
 [
-	f1: does [repeat i 1 [return 1 2]]
-	1 = f1
+    f1: does [repeat i 1 [return 1 2]]
+    1 = f1
 ]
 ; Test that errors do not stop the loop and errors can be returned
 [
-	num: 0
-	e: repeat i 2 [num: i try [1 / 0]]
-	all [error? e num = 2]
+    num: 0
+    e: repeat i 2 [num: i try [1 / 0]]
+    all [error? e num = 2]
 ]
 ; "recursive safety", "locality" and "body constantness" test in one
 [repeat i 1 b: [not same? 'i b/3]]
 ; recursivity
 [
-	num: 0
-	repeat i 5 [
-		repeat i 2 [num: num + 1]
-	]
-	num = 10
+    num: 0
+    repeat i 5 [
+        repeat i 2 [num: num + 1]
+    ]
+    num = 10
 ]
 ; local variable type safety
 [
-	test: false
-	error? try [
-		repeat i 2 [
-			either test [i == 2] [
-				test: true
-				i: false
-			]
-		]
-	]
+    test: false
+    error? try [
+        repeat i 2 [
+            either test [i == 2] [
+                test: true
+                i: false
+            ]
+        ]
+    ]
 ]
 ; functions/control/return.r
 [
-	f1: does [return 1 2]
-	1 = f1
+    f1: does [return 1 2]
+    1 = f1
 ]
 [
-	success: true
-	f1: does [return 1 success: false]
-	f1
-	success
+    success: true
+    f1: does [return 1 success: false]
+    f1
+    success
 ]
 ; return value tests
 [
-	f1: does [return ()]
-	unset? f1
+    f1: does [return ()]
+    unset? f1
 ]
 [
-	f1: does [return try [1 / 0]]
-	error? f1
+    f1: does [return try [1 / 0]]
+    error? f1
 ]
 ; the "result" of return should not be assignable, bug#1515
 [a: 1 eval does [a: return 2] :a =? 1]
@@ -6975,21 +6975,21 @@
 [a: 1 eval does [a: error? try [return 2]] :a =? 1]
 ; functions/control/switch.r
 [
-	11 = switch 1 [
-		1 [11]
-		2 [12]
-	]
+    11 = switch 1 [
+        1 [11]
+        2 [12]
+    ]
 ]
 [
-	12 = switch 2 [
-		1 [11]
-		2 [12]
-	]
+    12 = switch 2 [
+        1 [11]
+        2 [12]
+    ]
 ]
 [unset? switch 1 [1 []]]
 [
-	cases: reduce [1 head insert copy [] try [1 / 0]]
-	error? switch 1 cases
+    cases: reduce [1 head insert copy [] try [1 / 0]]
+    error? switch 1 cases
 ]
 ; functions/control/throw.r
 ; see functions/control/catch.r for basic functionality
@@ -7013,25 +7013,25 @@
 [a: 1 catch/name [a: error? try [throw/name 2 'b]] 'b :a =? 1]
 ; functions/control/try.r
 [
-	e: try [1 / 0]
-	e/id = 'zero-divide
+    e: try [1 / 0]
+    e/id = 'zero-divide
 ]
 [
-	success: true
-	error? try [
-		1 / 0
-		success: false
-	]
-	success
+    success: true
+    error? try [
+        1 / 0
+        success: false
+    ]
+    success
 ]
 [
-	success: true
-	f1: does [
-		1 / 0
-		success: false
-	]
-	error? try [f1]
-	success
+    success: true
+    f1: does [
+        1 / 0
+        success: false
+    ]
+    error? try [f1]
+    success
 ]
 ; testing TRY/EXCEPT
 ; bug#822
@@ -7044,14 +7044,14 @@
 [error? try [try/except [1 / 0] :add]]
 ; functions/control/unless.r
 [
-	success: false
-	unless false [success: true]
-	success
+    success: false
+    unless false [success: true]
+    success
 ]
 [
-	success: true
-	unless true [success: false]
-	success
+    success: true
+    unless true [success: false]
+    success
 ]
 [1 = unless false [1]]
 [unset? unless true [1]]
@@ -7059,17 +7059,17 @@
 [error? unless false [try [1 / 0]]]
 ; RETURN stops the evaluation
 [
-	f1: does [
-		unless false [return 1 2]
-		2
-	]
-	1 = f1
+    f1: does [
+        unless false [return 1 2]
+        2
+    ]
+    1 = f1
 ]
 ; functions/control/until.r
 [
-	num: 0
-	until [num: num + 1 num > 9]
-	num = 10
+    num: 0
+    until [num: num + 1 num > 9]
+    num = 10
 ]
 ; Test body-block return values
 [1 = until [1]]
@@ -7078,143 +7078,143 @@
 [1 = until [break/return 1 true]]
 ; Test continue
 [
-	success: true
-	cycle?: true
-	until [if cycle? [cycle?: false continue success: false] true]
-	success
+    success: true
+    cycle?: true
+    until [if cycle? [cycle?: false continue success: false] true]
+    success
 ]
 ; Test that return stops the loop
 [
-	f1: does [until [return 1]]
-	1 = f1
+    f1: does [until [return 1]]
+    1 = f1
 ]
 ; Test that errors do not stop the loop
 [1 = until [try [1 / 0] 1]]
 ; Recursion check
 [
-	num1: 0
-	num3: 0
-	until [
-		num2: 0
-		until [
-			num3: num3 + 1
-			1 < num2: num2 + 1
-		]
-		4 < num1: num1 + 1
-	]
-	10 = num3
+    num1: 0
+    num3: 0
+    until [
+        num2: 0
+        until [
+            num3: num3 + 1
+            1 < num2: num2 + 1
+        ]
+        4 < num1: num1 + 1
+    ]
+    10 = num3
 ]
 ; functions/control/wait.r
 ; bug#5
 [wait 0:0:0.3 true]
 ; functions/control/while.r
 [
-	num: 0
-	while [num < 10] [num: num + 1]
-	num = 10
+    num: 0
+    while [num < 10] [num: num + 1]
+    num = 10
 ]
 ; bug#37
 ; Test body-block return values
 [
-	num: 0
-	1 = while [num < 1] [num: num + 1]
+    num: 0
+    1 = while [num < 1] [num: num + 1]
 ]
 [unset? while [false] []]
 ; zero repetition
 [
-	success: true
-	while [false] [success: false]
-	success
+    success: true
+    while [false] [success: false]
+    success
 ]
 ; Test break, break/return and continue
 [cycle?: true unset? while [cycle?] [break cycle?: false]]
 ; Test reactions to break and continue in the condition
 [
-	was-stopped: true
-	while [true] [
-		while [break] []
-		was-stopped: false
-		break
-	]
-	was-stopped
+    was-stopped: true
+    while [true] [
+        while [break] []
+        was-stopped: false
+        break
+    ]
+    was-stopped
 ]
 [
-	first-time: true
-	was-continued: false
-	while [true] [
-		unless first-time [
-			was-continued: true
-			break
-		]
-		first-time: false
-		while [continue] [break]
-		break
-	]
-	was-continued
+    first-time: true
+    was-continued: false
+    while [true] [
+        unless first-time [
+            was-continued: true
+            break
+        ]
+        first-time: false
+        while [continue] [break]
+        break
+    ]
+    was-continued
 ]
 [
-	success: true
-	cycle?: true
-	while [cycle?] [cycle?: false continue success: false]
-	success
+    success: true
+    cycle?: true
+    while [cycle?] [cycle?: false continue success: false]
+    success
 ]
 [
-	num: 0
-	while [true] [num: 1 break num: 2]
-	num = 1
+    num: 0
+    while [true] [num: 1 break num: 2]
+    num = 1
 ]
 ; RETURN should stop the loop
 [
-	cycle?: true
-	f1: does [while [cycle?] [cycle?: false return 1] 2]
-	1 = f1
+    cycle?: true
+    f1: does [while [cycle?] [cycle?: false return 1] 2]
+    1 = f1
 ]
 [  ; bug#1519
-	cycle?: true
-	f1: does [while [if cycle? [return 1] cycle?] [cycle?: false 2]]
-	1 = f1
+    cycle?: true
+    f1: does [while [if cycle? [return 1] cycle?] [cycle?: false 2]]
+    1 = f1
 ]
 ; EXIT should stop the loop
 [
-	cycle?: true
-	f1: does [while [cycle?] [cycle?: false exit] 2]
-	unset? f1
+    cycle?: true
+    f1: does [while [cycle?] [cycle?: false exit] 2]
+    unset? f1
 ]
 [  ; bug#1519
-	cycle?: true
-	f1: does [while [if cycle? [exit] cycle?] [cycle?: false 2]]
-	unset? f1
+    cycle?: true
+    f1: does [while [if cycle? [exit] cycle?] [cycle?: false 2]]
+    unset? f1
 ]
 ; THROW should stop the loop
 [1 = catch [cycle?: true while [cycle?] [throw 1 cycle?: false]]]
 [  ; bug#1519
-	cycle?: true
-	1 = catch [while [if cycle? [throw 1] false] [cycle?: false]]
+    cycle?: true
+    1 = catch [while [if cycle? [throw 1] false] [cycle?: false]]
 ]
 [1 = catch/name [cycle?: true while [cycle?] [throw/name 1 'a cycle?: false]] 'a]
 [  ; bug#1519
-	cycle?: true
-	1 = catch/name [while [if cycle? [throw/name 1 'a] false] [cycle?: false]] 'a
+    cycle?: true
+    1 = catch/name [while [if cycle? [throw/name 1 'a] false] [cycle?: false]] 'a
 ]
 ; Test that disarmed errors do not stop the loop and errors can be returned
 [
-	num: 0
-	e: while [num < 10] [num: num + 1 try [1 / 0]]
-	all [error? e num = 10]
+    num: 0
+    e: while [num < 10] [num: num + 1 try [1 / 0]]
+    all [error? e num = 10]
 ]
 ; Recursion check
 [
-	num1: 0
-	num3: 0
-	while [num1 < 5] [
-		num2: 0
-		while [num2 < 2] [
-			num3: num3 + 1
-			num2: num2 + 1
-		]
-		num1: num1 + 1
-	]
-	10 = num3
+    num1: 0
+    num3: 0
+    while [num1 < 5] [
+        num2: 0
+        while [num2 < 2] [
+            num3: num3 + 1
+            num2: num2 + 1
+        ]
+        num1: num1 + 1
+    ]
+    10 = num3
 ]
 ; functions/control/quit.r
 ; bug#2190
@@ -7234,58 +7234,58 @@
 [error? try [load "':a:"]]
 ; bug#858
 [
-	a: [ < ]
-	a = load mold a
+    a: [ < ]
+    a = load mold a
 ]
 [error? try [load "1xyz#"]]
 ; load/next
 [error? try [load/next "1"]]
 ; bug#1122
 [
-	any [
-		error? try [load "9999999999999999999"]
-		greater? load "9999999999999999999" load "9223372036854775807"
-	]
+    any [
+        error? try [load "9999999999999999999"]
+        greater? load "9999999999999999999" load "9223372036854775807"
+    ]
 ]
 ; R2 bug
 [
-	 x: 1
-	 error? try [x: load/header ""]
-	 not error? x
+     x: 1
+     error? try [x: load/header ""]
+     not error? x
 ]
 ; functions/convert/mold.r
 ; bug#860
 ; bug#6
 ; cyclic block
 [
-	a: copy []
-	insert/only a a
-	string? mold a
+    a: copy []
+    insert/only a a
+    string? mold a
 ]
 ; cyclic paren
 [
-	a: first [()]
-	insert/only a a
-	string? mold a
+    a: first [()]
+    insert/only a a
+    string? mold a
 ]
 ; cyclic object
 ; bug#69
 [
-	a: make object! [a: self]
-	string? mold a
+    a: make object! [a: self]
+    string? mold a
 ]
 ; deep nested block mold
 ; bug#876
 [
-	n: 1
-	forever [
-		a: copy []
-		if error? try [
-			loop n [a: append/only copy [] a]
-			mold a
-		] [break/return true]
-		n: n * 2
-	]
+    n: 1
+    forever [
+        a: copy []
+        if error? try [
+            loop n [a: append/only copy [] a]
+            mold a
+        ] [break/return true]
+        n: n * 2
+    ]
 ]
 ; bug#719
 ["()" = mold quote ()]
@@ -7309,15 +7309,15 @@
 ; functions/define/func.r
 ; recursive safety
 [
-	f: func [] [
-		func [x] [
-			if x = 1 [
-				eval f 2
-				x = 1
-			]
-		]
-	]
-	eval f 1
+    f: func [] [
+        func [x] [
+            if x = 1 [
+                eval f 2
+                x = 1
+            ]
+        ]
+    ]
+    eval f 1
 ]
 ; functions/onvert/to-hex.r
 ; bug#43
@@ -7329,10 +7329,10 @@
 ; functions/file/make-dir.r
 ; bug#1674
 [
-	any [
-		not error? e: try [make-dir %/folder-to-save-test-files]
-		e/type = 'access
-	]
+    any [
+        not error? e: try [make-dir %/folder-to-save-test-files]
+        e/type = 'access
+    ]
 ]
 ; functions/file/open.r
 ; bug#1422: "Rebol crashes when opening the 128th port"
@@ -7370,8 +7370,8 @@
 ; bug#833
 #64bit
 [
-	a: try [abs to integer! #{8000000000000000}]
-	any [error? a not negative? a]
+    a: try [abs to integer! #{8000000000000000}]
+    any [error? a not negative? a]
 ]
 ; functions/math/add.r
 [3 = add 1 2]
@@ -7702,12 +7702,12 @@
 [not find complement charset "b" #"b"]
 [find complement charset "a" #"b"]
 [
-	a: make bitset! #{0000000000000000000000000000000000000000000000000000000000000000}
-	a == complement complement a
+    a: make bitset! #{0000000000000000000000000000000000000000000000000000000000000000}
+    a == complement complement a
 ]
 [
-	a: make bitset! #{FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-	a == complement complement a
+    a: make bitset! #{FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+    a == complement complement a
 ]
 ; bug#1706
 ; image
@@ -8084,12 +8084,12 @@
 [1:01 = negate -1:01]
 ; bitset
 [
-	a: make bitset! #{FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
-	a == negate negate a
+    a: make bitset! #{FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF}
+    a == negate negate a
 ]
 [
-	a: make bitset! #{0000000000000000000000000000000000000000000000000000000000000000}
-	a == negate negate a
+    a: make bitset! #{0000000000000000000000000000000000000000000000000000000000000000}
+    a == negate negate a
 ]
 ; functions/math/negativeq.r
 [not negative? 0]
@@ -8228,24 +8228,24 @@
 ; functions/math/random.r
 ; bug#1084
 [
-	random/seed 0
-	not any [
-		negative? random 1.0
-		negative? random 1.0
-	]
+    random/seed 0
+    not any [
+        negative? random 1.0
+        negative? random 1.0
+    ]
 ]
 ; bug#1875
 [
-	random/seed 0
-	2 = random/only next [1 2]
+    random/seed 0
+    2 = random/only next [1 2]
 ]
 ; bug#932
 [
-	s: "aa"
-	random/seed s
-	a: random 10000
-	random/seed s
-	a = random 10000
+    s: "aa"
+    random/seed s
+    a: random 10000
+    random/seed s
+    a = random 10000
 ]
 ; functions/math/remainder.r
 #64bit
@@ -9060,14 +9060,14 @@
 ; #bug#852
 ; Flint Hills test
 [
-	n: 25000
-	s4: 0.0
-	repeat l n [
-		k: to decimal! l
-		ks: sine/radians k
-		s4: 1.0 / (k * k * k * ks * ks) + s4
-	]
-	30.314520404 = round/to s4 1e-9
+    n: 25000
+    s4: 0.0
+    repeat l n [
+        k: to decimal! l
+        ks: sine/radians k
+        s4: 1.0 / (k * k * k * ks * ks) + s4
+    ]
+    30.314520404 = round/to s4 1e-9
 ]
 ; functions/math/square-root.r
 [0 = square-root 0]
@@ -9317,14 +9317,14 @@
 [error? try [tangent/radians pi / 2]]
 ; Flint Hills test
 [
-	n: 25000
-	s4t: 0.0
-	repeat l n [
-		k: to decimal! l
-		kt: tangent/radians k
-		s4t: 1.0 / (kt * kt) + 1.0 / (k * k * k) + s4t
-	]
-	30.314520404 = round/to s4t 1e-9
+    n: 25000
+    s4t: 0.0
+    repeat l n [
+        k: to decimal! l
+        kt: tangent/radians k
+        s4t: 1.0 / (kt * kt) + 1.0 / (k * k * k) + s4t
+    ]
+    30.314520404 = round/to s4t 1e-9
 ]
 ; functions/math/zeroq.r
 [zero? 0]
@@ -9376,156 +9376,156 @@
 ; functions/reflectors/body-of.r
 ; bug#49
 [
-	f: func [] []
-	not same? body-of :f body-of :f
+    f: func [] []
+    not same? body-of :f body-of :f
 ]
 ; functions/secure/protect.r
 ; bug#1748
 ; block
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	all [
-		error? try [insert value 4]
-		equal? value original
-	]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    all [
+        error? try [insert value 4]
+        equal? value original
+    ]
 ]
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	all [
-		error? try [append value 4]
-		equal? value original
-	]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    all [
+        error? try [append value 4]
+        equal? value original
+    ]
 ]
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	all [
-		error? try [change value 4]
-		equal? value original
-	]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    all [
+        error? try [change value 4]
+        equal? value original
+    ]
 ]
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	all [
-		error? try [reduce/into [4 + 5] value]
-		equal? value original
-	]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    all [
+        error? try [reduce/into [4 + 5] value]
+        equal? value original
+    ]
 ]
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	all [
-		error? try [compose/into [(4 + 5)] value]
-		equal? value original
-	]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    all [
+        error? try [compose/into [(4 + 5)] value]
+        equal? value original
+    ]
 ]
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	all [
-		error? try [poke value 1 4]
-		equal? value original
-	]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    all [
+        error? try [poke value 1 4]
+        equal? value original
+    ]
 ]
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	all [
-		error? try [remove/part value 1]
-		equal? value original
-	]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    all [
+        error? try [remove/part value 1]
+        equal? value original
+    ]
 ]
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	all [
-		error? try [take value]
-		equal? value original
-	]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    all [
+        error? try [take value]
+        equal? value original
+    ]
 ]
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	all [
-		error? try [reverse value]
-		equal? value original
-	]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    all [
+        error? try [reverse value]
+        equal? value original
+    ]
 ]
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	all [
-		error? try [clear value]
-		equal? value original
-	]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    all [
+        error? try [clear value]
+        equal? value original
+    ]
 ]
 ; string
 [
-	value: copy original: {1 + 2 + 3}
-	protect value
-	all [
-		error? try [insert value 4]
-		equal? value original
-	]
+    value: copy original: {1 + 2 + 3}
+    protect value
+    all [
+        error? try [insert value 4]
+        equal? value original
+    ]
 ]
 [
-	value: copy original: {1 + 2 + 3}
-	protect value
-	all [
-		error? try [append value 4]
-		equal? value original
-	]
+    value: copy original: {1 + 2 + 3}
+    protect value
+    all [
+        error? try [append value 4]
+        equal? value original
+    ]
 ]
 [
-	value: copy original: {1 + 2 + 3}
-	protect value
-	all [
-		error? try [change value 4]
-		equal? value original
-	]
+    value: copy original: {1 + 2 + 3}
+    protect value
+    all [
+        error? try [change value 4]
+        equal? value original
+    ]
 ]
 [
-	value: copy original: {1 + 2 + 3}
-	protect value
-	all [
-		error? try [poke value 1 4]
-		equal? value original
-	]
+    value: copy original: {1 + 2 + 3}
+    protect value
+    all [
+        error? try [poke value 1 4]
+        equal? value original
+    ]
 ]
 [
-	value: copy original: {1 + 2 + 3}
-	protect value
-	all [
-		error? try [remove/part value 1]
-		equal? value original
-	]
+    value: copy original: {1 + 2 + 3}
+    protect value
+    all [
+        error? try [remove/part value 1]
+        equal? value original
+    ]
 ]
 [
-	value: copy original: {1 + 2 + 3}
-	protect value
-	all [
-		error? try [take value]
-		equal? value original
-	]
+    value: copy original: {1 + 2 + 3}
+    protect value
+    all [
+        error? try [take value]
+        equal? value original
+    ]
 ]
 [
-	value: copy original: {1 + 2 + 3}
-	protect value
-	all [
-		error? try [reverse value]
-		equal? value original
-	]
+    value: copy original: {1 + 2 + 3}
+    protect value
+    all [
+        error? try [reverse value]
+        equal? value original
+    ]
 ]
 [
-	value: copy original: {1 + 2 + 3}
-	protect value
-	all [
-		error? try [clear value]
-		equal? value original
-	]
+    value: copy original: {1 + 2 + 3}
+    protect value
+    all [
+        error? try [clear value]
+        equal? value original
+    ]
 ]
 ; bug#1764
 [unset 'blk protect/deep 'blk true]
@@ -9534,247 +9534,247 @@
 ; bug#1748
 ; block
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	unprotect value
-	not error? try [insert value 4]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    unprotect value
+    not error? try [insert value 4]
 ]
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	unprotect value
-	not error? try [append value 4]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    unprotect value
+    not error? try [append value 4]
 ]
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	unprotect value
-	not error? try [change value 4]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    unprotect value
+    not error? try [change value 4]
 ]
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	unprotect value
-	not error? try [reduce/into [4 + 5] value]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    unprotect value
+    not error? try [reduce/into [4 + 5] value]
 ]
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	unprotect value
-	not error? try [compose/into [(4 + 5)] value]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    unprotect value
+    not error? try [compose/into [(4 + 5)] value]
 ]
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	unprotect value
-	not error? try [poke value 1 4]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    unprotect value
+    not error? try [poke value 1 4]
 ]
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	unprotect value
-	not error? try [remove/part value 1]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    unprotect value
+    not error? try [remove/part value 1]
 ]
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	unprotect value
-	not error? try [take value]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    unprotect value
+    not error? try [take value]
 ]
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	unprotect value
-	not error? try [reverse value]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    unprotect value
+    not error? try [reverse value]
 ]
 [
-	value: copy original: [1 + 2 + 3]
-	protect value
-	unprotect value
-	not error? try [clear value]
+    value: copy original: [1 + 2 + 3]
+    protect value
+    unprotect value
+    not error? try [clear value]
 ]
 ; string
 [
-	value: copy original: {1 + 2 + 3}
-	protect value
-	unprotect value
-	not error? try [insert value 4]
+    value: copy original: {1 + 2 + 3}
+    protect value
+    unprotect value
+    not error? try [insert value 4]
 ]
 [
-	value: copy original: {1 + 2 + 3}
-	protect value
-	unprotect value
-	not error? try [append value 4]
+    value: copy original: {1 + 2 + 3}
+    protect value
+    unprotect value
+    not error? try [append value 4]
 ]
 [
-	value: copy original: {1 + 2 + 3}
-	protect value
-	unprotect value
-	not error? try [change value 4]
+    value: copy original: {1 + 2 + 3}
+    protect value
+    unprotect value
+    not error? try [change value 4]
 ]
 [
-	value: copy original: {1 + 2 + 3}
-	protect value
-	unprotect value
-	not error? try [poke value 1 4]
+    value: copy original: {1 + 2 + 3}
+    protect value
+    unprotect value
+    not error? try [poke value 1 4]
 ]
 [
-	value: copy original: {1 + 2 + 3}
-	protect value
-	unprotect value
-	not error? try [remove/part value 1]
+    value: copy original: {1 + 2 + 3}
+    protect value
+    unprotect value
+    not error? try [remove/part value 1]
 ]
 [
-	value: copy original: {1 + 2 + 3}
-	protect value
-	unprotect value
-	not error? try [take value]
+    value: copy original: {1 + 2 + 3}
+    protect value
+    unprotect value
+    not error? try [take value]
 ]
 [
-	value: copy original: {1 + 2 + 3}
-	protect value
-	unprotect value
-	not error? try [reverse value]
+    value: copy original: {1 + 2 + 3}
+    protect value
+    unprotect value
+    not error? try [reverse value]
 ]
 [
-	value: copy original: {1 + 2 + 3}
-	protect value
-	unprotect value
-	not error? try [clear value]
+    value: copy original: {1 + 2 + 3}
+    protect value
+    unprotect value
+    not error? try [clear value]
 ]
 ; functions/series/append.r
 ; bug#75
 [
-	o: make object! [a: 1]
-	p: make o []
-	append p [b 2]
-	not in o 'b
+    o: make object! [a: 1]
+    p: make o []
+    append p [b 2]
+    not in o 'b
 ]
 [block? append copy [] ()]
 ; functions/series/at.r
 [
-	blk: []
-	same? blk at blk 1
+    blk: []
+    same? blk at blk 1
 ]
 [
-	blk: []
-	same? blk at blk 2147483647
+    blk: []
+    same? blk at blk 2147483647
 ]
 [
-	blk: []
-	same? blk at blk 0
+    blk: []
+    same? blk at blk 0
 ]
 [
-	blk: []
-	same? blk at blk -1
+    blk: []
+    same? blk at blk -1
 ]
 [
-	blk: []
-	same? blk at blk -2147483648
+    blk: []
+    same? blk at blk -2147483648
 ]
 [
-	blk: tail [1 2 3]
-	same? blk at blk 1
+    blk: tail [1 2 3]
+    same? blk at blk 1
 ]
 [
-	blk: tail [1 2 3]
-	same? blk at blk 0
+    blk: tail [1 2 3]
+    same? blk at blk 0
 ]
 [
-	blk: tail [1 2 3]
-	equal? [3] at blk -1
+    blk: tail [1 2 3]
+    equal? [3] at blk -1
 ]
 [
-	blk: tail [1 2]
-	same? blk at blk 2147483647
+    blk: tail [1 2]
+    same? blk at blk 2147483647
 ]
 [
-	blk: [1 2]
-	same? blk at blk -2147483647
+    blk: [1 2]
+    same? blk at blk -2147483647
 ]
 [
-	blk: [1 2]
-	same? blk at blk -2147483648
+    blk: [1 2]
+    same? blk at blk -2147483648
 ]
 ; string
 [
-	str: ""
-	same? str at str 1
+    str: ""
+    same? str at str 1
 ]
 [
-	str: ""
-	same? str at str 2147483647
+    str: ""
+    same? str at str 2147483647
 ]
 [
-	str: ""
-	same? str at str 0
+    str: ""
+    same? str at str 0
 ]
 [
-	str: ""
-	same? str at str -1
+    str: ""
+    same? str at str -1
 ]
 [
-	str: ""
-	same? str at str -2147483648
+    str: ""
+    same? str at str -2147483648
 ]
 [
-	str: tail "123"
-	same? str at str 1
+    str: tail "123"
+    same? str at str 1
 ]
 [
-	str: tail "123"
-	same? str at str 0
+    str: tail "123"
+    same? str at str 0
 ]
 [
-	str: tail "123"
-	equal? "3" at str -1
+    str: tail "123"
+    equal? "3" at str -1
 ]
 [
-	str: tail "12"
-	same? str at str 2147483647
+    str: tail "12"
+    same? str at str 2147483647
 ]
 [
-	str: "12"
-	same? str at str -2147483647
+    str: "12"
+    same? str at str -2147483647
 ]
 [
-	str: "12"
-	same? str at str -2147483648
+    str: "12"
+    same? str at str -2147483648
 ]
 ; functions/series/back.r
 [
-	a: [1]
-	same? a back a
+    a: [1]
+    same? a back a
 ]
 [
-	a: tail [1]
-	same? head a back a
+    a: tail [1]
+    same? head a back a
 ]
 ; path
 [
-	a: 'b/c
-	same? a back a
+    a: 'b/c
+    same? a back a
 ]
 [
-	a: tail 'b/c
-	same? head a back back a
+    a: tail 'b/c
+    same? head a back back a
 ]
 ; string
 [
-	a: tail "1"
-	same? head a back a
+    a: tail "1"
+    same? head a back a
 ]
 [
-	a: "1"
-	same? a back a
+    a: "1"
+    same? a back a
 ]
 ; functions/series/change.r
 [
-	blk1: at copy [1 2 3 4 5] 3
-	blk2: at copy [1 2 3 4 5] 3
-	change/part blk1 6 -2147483647
-	change/part blk2 6 -2147483648
-	equal? head blk1 head blk2
+    blk1: at copy [1 2 3 4 5] 3
+    blk2: at copy [1 2 3 4 5] 3
+    change/part blk1 6 -2147483647
+    change/part blk2 6 -2147483648
+    equal? head blk1 head blk2
 ]
 ; bug#9
 [equal? "tr" change/part "str" "" 1]
@@ -9782,26 +9782,26 @@
 [[] = clear []]
 [[] = clear copy [1]]
 [
-	block: at copy [1 2 3 4] 3
-	clear block
-	[1 2] == head clear block
+    block: at copy [1 2 3 4] 3
+    clear block
+    [1 2] == head clear block
 ]
 ; none
 [none == clear none]
 ; functions/series/copy.r
 [
-	blk: []
-	all [
-		blk = copy blk
-		not same? blk copy blk
-	]
+    blk: []
+    all [
+        blk = copy blk
+        not same? blk copy blk
+    ]
 ]
 [
-	blk: [1]
-	all [
-		blk = copy blk
-		not same? blk copy blk
-	]
+    blk: [1]
+    all [
+        blk = copy blk
+        not same? blk copy blk
+    ]
 ]
 [[1] = copy/part tail [1] -1]
 [[1] = copy/part tail [1] -2147483647]
@@ -9814,16 +9814,16 @@
 [error? try [copy none]]
 ; bug#877
 [
-	a: copy []
-	insert/only a a
-	error? try [copy/deep a]
-	true
+    a: copy []
+    insert/only a a
+    error? try [copy/deep a]
+    true
 ]
 ; bug#2043
 [
-	f: func [] []
-	error? try [copy :f]
-	true
+    f: func [] []
+    error? try [copy :f]
+    true
 ]
 ; bug#648
 [["a"] = deline/lines "a"]
@@ -9835,9 +9835,9 @@
 ; functions/series/emptyq.r
 [empty? []]
 [
-	blk: tail [1]
-	clear head blk
-	empty? blk
+    blk: tail [1]
+    clear head blk
+    empty? blk
 ]
 [empty? none]
 ; bug#190
@@ -9850,8 +9850,8 @@
 [none? find none 1]
 [none? find [] 1]
 [
-	blk: [1]
-	same? blk find blk 1
+    blk: [1]
+    same? blk find blk 1
 ]
 ; bug#66
 [none? find/skip [1 2 3 4 5 6] 2 3]
@@ -9864,280 +9864,280 @@
 [2 == index? next [a]]
 ; past-tail index
 [
-	a: tail copy [1]
-	remove head a
-	2 == index? a
+    a: tail copy [1]
+    remove head a
+    2 == index? a
 ]
 ; bug#1611: Allow INDEX? to take none as an argument, return none
 [none? index? none]
 ; functions/series/insert.r
 [
-	a: make block! 0
-	insert a 0
-	a == [0]
+    a: make block! 0
+    insert a 0
+    a == [0]
 ]
 [
-	a: [0]
-	b: make block! 0
-	insert b first a
-	a == b
+    a: [0]
+    b: make block! 0
+    insert b first a
+    a == b
 ]
 [
-	a: [0]
-	b: make block! 0
-	insert b a
-	a == b
+    a: [0]
+    b: make block! 0
+    insert b a
+    a == b
 ]
 ; paren
 [
-	a: make paren! 0
-	insert a 0
-	a == first [(0)]
+    a: make paren! 0
+    insert a 0
+    a == first [(0)]
 ]
 [
-	a: first [(0)]
-	b: make paren! 0
-	insert b first a
-	a == b
+    a: first [(0)]
+    b: make paren! 0
+    insert b first a
+    a == b
 ]
 [
-	a: first [(0)]
-	b: make paren! 0
-	insert b a
-	a == b
+    a: first [(0)]
+    b: make paren! 0
+    insert b a
+    a == b
 ]
 ; path
 [
-	a: make path! 0
-	insert a 0
-	a == to path! [0]
+    a: make path! 0
+    insert a 0
+    a == to path! [0]
 ]
 [
-	a: to path! [0]
-	b: make path! 0
-	insert b first a
-	a == b
+    a: to path! [0]
+    b: make path! 0
+    insert b first a
+    a == b
 ]
 [
-	a: to path! [0]
-	b: make path! 0
-	insert :b a
-	a == b
+    a: to path! [0]
+    b: make path! 0
+    insert :b a
+    a == b
 ]
 ; lit-path
 [
-	a: make lit-path! 0
-	insert :a 0
-	:a == to lit-path! [0]
+    a: make lit-path! 0
+    insert :a 0
+    :a == to lit-path! [0]
 ]
 [
-	a: to lit-path! [0]
-	b: make lit-path! 0
-	insert :b first :a
-	:a == :b
+    a: to lit-path! [0]
+    b: make lit-path! 0
+    insert :b first :a
+    :a == :b
 ]
 [
-	a: to lit-path! [0]
-	b: make lit-path! 0
-	insert :b :a
-	:a == :b
+    a: to lit-path! [0]
+    b: make lit-path! 0
+    insert :b :a
+    :a == :b
 ]
 ; set-path
 [
-	a: make set-path! 0
-	insert :a 0
-	:a == to set-path! [0]
+    a: make set-path! 0
+    insert :a 0
+    :a == to set-path! [0]
 ]
 [
-	a: to set-path! [0]
-	b: make set-path! 0
-	insert :b first :a
-	:a == :b
+    a: to set-path! [0]
+    b: make set-path! 0
+    insert :b first :a
+    :a == :b
 ]
 [
-	a: to set-path! [0]
-	b: make set-path! 0
-	insert :b :a
-	:a == :b
+    a: to set-path! [0]
+    b: make set-path! 0
+    insert :b :a
+    :a == :b
 ]
 ; string
 [
-	a: make string! 0
-	insert a #"0"
-	a == "0"
+    a: make string! 0
+    insert a #"0"
+    a == "0"
 ]
 [
-	a: "0"
-	b: make string! 0
-	insert b first a
-	a == b
+    a: "0"
+    b: make string! 0
+    insert b first a
+    a == b
 ]
 [
-	a: "0"
-	b: make string! 0
-	insert b a
-	a == b
+    a: "0"
+    b: make string! 0
+    insert b a
+    a == b
 ]
 ; file
 [
-	a: make file! 0
-	insert a #"0"
-	a == %"0"
+    a: make file! 0
+    insert a #"0"
+    a == %"0"
 ]
 [
-	a: %"0"
-	b: make file! 0
-	insert b first a
-	a == b
+    a: %"0"
+    b: make file! 0
+    insert b first a
+    a == b
 ]
 [
-	a: %"0"
-	b: make file! 0
-	insert b a
-	a == b
+    a: %"0"
+    b: make file! 0
+    insert b a
+    a == b
 ]
 ; email
 [
-	a: make email! 0
-	insert a #"0"
-	a == #[email! "0"]
+    a: make email! 0
+    insert a #"0"
+    a == #[email! "0"]
 ]
 [
-	a: #[email! "0"]
-	b: make email! 0
-	insert b first a
-	a == b
+    a: #[email! "0"]
+    b: make email! 0
+    insert b first a
+    a == b
 ]
 [
-	a: #[email! "0"]
-	b: make email! 0
-	insert b a
-	a == b
+    a: #[email! "0"]
+    b: make email! 0
+    insert b a
+    a == b
 ]
 ; url
 [
-	a: make url! 0
-	insert a #"0"
-	a == #[url! "0"]
+    a: make url! 0
+    insert a #"0"
+    a == #[url! "0"]
 ]
 [
-	a: #[url! "0"]
-	b: make url! 0
-	insert b first a
-	a == b
+    a: #[url! "0"]
+    b: make url! 0
+    insert b first a
+    a == b
 ]
 [
-	a: #[url! "0"]
-	b: make url! 0
-	insert b a
-	a == b
+    a: #[url! "0"]
+    b: make url! 0
+    insert b a
+    a == b
 ]
 ; tag
 [
-	a: make tag! 0
-	insert a #"0"
-	a == <0>
+    a: make tag! 0
+    insert a #"0"
+    a == <0>
 ]
 ; bug#855
 [
-	a: #{00}
-	b: make binary! 0
-	insert b first a
-	a == b
+    a: #{00}
+    b: make binary! 0
+    insert b first a
+    a == b
 ]
 [
-	a: #{00}
-	b: make binary! 0
-	insert b a
-	a == b
+    a: #{00}
+    b: make binary! 0
+    insert b a
+    a == b
 ]
 ; insert/part
 [
-	a: make block! 0
-	b: at [1 2 3 4 5 6 7 8 9] 5
-	insert/part a b 1
-	a == [5]
+    a: make block! 0
+    b: at [1 2 3 4 5 6 7 8 9] 5
+    insert/part a b 1
+    a == [5]
 ]
 [
-	a: make block! 0
-	b: at [1 2 3 4 5 6 7 8 9] 5
-	insert/part a b 5
-	a == [5 6 7 8 9]
+    a: make block! 0
+    b: at [1 2 3 4 5 6 7 8 9] 5
+    insert/part a b 5
+    a == [5 6 7 8 9]
 ]
 [
-	a: make block! 0
-	b: at [1 2 3 4 5 6 7 8 9] 5
-	insert/part a b 6
-	a == [5 6 7 8 9]
+    a: make block! 0
+    b: at [1 2 3 4 5 6 7 8 9] 5
+    insert/part a b 6
+    a == [5 6 7 8 9]
 ]
 [
-	a: make block! 0
-	b: at [1 2 3 4 5 6 7 8 9] 5
-	insert/part a b 2147483647
-	a == [5 6 7 8 9]
+    a: make block! 0
+    b: at [1 2 3 4 5 6 7 8 9] 5
+    insert/part a b 2147483647
+    a == [5 6 7 8 9]
 ]
 [
-	a: make block! 0
-	b: at [1 2 3 4 5 6 7 8 9] 5
-	insert/part a b 0
-	empty? a
+    a: make block! 0
+    b: at [1 2 3 4 5 6 7 8 9] 5
+    insert/part a b 0
+    empty? a
 ]
 [
-	a: make block! 0
-	b: at [1 2 3 4 5 6 7 8 9] 5
-	insert/part a b -1
-	a == [4]
+    a: make block! 0
+    b: at [1 2 3 4 5 6 7 8 9] 5
+    insert/part a b -1
+    a == [4]
 ]
 [
-	a: make block! 0
-	b: at [1 2 3 4 5 6 7 8 9] 5
-	insert/part a b -4
-	a == [1 2 3 4]
+    a: make block! 0
+    b: at [1 2 3 4 5 6 7 8 9] 5
+    insert/part a b -4
+    a == [1 2 3 4]
 ]
 [
-	a: make block! 0
-	b: at [1 2 3 4 5 6 7 8 9] 5
-	insert/part a b -5
-	a == [1 2 3 4]
+    a: make block! 0
+    b: at [1 2 3 4 5 6 7 8 9] 5
+    insert/part a b -5
+    a == [1 2 3 4]
 ]
 [
-	a: make block! 0
-	b: at [1 2 3 4 5 6 7 8 9] 5
-	insert/part a b -2147483648
-	a == [1 2 3 4]
+    a: make block! 0
+    b: at [1 2 3 4 5 6 7 8 9] 5
+    insert/part a b -2147483648
+    a == [1 2 3 4]
 ]
 ; insert/only
 [
-	a: make block! 0
-	b: []
-	insert/only a b
-	same? b first a
+    a: make block! 0
+    b: []
+    insert/only a b
+    same? b first a
 ]
 ; insert/dup
 [
-	a: make block! 0
-	insert/dup a 0 2
-	a == [0 0]
+    a: make block! 0
+    insert/dup a 0 2
+    a == [0 0]
 ]
 [
-	a: make block! 0
-	insert/dup a 0 0
-	a == []
+    a: make block! 0
+    insert/dup a 0 0
+    a == []
 ]
 [
-	a: make block! 0
-	insert/dup a 0 -1
-	a == []
+    a: make block! 0
+    insert/dup a 0 -1
+    a == []
 ]
 [
-	a: make block! 0
-	insert/dup a 0 -2147483648
-	a == []
+    a: make block! 0
+    insert/dup a 0 -2147483648
+    a == []
 ]
 [
-	a: make block! 0
-	insert/dup a 0 -2147483648
-	empty? a
+    a: make block! 0
+    insert/dup a 0 -2147483648
+    empty? a
 ]
 ; functions/series/intersect.r
 ; bug#799
@@ -10152,12 +10152,12 @@
 [none? length? none]
 ; functions/series/next.r
 [
-	blk: [1]
-	same? tail blk next blk
+    blk: [1]
+    same? tail blk next blk
 ]
 [
-	blk: tail [1]
-	same? blk next blk
+    blk: tail [1]
+    same? blk next blk
 ]
 ; functions/series/ordinals.r
 [none? first []]
@@ -10206,15 +10206,15 @@
 ; THRU rule
 ; bug#682: parse thru tag!
 [
-	t: none
-	parse "<tag>text</tag>" [thru <tag> copy t to </tag>]
-	t == "text"
+    t: none
+    parse "<tag>text</tag>" [thru <tag> copy t to </tag>]
+    t == "text"
 ]
 ; THRU advances the input position correctly.
 [
-	i: 0
-	parse "a." [any [thru "a" (i: i + 1 j: to-value if i > 1 [[end skip]]) j]]
-	i == 1
+    i: 0
+    parse "a." [any [thru "a" (i: i + 1 j: to-value if i > 1 [[end skip]]) j]]
+    i == 1
 ]
 ; bug#1959: THRU fails to to match at end
 [parse "abcd" [thru "d"]]
@@ -10226,34 +10226,34 @@
 ; self-invoking rule
 ; bug#1672
 [
-	a: [a]
-	error? try [parse [] a]
+    a: [a]
+    error? try [parse [] a]
 ]
 ; repetition
 ; bug#1280
 [
-	parse "" [(i: 0) 3 [["a" |] (i: i + 1)]]
-	i == 3
+    parse "" [(i: 0) 3 [["a" |] (i: i + 1)]]
+    i == 3
 ]
 ; bug#1268
 [
-	i: 0
-	parse "a" [any [(i: i + 1)]]
-	i == 1
+    i: 0
+    parse "a" [any [(i: i + 1)]]
+    i == 1
 ]
 [
-	i: 0
-	parse "a" [while [(i: i + 1 j: to-value if i = 2 [[fail]]) j]]
-	i == 2
+    i: 0
+    parse "a" [while [(i: i + 1 j: to-value if i = 2 [[fail]]) j]]
+    i == 2
 ]
 ; THEN rule
 ; bug#1267
 [
-	b: "abc"
-	c: ["a" | "b"]
-	a2: [any [b e: (d: [:e]) then fail | [c | (d: [fail]) fail]] d]
-	a4: [any [b then e: (d: [:e]) fail | [c | (d: [fail]) fail]] d]
-	equal? parse "aaaaabc" a2 parse "aaaaabc" a4
+    b: "abc"
+    c: ["a" | "b"]
+    a2: [any [b e: (d: [:e]) then fail | [c | (d: [fail]) fail]] d]
+    a4: [any [b then e: (d: [:e]) fail | [c | (d: [fail]) fail]] d]
+    equal? parse "aaaaabc" a2 parse "aaaaabc" a4
 ]
 ; NOT rule
 ; bug#1246
@@ -10309,8 +10309,8 @@
 [error? try [pick at "12345" 3 9223372036854775807]]
 ; functions/series/poke.r
 [
-	poke a: #{00} 1 pick b: #{11} 1
-	a == b
+    poke a: #{00} 1 pick b: #{11} 1
+    a == b
 ]
 ; functions/series/remove.r
 [[] = remove []]
@@ -10319,14 +10319,14 @@
 [none = remove none]
 ; bitset
 [
-	a-bitset: charset "a"
-	remove/part a-bitset "a"
-	none? find a-bitset #"a"
+    a-bitset: charset "a"
+    remove/part a-bitset "a"
+    none? find a-bitset #"a"
 ]
 [
-	a-bitset: charset "a"
-	remove/part a-bitset to integer! #"a"
-	none? find a-bitset #"a"
+    a-bitset: charset "a"
+    remove/part a-bitset to integer! #"a"
+    none? find a-bitset #"a"
 ]
 ; functions/series/reverse.r
 ; bug#1810: REVERSE/part does not work for tuple!
@@ -10336,56 +10336,56 @@
 [4 == select [1 2 3 4 5 6] [1 2 3]]
 ; functions/series/skip.r
 [
-	blk: []
-	same? blk skip blk 0
+    blk: []
+    same? blk skip blk 0
 ]
 [
-	blk: []
-	same? blk skip blk 2147483647
+    blk: []
+    same? blk skip blk 2147483647
 ]
 [
-	blk: []
-	same? blk skip blk -1
+    blk: []
+    same? blk skip blk -1
 ]
 [
-	blk: []
-	same? blk skip blk -2147483648
+    blk: []
+    same? blk skip blk -2147483648
 ]
 [
-	blk: next [1 2 3]
-	same? blk skip blk 0
+    blk: next [1 2 3]
+    same? blk skip blk 0
 ]
 [
-	blk: next [1 2 3]
-	equal? [3] skip blk 1
+    blk: next [1 2 3]
+    equal? [3] skip blk 1
 ]
 [
-	blk: next [1 2 3]
-	same? tail blk skip blk 2
+    blk: next [1 2 3]
+    same? tail blk skip blk 2
 ]
 [
-	blk: next [1 2 3]
-	same? tail blk skip blk 2147483647
+    blk: next [1 2 3]
+    same? tail blk skip blk 2147483647
 ]
 [
-	blk: at [1 2 3] 3
-	same? tail blk skip blk 2147483646
+    blk: at [1 2 3] 3
+    same? tail blk skip blk 2147483646
 ]
 [
-	blk: at [1 2 3] 4
-	same? tail blk skip blk 2147483645
+    blk: at [1 2 3] 4
+    same? tail blk skip blk 2147483645
 ]
 [
-	blk: [1 2 3]
-	same? head blk skip blk -1
+    blk: [1 2 3]
+    same? head blk skip blk -1
 ]
 [
-	blk: [1 2 3]
-	same? head blk skip blk -2147483647
+    blk: [1 2 3]
+    same? head blk skip blk -2147483647
 ]
 [
-	blk: next [1 2 3]
-	same? head blk skip blk -2147483648
+    blk: next [1 2 3]
+    same? head blk skip blk -2147483648
 ]
 ; functions/series/sort.r
 [[1 2 3] = sort [1 3 2]]
@@ -10402,13 +10402,13 @@
 [strict-equal? ["A" "a"] sort/case ["A" "a"]]
 ; bug#1152: SORT not stable (order not preserved)
 [
-	set [c d] sort reduce [a: "a" b: "a"]
-	all [
-		same? c a
-		same? d b
-		not same? c b
-		not same? d a
-	]
+    set [c d] sort reduce [a: "a" b: "a"]
+    all [
+        same? c a
+        same? d b
+        not same? c b
+        not same? d a
+    ]
 ]
 ; bug#1152: SORT not stable (order not preserved)
 [equal? [1 9 1 5 1 7] sort/skip/compare [1 9 1 5 1 7] 2 1]
@@ -10453,9 +10453,9 @@
 ; functions/series/tailq.r
 [tail? []]
 [
-	blk: tail [1]
-	clear head blk
-	tail? blk
+    blk: tail [1]
+    clear head blk
+    tail? blk
 ]
 ; functions/series/trim.r
 ; bug#83
@@ -10481,9 +10481,9 @@
 ; functions/string/decloak.r
 ; bug#48
 [
-	a: compress "a"
-	b: encloak a "a"
-	equal? a decloak b "a"
+    a: compress "a"
+    b: encloak a "a"
+    equal? a decloak b "a"
 ]
 ; functions/string/decode.r
 [image? decode 'bmp read %fixtures/rebol-logo.bmp]
@@ -10537,23 +10537,23 @@
 ; system/gc.r
 ; bug#1776, bug#2072
 [
-	a: copy []
-	loop 200'000 [a: append/only copy [] a]
-	recycle
-	true
+    a: copy []
+    loop 200'000 [a: append/only copy [] a]
+    recycle
+    true
 ]
 ; bug#1989
 [
-	loop ([comment 30000000] 300) [make gob! []]
-	true
+    loop ([comment 30000000] 300) [make gob! []]
+    true
 ]
 
 ; !!! simplest possible LOAD/SAVE smoke test, expand!
 [
-	file: %simple-save-test.r
-	data: "Simple save test produced by %core-tests.r"
-	save file data
-	(load file) = data
+    file: %simple-save-test.r
+    data: "Simple save test produced by %core-tests.r"
+    save file data
+    (load file) = data
 ]
 
 ; !!! simplest possible HTTP and HTTPS protocol smoke test, expand!
