@@ -10562,3 +10562,15 @@
 ; !!! simplest possible HTTP and HTTPS protocol smoke test, expand!
 [not error? trap [ read http://example.com ]]
 [not error? trap [ read https://example.com ]]
+
+; Source analysis tests.
+[
+	do %source-tools.reb
+	source-analysis: rebsource/analyse/files
+	save %source-analysis.log source-analysis
+	true
+]
+[not find source-analysis 'eol-wsp]
+[not find source-analysis 'id-mismatch]
+[not find source-analysis [line-exceeds 127]]
+[not find source-analysis 'malloc]
