@@ -58,6 +58,10 @@ rebsource: context [
 
         max-line-length: 127
         ; Not counting newline, lines over this length require an extra warning.
+
+        function-spacing: [3 eol]
+        ; Parse Rule which specifies the standard spacing between functions,
+        ; from final right brace of leading function to intro comment of following function.
     ]
 
     fixed-source-paths: [
@@ -161,6 +165,23 @@ rebsource: context [
                     block? proto-parser/data
                 ] [
 
+                    do bind [
+
+                        if last-func-end [
+                            if not all [
+                                parse last-func-end [function-spacing-rule position: to end]
+                                same? position proto-parser/parse.position
+                            ] [
+                                line: line-of text proto-parser/parse.position
+                                append any [
+                                    non-std-func-space
+                                    set 'non-std-func-space copy []
+                                ] line-of file-text proto-parser/parse.position
+                            ]
+                        ]
+
+                    ] parser-extension
+
                     either find/match mold proto-parser/data/2 {native} [
 
                         if not equal? c-id-to-word proto-parser/proto.arg.1 to word! proto-parser/data/1 [
@@ -177,8 +198,14 @@ rebsource: context [
                 ]
 
             ]
+
+            non-std-func-space: none
             proto-parser/emit-proto: :emit-proto
             proto-parser/process text
+
+            if non-std-func-space [
+                emit [non-std-func-space (file) (non-std-func-space)]
+            ]
 
             analysis
         ]
@@ -205,6 +232,31 @@ rebsource: context [
             files
         ]
     ]
+
+    parser-extension: context bind bind [
+
+        ; Extend parser to support checking of function spacing.
+
+        last-func-end: none
+
+        lbrace: [and punctuator #"{"]
+        rbrace: [and punctuator #"}"]
+        braced: [lbrace any [braced | not rbrace skip] rbrace]
+
+        function-spacing-rule: bind/copy standard/function-spacing c.lexical/grammar
+
+        grammar/function-body: braced
+
+        append grammar/format2015-func-section [
+            last-func-end:
+            any [nl | eol | wsp]
+        ]
+
+        append/only grammar/other-segment to paren! [
+            last-func-end: none
+        ]
+
+    ] proto-parser c.lexical/grammar
 
     whitelisted?: function [{Returns true if file should not be analysed.} file] [
 
