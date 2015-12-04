@@ -19,29 +19,10 @@ ren-c-repo: any [
 ren-c-repo: clean-path ren-c-repo
 
 do ren-c-repo/src/tools/r2r3-future.r
+do ren-c-repo/src/tools/common.r
 do ren-c-repo/src/tools/common-parsers.r
 do %lib/text-lines.reb
 
-
-c-id-to-word: func [
-    {Translate C identifier to Rebol word.}
-    identifier
-    /local id
-] [
-
-    id: select [
-        {_add_add} ++
-    ] identifier
-
-    if not id [
-        id: copy identifier
-        replace/all id #"_" #"-"
-        if #"q" = last id [change back tail id #"?"]
-        id: to word! id
-    ]
-
-    id
-]
 
 rebsource: context [
 
@@ -166,7 +147,6 @@ rebsource: context [
                 ] [
 
                     do bind [
-
                         if last-func-end [
                             if not all [
                                 parse last-func-end [function-spacing-rule position: to end]
@@ -183,16 +163,36 @@ rebsource: context [
                     ] parser-extension
 
                     either find/match mold proto-parser/data/2 {native} [
-
-                        if not equal? c-id-to-word proto-parser/proto.arg.1 to word! proto-parser/data/1 [
+                        ;
+                        ; It's a `some-name?: native [...]`, so we expect
+                        ; `REBNATIVE(some_name_q)` to be correctly lined up
+                        ; as the "to-c-name" of the Rebol set-word
+                        ;
+                        unless (
+                            equal?
+                                proto-parser/proto.arg.1
+                                (to-c-name to word! proto-parser/data/1)
+                        ) [
                             line: line-of text proto-parser/parse.position
-                            emit [id-mismatch (mold proto-parser/data/1) (file) (line)]
+                            emit [
+                                id-mismatch
+                                (mold proto-parser/data/1) (file) (line)
+                            ]
                         ]
                     ][
-
-                        if not equal? proto-parser/proto.id form to word! proto-parser/data/1 [
+                        ;
+                        ; ... ? (not a native)
+                        ;
+                        unless (
+                            equal?
+                                proto-parser/proto.id
+                                form to word! proto-parser/data/1
+                        ) [
                             line: line-of text proto-parser/parse.position
-                            emit [id-mismatch (mold proto-parser/data/1) (file) (line)]
+                            emit [
+                                id-mismatch
+                                (mold proto-parser/data/1) (file) (line)
+                            ]
                         ]
                     ]
                 ]
