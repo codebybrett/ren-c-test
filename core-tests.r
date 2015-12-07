@@ -876,7 +876,6 @@
 [error? make error! [type: 'internal id: 'stack-overflow]]
 [error? make error! [type: 'internal id: 'globals-full]]
 [error? make error! [type: 'internal id: 'max-natives]]
-[error? make error! [type: 'internal id: 'bad-series]]
 [error? make error! [type: 'internal id: 'limit-hit]]
 [error? make error! [type: 'internal id: 'bad-sys-func]]
 [error? make error! [type: 'internal id: 'not-done]]
