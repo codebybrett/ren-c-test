@@ -1726,10 +1726,12 @@
 ]
 [
     o: make object! []
-    error? try [append o 'self]
+    append o 'self
+    true
 ]
 [
     o: make object! []
+    ; currently disallowed..."would expose or modify hidden values"
     error? try [append o [self: 1]]
 ]
 ; datatypes/op.r
