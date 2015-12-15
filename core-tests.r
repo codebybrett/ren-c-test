@@ -7006,7 +7006,7 @@
     error? switch 1 cases
 ]
 ; bug#2242
-[11 = do does [switch/all 1 [1 [return 11 88]] 99]]
+[11 = eval does [switch/all 1 [1 [return 11 88]] 99]]
 ; functions/control/throw.r
 ; see functions/control/catch.r for basic functionality
 ; the "result" of throw should not be assignable, bug#1515
