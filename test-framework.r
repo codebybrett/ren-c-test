@@ -106,7 +106,7 @@ make object! compose [
         {Executes tests in the FILE and recovers from crash}
         file [file!] {test file}
         flags [block!] {which flags to accept}
-		code-checksum [binary! none!]
+        code-checksum [binary! none!]
         log-file-prefix [file!]
         /local interpreter last-vector value position next-position
         test-sources test-checksum guard
@@ -118,13 +118,13 @@ make object! compose [
 
         log-file: log-file-prefix
 
-		if code-checksum [
+        if code-checksum [
             append log-file "_"
-			append log-file copy/part skip mold code-checksum 2 6
+            append log-file copy/part skip mold code-checksum 2 6
         ]
 
-		append log-file "_"
-		append log-file copy/part skip mold test-checksum 2 6
+        append log-file "_"
+        append log-file copy/part skip mold test-checksum 2 6
 
         append log-file ".log"
         log-file: clean-path log-file

@@ -21,12 +21,12 @@ f: func [
         i/i > j/i [1]
      ]
 ]
-    
+
 cb: make callback! [
     [
-		a [pointer]
-		b [pointer]
-		return: [int32]
+        a [pointer]
+        b [pointer]
+        return: [int32]
     ]
     :f
 ]
@@ -39,7 +39,7 @@ qsort: make routine! compose/deep [
     [
         base [pointer]
         nmemb [(size_t)]
-		size [(size_t)]
+        size [(size_t)]
         comp [pointer]
     ]
     (libc) "qsort"

@@ -1895,22 +1895,22 @@
 ]
 ; calling functions through paths: function in object
 [
-	obj: make object! [fun: func [] [1]]
-	1 == obj/fun
+    obj: make object! [fun: func [] [1]]
+    1 == obj/fun
 ]
 [
-	obj: make object! [fun: func [/ref val] [val]]
-	1 == obj/fun/ref 1
+    obj: make object! [fun: func [/ref val] [val]]
+    1 == obj/fun/ref 1
 ]
 ; calling functions through paths: function in block, positional
 [
-	blk: reduce [func [] [10]  func [] [20]]
-	10 == blk/1
+    blk: reduce [func [] [10]  func [] [20]]
+    10 == blk/1
 ]
 ; calling functions through paths: function in block, "named"
 [
-	blk: reduce ['foo func [] [10]  'bar func [] [20]]
-	20 == blk/bar
+    blk: reduce ['foo func [] [10]  'bar func [] [20]]
+    20 == blk/bar
 ]
 ; bug#26
 [
@@ -2730,7 +2730,7 @@
 [not equal? :abs :add]
 [equal? :all :all]
 [not equal? :all :any]
-; reflexivity test for infix 
+; reflexivity test for infix
 [equal? :+ :+]
 [not equal? :+ :-]
 ; reflexivity test for function!
@@ -7241,21 +7241,21 @@
 [99 = do {do {quit/return 42} 99}]
 ; Returning of Rebol values from called to calling script via QUIT/return.
 [
-	do-script-returning: func [value /local script] [
-		save/header script: %tmp-inner.reb compose ['quit/return (value)] []
-		do script
-	]
-	all map-each value reduce [
-		42
-		{foo}
-		#{CAFE}
-		none
-		http://somewhere
-		1900-01-30
-		context [x: 42]
-	] [
-		value = do-script-returning value
-	]
+    do-script-returning: func [value /local script] [
+        save/header script: %tmp-inner.reb compose ['quit/return (value)] []
+        do script
+    ]
+    all map-each value reduce [
+        42
+        {foo}
+        #{CAFE}
+        none
+        http://somewhere
+        1900-01-30
+        context [x: 42]
+    ] [
+        value = do-script-returning value
+    ]
 ]
 ; bug#2190
 [error? try [catch/quit [attempt [quit]] 1 / 0]]
@@ -10597,15 +10597,15 @@
 ]
 
 ; !!! simplest possible HTTP and HTTPS protocol smoke test, expand!
-[not error? trap [ read http://example.com ]]
-[not error? trap [ read https://example.com ]]
+[not error? trap [read http://example.com]]
+[not error? trap [read https://example.com]]
 
 ; Source analysis tests.
 [
-	do %source-tools.reb
-	source-analysis: rebsource/analyse/files
-	save %source-analysis.log source-analysis
-	true
+    do %source-tools.reb
+    source-analysis: rebsource/analyse/files
+    save %source-analysis.log source-analysis
+    true
 ]
 [not find source-analysis 'eol-wsp]
 [not find source-analysis 'id-mismatch]

@@ -42,18 +42,18 @@ fclose fp
 ;       };
 
 tm: make struct! [
-	tm_sec [int32]  
-	tm_min [int32] 
-   	tm_hour [int32] ;   /* Hours (0-23) */
-   	tm_mday [int32] ;   /* Day of the month (1-31) */
-   	tm_mon  [int32] ;    /* Month (0-11) */
-   	tm_year [int32] ;   /* Year - 1900 */
-   	tm_wday [int32] ;   /* Day of the week (0-6, Sunday = 0) */
-   	tm_yday [int32] ;   /* Day in the year (0-365, 1 Jan = 0) */
-   	tm_isdst [int32];  /* Daylight saving time */
+    tm_sec [int32]
+    tm_min [int32]
+    tm_hour [int32] ;   /* Hours (0-23) */
+    tm_mday [int32] ;   /* Day of the month (1-31) */
+    tm_mon  [int32] ;    /* Month (0-11) */
+    tm_year [int32] ;   /* Year - 1900 */
+    tm_wday [int32] ;   /* Day of the week (0-6, Sunday = 0) */
+    tm_yday [int32] ;   /* Day in the year (0-365, 1 Jan = 0) */
+    tm_isdst [int32];  /* Daylight saving time */
 ]
 time_t: make struct! [
-	t [int64]
+    t [int64]
 ]
 
 time: make routine! compose [[t [pointer] return: [int64]] (libc) "time"]
