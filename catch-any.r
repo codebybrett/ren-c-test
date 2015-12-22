@@ -33,19 +33,19 @@ make object! [
                         ]
                         ; an error was triggered
                         set exception 'error
-                        exit
+                        return ()
                     ]
                     ; BREAK or CONTINUE
                     set exception 'break
-                    exit
+                    return ()
                 ]
                 ; THROW
                 set exception 'throw
-                exit
+                return ()
             ]
             ; QUIT
             set exception 'quit
-            exit
+            return ()
         ]
     ]
 

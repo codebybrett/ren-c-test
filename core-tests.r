@@ -6837,7 +6837,7 @@
 [1 = catch [reduce [throw 1]]]
 [1 = catch/name [reduce [throw/name 1 'a]] 'a]
 [1 = eval does [reduce [return 1 2] 2]]
-[unset? eval does [reduce [exit 1] 2]]
+[unset? if 1 < 2 [eval does [reduce [exit/from :if 1] 2]]]
 ; recursive behaviour
 [1 = first reduce [first reduce [1]]]
 ; infinite recursion
@@ -7190,15 +7190,19 @@
     f1: does [while [if cycle? [return 1] cycle?] [cycle?: false 2]]
     1 = f1
 ]
-; EXIT should stop the loop
+; EXIT/FROM the IF should stop the loop
 [
     cycle?: true
-    f1: does [while [cycle?] [cycle?: false exit] 2]
+    f1: does [if 1 < 2 [while [cycle?] [cycle?: false exit/from :if] 2]]
     unset? f1
 ]
 [  ; bug#1519
     cycle?: true
-    f1: does [while [if cycle? [exit] cycle?] [cycle?: false 2]]
+    f1: does [
+        unless 1 > 2 [
+            while [if cycle? [exit/from :unless] cycle?] [cycle?: false 2]
+        ]
+    ]
     unset? f1
 ]
 ; THROW should stop the loop

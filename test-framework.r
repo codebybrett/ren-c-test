@@ -50,13 +50,13 @@ make object! compose [
         unless empty? exclude flags allowed-flags [
             skipped: skipped + 1
             log [{ "skipped"^/}]
-            exit
+            return ()
         ]
 
         if error? try [test-block: load source] [
             test-failures: test-failures + 1
             log [{ "failed, cannot load test source"^/}]
-            exit
+            return ()
         ]
 
         error? set/any 'test-block catch-any test-block 'exception
