@@ -80,7 +80,7 @@ make object! [
             append collected-tests reduce [
                 test-file 'dialect {^/"failed, cannot read the file"^/}
             ]
-            exit
+            return ()
         ] [
             append collected-tests test-file
         ]

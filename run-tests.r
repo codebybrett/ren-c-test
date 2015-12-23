@@ -31,7 +31,7 @@ run-tests: func [
             ; check if it is a test file
             if %.tst = find/last file %. [run-tests file]
         ]
-        exit
+        return ()
     ]
 
     ; having an individual file
