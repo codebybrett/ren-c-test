@@ -44,7 +44,7 @@ do-core-tests: has [
         ] 
     ]
 
-    log-file-prefix: %r
+    log-file-prefix: copy %r
     repeat i length? version: system/version [
         append log-file-prefix "_"
         append log-file-prefix mold version/:i
