@@ -10238,15 +10238,15 @@
 ; bug#2130
 [res: parse ser: "foo" [copy val: pos: skip] all [not res val = "f" pos = ser]]
 ; TO/THRU integer!
-[parse "abcd" [to 3 "cd"]]
-[parse "abcd" [to 5]]
-[parse "abcd" [to 128]]
+[true? parse "abcd" [to 3 "cd"]]
+[true? parse "abcd" [to 5]]
+[true? parse "abcd" [to 128]]
 ; bug#1965
-[parse "abcd" [thru 3 "d"]]
-[parse "abcd" [thru 4]]
-[parse "abcd" [thru 128]]
-[parse "abcd" ["ab" to 1 "abcd"]]
-[parse "abcd" ["ab" thru 1 "bcd"]]
+[true? parse "abcd" [thru 3 "d"]]
+[true? parse "abcd" [thru 4]]
+[true? parse "abcd" [thru 128]]
+[true? parse "abcd" ["ab" to 1 "abcd"]]
+[true? parse "abcd" ["ab" thru 1 "bcd"]]
 ; THRU rule
 ; bug#682: parse thru tag!
 [
@@ -10261,12 +10261,12 @@
     i == 1
 ]
 ; bug#1959: THRU fails to to match at end
-[parse "abcd" [thru "d"]]
-[parse "abcd" [to "d" skip]]
+[true? parse "abcd" [thru "d"]]
+[true? parse "abcd" [to "d" skip]]
 ; bug#1959
-[parse "<abcd>" [thru <abcd>]]
-[parse [a b c d] [thru 'd]]
-[parse [a b c d] [to 'd skip]]
+[true? parse "<abcd>" [thru <abcd>]]
+[true? parse [a b c d] [thru 'd]]
+[true? parse [a b c d] [to 'd skip]]
 ; self-invoking rule
 ; bug#1672
 [
@@ -10301,20 +10301,20 @@
 ]
 ; NOT rule
 ; bug#1246
-[parse "1" [not not "1" "1"]]
-[parse "1" [not [not "1"] "1"]]
-[false == parse "" [not 0 "a"]]
-[false == parse "" [not [0 "a"]]]
+[true? parse "1" [not not "1" "1"]]
+[true? parse "1" [not [not "1"] "1"]]
+[false? parse "" [not 0 "a"]]
+[false? parse "" [not [0 "a"]]]
 ; bug#1240
-[parse "" [not "a"]]
-[parse "" [not skip]]
-[parse "" [not fail]]
+[true? parse "" [not "a"]]
+[true? parse "" [not skip]]
+[true? parse "" [not fail]]
 ; bug#100
 [1 == eval does [parse [] [(return 1)] 2]]
 ; bug#1457: TO/THRU + bitset!/charset!
-[parse "a" compose [thru (charset "a")]]
+[true? parse "a" compose [thru (charset "a")]]
 [not parse "a" compose [thru (charset "a") skip]]
-[parse "ba" compose [to (charset "a") skip]]
+[true? parse "ba" compose [to (charset "a") skip]]
 [not parse "ba" compose [to (charset "a") "ba"]]
 ; self-modifying rule
 [not parse "abcd" rule: ["ab" (remove back tail rule) "cd"]]
