@@ -10600,11 +10600,78 @@
     (load file) = data
 ]
 
-; !!! simplest possible HTTP and HTTPS protocol smoke test, expand!
+
+;;
+;; "Mold Stack" tests
+;;
+
+; Nested ajoin
+[
+    nested-ajoin: func [n] [
+        either n <= 1 [n][ajoin [n space nested-ajoin n - 1]]
+    ]
+    "9 8 7 6 5 4 3 2 1" = nested-ajoin 9
+]
+; Mold recursive object
+[
+    o: object [a: 1 r: none]
+    o/r: o
+    (ajoin ["<" mold o  ">"])
+        = "<make object! [^/    a: 1^/    r: make object! [...]^/]>"
+]
+; Form recursive object...
+[
+    o: object [a: 1 r: none] o/r: o
+    (ajoin ["<" form o  ">"]) = "<a: 1^/r: make object! [...]>"
+]
+; detab...
+[
+    (ajoin ["<" detab "aa^-b^-c" ">"]) = "<aa  b   c>"
+]
+; entab...
+[
+    (ajoin ["<" entab "     a    b" ">"]) = "<^- a    b>"
+]
+; dehex...
+[
+    (ajoin ["<" dehex "a%20b" ">"]) = "<a b>"
+]
+; form...
+[
+    (ajoin ["<" form [1 <a> [2 3] "^""] ">"]) = {<1 <a> 2 3 ">}
+]
+; transcode...
+[
+    (ajoin ["<" mold transcode to binary! "a [b c]"  ">"])
+        = "<[a [b c] #{}]>"
+]
+; ...
+[
+    (ajoin ["<" intersect [a b c] [d e f]  ">"]) = "<>"
+]
+
+
+;;
+;; Simplest possible HTTP and HTTPS protocol smoke test
+;;
+;; !!! EXPAND!
+;;
+
 [not error? trap [read http://example.com]]
 [not error? trap [read https://example.com]]
 
-; Source analysis tests.
+
+;;
+;; Source analysis tests.  These check the source code for adherence to
+;; coding conventions (naming, indentation, column width, etc.)  These
+;; tests may evolve further into enforcing rules about the call graph
+;; and other statically-checkable aspects.
+;;
+;; At the moment, there are some failures of these tests.  They will be
+;; addressed in an ongoing fashion as the source is brought in line
+;; with the automated checking.
+;;
+
 [
     do %source-tools.reb
     source-analysis: rebsource/analyse/files
