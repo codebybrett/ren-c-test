@@ -559,7 +559,7 @@
 [datatype? none!]
 [datatype? object!]
 [datatype? pair!]
-[datatype? paren!]
+[datatype? group!]
 [datatype? path!]
 [datatype? percent!]
 [datatype? port!]
@@ -1756,14 +1756,14 @@
 ; maximum
 [pair? 2147483647x2147483647]
 ; datatypes/paren.r
-[paren? first [(1 + 1)]]
-[not paren? 1]
+[group? first [(1 + 1)]]
+[not group? 1]
 ; minimum
-[paren! = type? first [()]]
+[group! = type? first [()]]
 ; alternative literal form
-[strict-equal? first [()] first [#[paren! []]]]
-[strict-equal? first [()] make paren! 0]
-[strict-equal? first [()] to paren! []]
+[strict-equal? first [()] first [#[group! []]]]
+[strict-equal? first [()] make group! 0]
+[strict-equal? first [()] to group! []]
 ["()" == mold first [()]]
 ; parens are active
 [
@@ -1774,14 +1774,14 @@
 [
     num1: 4
     num2: 1
-    fact: to paren! [either num1 = 1 [num2] [num2: num1 * num2 num1: num1 - 1]]
+    fact: to group! [either num1 = 1 [num2] [num2: num1 * num2 num1: num1 - 1]]
     insert/only tail last fact fact
     24 = do fact
 ]
 ; bug#1665
 ; infinite recursion
 [
-    fact: to paren! []
+    fact: to group! []
     insert/only fact fact
     error? try [do fact]
 ]
@@ -2908,9 +2908,9 @@
 ]
 [not equal? [] none]
 [equal? equal? [] none equal? none []]
-; block! vs. paren!
+; block! vs. group!
 [not equal? [] first [()]]
-; block! vs. paren! symmetry
+; block! vs. group! symmetry
 [equal? equal? [] first [()] equal? first [()] []]
 ; block! vs. path!
 [not equal? [a b] 'a/b]
@@ -3509,9 +3509,9 @@
 ]
 [not equiv? [] none]
 [equal? equiv? [] none equiv? none []]
-; block! vs. paren!
+; block! vs. group!
 [not equiv? [] first [()]]
-; block! vs. paren! symmetry
+; block! vs. group! symmetry
 [equal? equiv? [] first [()] equiv? first [()] []]
 ; block! vs. path!
 [not equiv? [a b] 'a/b]
@@ -5494,7 +5494,7 @@
 [use [a] [a: false 'a = apply func [/a] [a] ['a]]]
 [use [a] [a: false 'a = apply func [/a] [a] [/a]]]
 [use [a] [a: false 'a = apply/only func [/a] [a] [a]]]
-[paren! == apply/only :type? [()]]
+[group! == apply/only :type? [()]]
 [[1] == head apply :insert [copy [] [1] none none none]]
 [[1] == head apply :insert [copy [] [1] none none false]]
 [[[1]] == head apply :insert [copy [] [1] none none true]]
@@ -9934,19 +9934,19 @@
 ]
 ; paren
 [
-    a: make paren! 0
+    a: make group! 0
     insert a 0
     a == first [(0)]
 ]
 [
     a: first [(0)]
-    b: make paren! 0
+    b: make group! 0
     insert b first a
     a == b
 ]
 [
     a: first [(0)]
-    b: make paren! 0
+    b: make group! 0
     insert b a
     a == b
 ]

@@ -252,7 +252,7 @@ rebsource: context [
             any [nl | eol | wsp]
         ]
 
-        append/only grammar/other-segment to paren! [
+        append/only grammar/other-segment to group! [
             last-func-end: none
         ]
 

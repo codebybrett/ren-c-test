@@ -365,7 +365,7 @@
 
 [false == apply/only func [/a] [a] [#[false]]]
 
-['paren! == apply/only :type? [() true]]
+['group! == apply/only :type? [() true]]
 
 ;-- CC#2246
 [none? case [true []]]
