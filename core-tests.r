@@ -10649,7 +10649,10 @@
 [
     (ajoin ["<" intersect [a b c] [d e f]  ">"]) = "<>"
 ]
-
+; reword
+[ equal? reword "$1 is $2." [1 "This" 2 "that"] "This is that." ]
+[ equal? reword/escape "A %%a is %%b." [a "fox" b "brown"] "%%" "A fox is brown." ]
+[ equal? reword/escape "I am answering you." ["I am" "Brian is" you "Adrian"] none "Brian is answering Adrian." ]
 
 ;;
 ;; Simplest possible HTTP and HTTPS protocol smoke test
