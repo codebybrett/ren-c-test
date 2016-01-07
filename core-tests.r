@@ -5470,7 +5470,7 @@
 ; bug#44
 [error? try [apply 'type?/word []]]
 ; EVAL is special
-[8 == eval does [return apply :eval [:add 4 4]]]
+[8 == eval does [return apply :eval [:add false 4 4]]]
 [1 == apply :subtract [2 1]]
 ; Infix OP! is not supported by user-mode APPLY, as it is a legacy concept
 ; in the first place and this is likely to be uncommon.
@@ -5511,6 +5511,18 @@
 [1 == eval does [apply :also [return 1 2]]]
 ; bug#1760
 [1 == eval does [apply :also [2 return 1]]]
+
+; EVAL/ONLY
+[
+    o: make object! [a: 0]
+    b: eval/only (quote o/a:) 1 + 2
+    all [o/a = 1 b = 3]
+]
+[
+    a: func [b c :d] [reduce [b c d]]
+    [1 + 2] = (eval/only :a 1 + 2)
+]
+
 [unset? apply func [x [any-value!]] [get/any 'x] [()]]
 [unset? apply func ['x [any-value!]] [get/any 'x] [()]]
 [unset? apply func [:x [any-value!]] [get/any 'x] [()]]
