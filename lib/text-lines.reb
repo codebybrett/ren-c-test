@@ -65,7 +65,7 @@ foreach-line: func [
     /local eol
 ] [
 
-    set/any 'result while [not tail? text] [
+    set/opt 'result while [not tail? text] [
 
         eol: any [
             find text newline
@@ -78,7 +78,7 @@ foreach-line: func [
         do body
     ]
 
-    get/any 'result
+    get/opt 'result
 ]
 
 lines-exceeding: function [

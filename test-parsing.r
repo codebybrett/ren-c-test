@@ -37,7 +37,7 @@ make object! [
             position: ["{" | {"}] (
                 ; handle string using TRANSCODE
                 success: either error? try [
-                    set/any 'position second transcode/next position
+                    set/opt 'position second transcode/next position
                 ] [
                     [end skip]
                 ] [
@@ -104,15 +104,15 @@ make object! [
                     case [
                         any [
                             error? try [
-                                set/any [value next-position] transcode/next position
+                                set/opt [value next-position] transcode/next position
                             ]
                             none? next-position
                         ] [stop: [:position]]
-                        issue? get/any 'value [
+                        issue? get/opt 'value [
                             append flags value
                             stop: [end skip]
                         ]
-                        file? get/any 'value [
+                        file? get/opt 'value [
                             collect-tests collected-tests value
                             print ["file:" mold test-file]
                             append collected-tests test-file
@@ -147,7 +147,7 @@ make object! [
                 any whitespace
                 [
                     position: "%"
-                    (set/any [value next-position] transcode/next position)
+                    (set/opt [value next-position] transcode/next position)
                     :next-position
                         |
                     ; dialect failure?

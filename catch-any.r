@@ -27,7 +27,7 @@ make object! [
                     loop 1 [
                         try [
                             set exception 'return
-                            set/any 'result do block
+                            set/opt 'result do block
                             set exception none
                             return :result
                         ]
@@ -67,23 +67,23 @@ make object! [
             catch/quit [
                 try [
                     catch [
-                        loop 1 [set/any 'result do-block block exception]
+                        loop 1 [set/opt 'result do-block block exception]
                     ]
                 ]
             ]
         ]
         either get exception [#[unset!]] [:result]
     ]] [[
-        error? set/any 'result catch [
-            error? set/any 'result loop 1 [
+        error? set/opt 'result catch [
+            error? set/opt 'result loop 1 [
                 error? result: try [
                     ; RETURN or EXIT
                     set exception 'return
-                    set/any 'result do block
+                    set/opt 'result do block
 
                     ; no exception
                     set exception none
-                    return get/any 'result
+                    return get/opt 'result
                 ]
                 ; an error was triggered
                 set exception 'error
@@ -91,10 +91,10 @@ make object! [
             ]
             ; BREAK
             set exception 'break
-            return get/any 'result
+            return get/opt 'result
         ]
         ; THROW
         set exception 'throw
-        return get/any 'result
+        return get/opt 'result
     ]]
 ]

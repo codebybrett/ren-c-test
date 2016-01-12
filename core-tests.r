@@ -881,7 +881,7 @@
 ; triggered errors should not be assignable
 [a: 1 error? try [a: 1 / 0] :a =? 1]
 [a: 1 error? try [set 'a 1 / 0] :a =? 1]
-[a: 1 error? try [set/any 'a 1 / 0] :a =? 1]
+[a: 1 error? try [set/opt 'a 1 / 0] :a =? 1]
 ; bug#2190
 [127 = catch/quit [attempt [catch/quit [1 / 0]] quit/return 127]]
 ; datatypes/event.r
@@ -2340,9 +2340,9 @@
 ; bug#68
 [unset? to unset! none]
 [unset? to unset! 1]
-[unset? try [a: ()]]
+[error? try [a: ()]]
 [error? try [a: () a]]
-[not error? try [set/any 'a ()]]
+[not error? try [set/opt 'a ()]]
 ; datatypes/url.r
 [url? http://www.fm.tul.cz/~ladislav/rebol]
 [not url? 1]
@@ -3337,7 +3337,7 @@
 ; Evaluates (try [1 / 0]) to get error! value.
 [
     a-value: none
-    set/any 'a-value (try [1 / 0])
+    set/opt 'a-value (try [1 / 0])
     equal? a-value a-value
 ]
 ; error! structural equivalence
@@ -4711,14 +4711,14 @@
 [x: construct [a: 1] all [error? try [set x reduce [()]] x/a = 1]]
 [x: construct [a: 1] set x reduce [2 ()] x/a = 2]
 [x: construct [a: 1 b: 2] all [error? try [set x reduce [3 ()]] x/a = 1]]
-[a: 1 set/any [a] reduce [()] unset? get/any 'a]
-[a: 1 b: 2 set/any [a b] reduce [3 ()] all [a = 3 unset? get/any 'b]]
-[x: construct [a: 1] set/any x reduce [()] unset? get/any in x 'a]
-[x: construct [a: 1 b: 2] set/any x reduce [3 ()] all [a = 3 unset? get/any in x 'b]]
+[a: 1 set/opt [a] reduce [()] unset? get/opt 'a]
+[a: 1 b: 2 set/opt [a b] reduce [3 ()] all [a = 3 unset? get/opt 'b]]
+[x: construct [a: 1] set/opt x reduce [()] unset? get/opt in x 'a]
+[x: construct [a: 1 b: 2] set/opt x reduce [3 ()] all [a = 3 unset? get/opt in x 'b]]
 ; set [:get-word] [word]
 [a: 1 b: none set [:b] [a] b =? 1]
 [unset 'a b: none all [error? try [set [:b] [a]] none? b]]
-[unset 'a b: none set/any [:b] [a] unset? get/any 'b]
+[unset 'a b: none set/opt [:b] [a] unset? get/opt 'b]
 ; functions/context/unset.r
 [
     a: none
@@ -5534,27 +5534,27 @@
     [1 + 2] = (eval/only :a 1 + 2)
 ]
 
-[unset? apply func [x [any-value!]] [get/any 'x] [()]]
-[unset? apply func ['x [any-value!]] [get/any 'x] [()]]
-[unset? apply func [:x [any-value!]] [get/any 'x] [()]]
-[unset? apply func [x [any-value!]] [return get/any 'x] [()]]
-[unset? apply func ['x [any-value!]] [return get/any 'x] [()]]
-[unset? apply func [:x [any-value!]] [return get/any 'x] [()]]
+[unset? apply func [x [any-value!]] [get/opt 'x] [()]]
+[unset? apply func ['x [any-value!]] [get/opt 'x] [()]]
+[unset? apply func [:x [any-value!]] [get/opt 'x] [()]]
+[unset? apply func [x [any-value!]] [return get/opt 'x] [()]]
+[unset? apply func ['x [any-value!]] [return get/opt 'x] [()]]
+[unset? apply func [:x [any-value!]] [return get/opt 'x] [()]]
 [error? apply :make [error! ""]]
-[error? apply func [:x [any-value!]] [return get/any 'x] [make error! ""]]
+[error? apply func [:x [any-value!]] [return get/opt 'x] [make error! ""]]
 [
     error? apply/only func [x [any-value!]] [
-        return get/any 'x
+        return get/opt 'x
     ] head insert copy [] make error! ""
 ]
 [
     error? apply/only func ['x [any-value!]] [
-        return get/any 'x
+        return get/opt 'x
     ] head insert copy [] make error! ""
 ]
 [
     error? apply/only func [:x [any-value!]] [
-        return get/any 'x
+        return get/opt 'x
     ] head insert copy [] make error! ""
 ]
 [use [x] [x: 1 strict-equal? 1 apply func ['x] [:x] [:x]]]
@@ -5564,7 +5564,7 @@
     use [x] [
         unset 'x
         strict-equal? first [:x] apply/only func [:x [any-value!]] [
-            return get/any 'x
+            return get/opt 'x
         ] [:x]
     ]
 ]
@@ -5576,7 +5576,7 @@
     use [x] [
         unset 'x
         strict-equal? 'x apply/only func [:x [any-value!]] [
-            return get/any 'x
+            return get/opt 'x
         ] [x]
     ]
 ]
@@ -5618,10 +5618,10 @@
 ; the "result" of break should not be assignable, bug#1515
 [a: 1 loop 1 [a: break] :a =? 1]
 [a: 1 loop 1 [set 'a break] :a =? 1]
-[a: 1 loop 1 [set/any 'a break] :a =? 1]
+[a: 1 loop 1 [set/opt 'a break] :a =? 1]
 [a: 1 loop 1 [a: break/return 2] :a =? 1]
 [a: 1 loop 1 [set 'a break/return 2] :a =? 1]
-[a: 1 loop 1 [set/any 'a break/return 2] :a =? 1]
+[a: 1 loop 1 [set/opt 'a break/return 2] :a =? 1]
 ; the "result" of break should not be passable to functions, bug#1509
 [a: 1 loop 1 [a: error? break] :a =? 1] ; error? function takes 1 arg
 [a: 1 loop 1 [a: error? break/return 2] :a =? 1]
@@ -5834,7 +5834,7 @@
 ; the "result" of continue should not be assignable, bug#1515
 [a: 1 loop 1 [a: continue] :a =? 1]
 [a: 1 loop 1 [set 'a continue] :a =? 1]
-[a: 1 loop 1 [set/any 'a continue] :a =? 1]
+[a: 1 loop 1 [set/opt 'a continue] :a =? 1]
 ; the "result" of continue should not be passable to functions, bug#1509
 [a: 1 loop 1 [a: error? continue] :a =? 1]
 ; bug#1535
@@ -6203,7 +6203,7 @@
 ; the "result" of exit should not be assignable, bug#1515
 [a: 1 eval does [a: exit] :a =? 1]
 [a: 1 eval does [set 'a exit] :a =? 1]
-[a: 1 eval does [set/any 'a exit] :a =? 1]
+[a: 1 eval does [set/opt 'a exit] :a =? 1]
 ; the "result" of exit should not be passable to functions, bug#1509
 [a: 1 eval does [a: error? exit] :a =? 1]
 ; bug#1535
@@ -6829,7 +6829,7 @@
                 use [break] [
                     break: 1
                     f 2
-                    1 = get/any 'break
+                    1 = get/opt 'break
                 ]
             ]
         ]
@@ -7000,7 +7000,7 @@
 ; the "result" of return should not be assignable, bug#1515
 [a: 1 eval does [a: return 2] :a =? 1]
 [a: 1 eval does [set 'a return 2] :a =? 1]
-[a: 1 eval does [set/any 'a return 2] :a =? 1]
+[a: 1 eval does [set/opt 'a return 2] :a =? 1]
 ; the "result" of return should not be passable to functions, bug#1509
 [a: 1 eval does [a: error? return 2] :a =? 1]
 ; bug#1535
@@ -7035,10 +7035,10 @@
 ; the "result" of throw should not be assignable, bug#1515
 [a: 1 catch [a: throw 2] :a =? 1]
 [a: 1 catch [set 'a throw 2] :a =? 1]
-[a: 1 catch [set/any 'a throw 2] :a =? 1]
+[a: 1 catch [set/opt 'a throw 2] :a =? 1]
 [a: 1 catch/name [a: throw/name 2 'b] 'b :a =? 1]
 [a: 1 catch/name [set 'a throw/name 2 'b] 'b :a =? 1]
-[a: 1 catch/name [set/any 'a throw/name 2 'b] 'b :a =? 1]
+[a: 1 catch/name [set/opt 'a throw/name 2 'b] 'b :a =? 1]
 ; the "result" of throw should not be passable to functions, bug#1509
 [a: 1 catch [a: error? throw 2] :a =? 1]
 ; bug#1535

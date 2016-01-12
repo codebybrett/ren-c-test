@@ -59,11 +59,11 @@ make object! compose [
             return ()
         ]
 
-        error? set/any 'test-block catch-any test-block 'exception
+        error? set/opt 'test-block catch-any test-block 'exception
 
         test-block: case [
             exception [rejoin ["failed, " exceptions/:exception]]
-            not logic? get/any 'test-block ["failed, not a logic value"]
+            not logic? get/opt 'test-block ["failed, not a logic value"]
             :test-block ["succeeded"]
             true ["failed"]
         ]
@@ -149,7 +149,7 @@ make object! compose [
                         any whitespace
                         [
                             position: "%"
-                            (set/any [value next-position] transcode/next position)
+                            (set/opt [value next-position] transcode/next position)
                             :next-position
                                 |
                             ; dialect failure?
