@@ -1423,7 +1423,7 @@
 [module! = type? module [] []]
 [
     a-module: module [
-    ][
+    ] [
         ; 'var will be in the module
         var: 1
     ]
@@ -1434,7 +1434,7 @@
 [
     a-module: module [
         exports: [var]
-    ][
+    ] [
         var: 2
     ]
     import a-module
@@ -1445,7 +1445,7 @@
     var: 1
     a-module: module [
         exports: [var]
-    ][
+    ] [
         var: 2
     ]
     import a-module
@@ -10598,8 +10598,8 @@
 [block? read %./]
 [block? read %fixtures/]
 
-; We put the tests that take a long time and stress at the end.  They may need their own
-; separate file.
+; We put the tests that take a long time and stress at the end.  They may need
+; their own separate file.
 
 ; system/gc.r
 ; bug#1776, bug#2072
@@ -10631,7 +10631,7 @@
 ; Nested ajoin
 [
     nested-ajoin: func [n] [
-        either n <= 1 [n][ajoin [n space nested-ajoin n - 1]]
+        either n <= 1 [n] [ajoin [n space nested-ajoin n - 1]]
     ]
     "9 8 7 6 5 4 3 2 1" = nested-ajoin 9
 ]
@@ -10673,9 +10673,9 @@
     (ajoin ["<" intersect [a b c] [d e f]  ">"]) = "<>"
 ]
 ; reword
-[ equal? reword "$1 is $2." [1 "This" 2 "that"] "This is that." ]
-[ equal? reword/escape "A %%a is %%b." [a "fox" b "brown"] "%%" "A fox is brown." ]
-[ equal? reword/escape "I am answering you." ["I am" "Brian is" you "Adrian"] none "Brian is answering Adrian." ]
+[equal? reword "$1 is $2." [1 "This" 2 "that"] "This is that."]
+[equal? reword/escape "A %%a is %%b." [a "fox" b "brown"] "%%" "A fox is brown." ]
+[equal? reword/escape "I am answering you." ["I am" "Brian is" you "Adrian"] none "Brian is answering Adrian."]
 
 ;;
 ;; Simplest possible HTTP and HTTPS protocol smoke test
