@@ -5534,26 +5534,26 @@
     [1 + 2] = (eval/only :a 1 + 2)
 ]
 
-[unset? apply func [x [any-value!]] [get/opt 'x] [()]]
-[unset? apply func ['x [any-value!]] [get/opt 'x] [()]]
-[unset? apply func [:x [any-value!]] [get/opt 'x] [()]]
-[unset? apply func [x [any-value!]] [return get/opt 'x] [()]]
-[unset? apply func ['x [any-value!]] [return get/opt 'x] [()]]
-[unset? apply func [:x [any-value!]] [return get/opt 'x] [()]]
+[unset? apply func [x [opt-any-value!]] [get/opt 'x] [()]]
+[unset? apply func ['x [opt-any-value!]] [get/opt 'x] [()]]
+[unset? apply func [:x [opt-any-value!]] [get/opt 'x] [()]]
+[unset? apply func [x [opt-any-value!]] [return get/opt 'x] [()]]
+[unset? apply func ['x [opt-any-value!]] [return get/opt 'x] [()]]
+[unset? apply func [:x [opt-any-value!]] [return get/opt 'x] [()]]
 [error? apply :make [error! ""]]
-[error? apply func [:x [any-value!]] [return get/opt 'x] [make error! ""]]
+[error? apply func [:x [opt-any-value!]] [return get/opt 'x] [make error! ""]]
 [
-    error? apply/only func [x [any-value!]] [
+    error? apply/only func [x [opt-any-value!]] [
         return get/opt 'x
     ] head insert copy [] make error! ""
 ]
 [
-    error? apply/only func ['x [any-value!]] [
+    error? apply/only func ['x [opt-any-value!]] [
         return get/opt 'x
     ] head insert copy [] make error! ""
 ]
 [
-    error? apply/only func [:x [any-value!]] [
+    error? apply/only func [:x [opt-any-value!]] [
         return get/opt 'x
     ] head insert copy [] make error! ""
 ]
@@ -5563,7 +5563,7 @@
 [
     use [x] [
         unset 'x
-        strict-equal? first [:x] apply/only func [:x [any-value!]] [
+        strict-equal? first [:x] apply/only func [:x [opt-any-value!]] [
             return get/opt 'x
         ] [:x]
     ]
@@ -5575,7 +5575,7 @@
 [
     use [x] [
         unset 'x
-        strict-equal? 'x apply/only func [:x [any-value!]] [
+        strict-equal? 'x apply/only func [:x [opt-any-value!]] [
             return get/opt 'x
         ] [x]
     ]
