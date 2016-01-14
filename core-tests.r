@@ -821,7 +821,7 @@
 [error? make error! [type: 'script id: 'hidden]]
 [error? make error! [type: 'script id: 'bad-bad]]
 [error? make error! [type: 'script id: 'bad-make-arg]]
-[error? make error! [type: 'script id: 'bad-decode]]
+[error? make error! [type: 'script id: 'bad-utf8]]
 [error? make error! [type: 'script id: 'wrong-denom]]
 [error? make error! [type: 'script id: 'bad-compression]]
 [error? make error! [type: 'script id: 'dialect]]
