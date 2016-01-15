@@ -821,7 +821,7 @@
 [error? make error! [type: 'script id: 'hidden]]
 [error? make error! [type: 'script id: 'bad-bad]]
 [error? make error! [type: 'script id: 'bad-make-arg]]
-[error? make error! [type: 'script id: 'bad-utf8]]
+[error? make error! [type: 'internal id: 'bad-utf8]]
 [error? make error! [type: 'script id: 'wrong-denom]]
 [error? make error! [type: 'script id: 'bad-compression]]
 [error? make error! [type: 'script id: 'dialect]]
@@ -1748,9 +1748,11 @@
 [infix? get '+]
 [error? try [infix? 1]]
 [any-function? get '+]
-[error? try [do reduce [get '+ 1 2]]]
-; bug#1934
-[3 = do reduce [1 :+ 2]]
+
+; #1934
+[error? try [do reduce [1 get '+ 2]]]
+[3 = do reduce [:+ 1 2]]
+
 ; datatypes/pair.r
 [pair? 1x2]
 [not pair? 1]
