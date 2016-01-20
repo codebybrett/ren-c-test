@@ -3,6 +3,26 @@
 ; clearly, and to make the day to day testing run with 0 errors so that a
 ; log diffing is not required.
 
+; !!! #1893 suggests that there isn't value to be gained by prohibiting the
+; binding of words to frames that are off the stack.  Many factors are now
+; different in Ren-C from when that was written...where each function 
+; instance has the potential to have a unique FRAME! reified to refer to it
+; and its parameters, and where words lose their relative binding in favor
+; of specific binding--and won't be able to go back
+;
+; Mechanically it will not be possible for the binding of a dead word that
+; had a "specific binding" to be reused.  The specific binding will be to
+; a FRAME!, and in order to allow the GC of FRAME!s the words will have to
+; collapse to an ANY-FUNCTION! for documentary purposes of that binding.
+; However that "relativeness" will never be exposed.
+;
+; It's early yet to have the last word on this, but this will give an error
+; for now...so putting it in the pending tests to process later.
+[
+    word: eval func [x] ['x] 1
+    same? word bind 'x word
+]
+
 ; !!! This former bug is now an "issue", regarding what the nature and
 ; intent of non-definitional return should be.  A fair argument could be
 ; that EXIT should never be able to escape a DO or CATCH or other DO-like
@@ -41,13 +61,13 @@
 ;; rid of /local on all the internal generators.
 ; bug#2076
 [
-	o: bound? use [x] ['x]
+    o: context-of use [x] ['x]
 	3 == length? words-of append o 'self ; !!! weird test, includes /local
 ]
 ; bug#2076
 [
-	o: bound? use [x] ['x]
-	3 == length? words-of append o [self: 1] ; weird test, includes /local
+    o: context-of use [x] ['x]
+    3 == length? words-of append o [self: 1] ; weird test, includes /local
 ]
 
 [equal? mold/all #[email! ""] {#[email! ""]}]
@@ -351,8 +371,8 @@
 ]
 
 [
-	o: make object! [a: none]
-	same? bound? in o 'self bound? in o 'a
+    o: make object! [a: none]
+    same? context-of in o 'self context-of in o 'a
 ]
 
 ; bug#1745

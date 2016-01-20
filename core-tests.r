@@ -4647,7 +4647,7 @@
 [strict-not-equal? 0 1]
 ; functions/context/bind.r
 ; bug#50
-[none? bind? to word! "zzz"]
+[none? context-of to word! "zzz"]
 ; BIND works 'as expected' in object spec
 ; bug#1549
 [
@@ -4691,16 +4691,11 @@
 [not head? bind next [1] 'rebol]
 ; bug#892, bug#216
 [y: 'x eval has [x] [x: true get bind y 'x]]
-; bug#1893
-[
-    word: eval func [x] ['x] 1
-    same? word bind 'x word
-]
 ; functions/context/boundq.r
 ; functions/context/bindq.r
 [
     o: make object! [a: none]
-    same? o bound? in o 'a
+    same? o context-of in o 'a
 ]
 ; functions/context/resolve.r
 ; bug#2017: crash in RESOLVE/extend/only
