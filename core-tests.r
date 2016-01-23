@@ -237,8 +237,6 @@
 [closure! = type? closure [] ["OK"]]
 ; minimum
 [closure? closure [] []]
-; literal form
-[closure? first [#[closure! [[] []]]]]
 ; return-less return value tests
 [
     f: closure [] []
