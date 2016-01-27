@@ -1210,6 +1210,11 @@
 [eval does [reduce reduce [:self] true]]
 ; bug#2025
 [
+    ; ensure x and y are unset from previous tests, as the test here
+    ; is trying to cause an error...
+    unset 'x
+    unset 'y
+
     body: [x + y]
     f: make function! reduce [[x] body]
     g: make function! reduce [[y] body]
