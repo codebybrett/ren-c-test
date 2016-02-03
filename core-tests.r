@@ -63,6 +63,28 @@
     error? trap [take eval (foo: func [x [integer! <...>]] [x])]
 ]
 
+
+; better-than-nothing (New)APPLY tests
+
+[
+    s: apply :append [series: [a b c] value: [d e] dup: true count: 2]
+    s = [a b c d e d e]
+]
+
+
+; better-than-nothing SPECIALIZE tests
+
+[
+    append-123: specialize :append [value: [1 2 3] only: true]
+    [a b c [1 2 3] [1 2 3]] = append-123/dup [a b c] 2
+]
+[
+    append-123: specialize :append [value: [1 2 3] only: true]
+    append-123-twice: specialize :append-123 [dup: true count: 2]
+    [a b c [1 2 3] [1 2 3]] = append-123-twice [a b c]
+]
+
+
 ; datatypes/binary.r
 [binary? #{00}]
 [not binary? 1]
