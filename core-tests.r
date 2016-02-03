@@ -22,7 +22,7 @@
 ; datatypes/action.r
 [action? :abs]
 [not action? 1]
-[action! = type? :abs]
+[function! = type? :abs]
 ; bug#1659
 ; actions are active
 [1 == do reduce [:abs -1]]
@@ -467,7 +467,7 @@
 ]
 ; two-function return test
 [
-    g: closure [f [any-function!]] [f [return 1] 2]
+    g: closure [f [function!]] [f [return 1] 2]
     1 = g :do
 ]
 ; BREAK out of a closure
@@ -560,14 +560,13 @@
 ]
 ; datatypes/datatype.r
 [not datatype? 1]
-[datatype! = type? action!]
-[datatype? action!]
+[datatype! = type? function!]
+[datatype? function!]
 [datatype? binary!]
 [datatype? bitset!]
 [datatype? block!]
 [datatype? char!]
 [datatype? closure!]  ; closure! =? function! in R2/Forward, R2 2.7.7+
-[datatype? command!]
 [datatype? datatype!]
 [datatype? date!]
 [datatype? decimal!]
@@ -590,7 +589,6 @@
 [datatype? map!]  ; map! =? hash! in R2/Forward, R2 2.7.7+
 [datatype? module!]
 [datatype? money!]
-[datatype? native!]
 [datatype? none!]
 [datatype? object!]
 [datatype? pair!]
@@ -612,7 +610,7 @@
 [datatype? vector!]
 [datatype? word!]
 ; alternative literal representation
-[datatype? #[datatype! action!]]
+[datatype? #[datatype! function!]]
 ; datatypes/date.r
 [date? 25/Sep/2006]
 [not date? 1]
@@ -1127,7 +1125,7 @@
 ]
 ; two-function return tests
 [
-    g: func [f [any-function!]] [f [return 1] 2]
+    g: func [f [function!]] [f [return 1] 2]
     1 = g :do
 ]
 ; BREAK out of a function
@@ -1644,9 +1642,9 @@
     zero? x - to decimal! to money! x
 ]
 ; datatypes/native.r
-[native? :reduce]
-[not native? 1]
-[native! = type? :reduce]
+[function? :reduce]
+[not function? 1]
+[function! = type? :reduce]
 ; bug#1659
 ; natives are active
 [same? none! do reduce [:type? make none! none]]
@@ -1787,7 +1785,7 @@
 ; datatypes/op.r
 [infix? get '+]
 [error? try [infix? 1]]
-[any-function? get '+]
+[function? get '+]
 
 ; #1934
 [error? try [do reduce [1 get '+ 2]]]
@@ -2118,8 +2116,8 @@
     equal? a []
 ]
 [
-    a: action!
-    equal? :a action!
+    a: function!
+    equal? :a function!
 ]
 ; bug#1817
 [
@@ -2345,8 +2343,6 @@
 ; datatypes/typeset.r
 [typeset? any-array!]
 [typeset? to-typeset any-array!]
-[typeset? any-function!]
-[typeset? to-typeset any-function!]
 [typeset? any-path!]
 [typeset? to-typeset any-path!]
 [typeset? any-context!]
@@ -2778,7 +2774,7 @@
 ; bug#8
 [3 = first maximum-of [1 2 3]]
 ; functions/comparison/equalq.r
-; reflexivity test for native!
+; reflexivity test for native
 [equal? :abs :abs]
 [not equal? :abs :add]
 [equal? :all :all]
@@ -3422,7 +3418,7 @@
     error? try [do a]
 ]
 ; functions/comparison/equivq.r
-; reflexivity test for native!
+; reflexivity test for native
 [equiv? :abs :abs]
 [equiv? :all :all]
 [not equiv? :all :any]
@@ -3844,9 +3840,9 @@
     ]
 ]
 ; functions/comparison/sameq.r
-; reflexivity test for action!
+; reflexivity test for action
 [same? :abs :abs]
-; reflexivity test for native!
+; reflexivity test for native
 [same? :all :all]
 ; reflexivity test for infix
 [same? :+ :+]
@@ -4266,7 +4262,7 @@
 ]
 ; functions/comparison/strict-equalq.r
 [strict-equal? :abs :abs]
-; reflexivity test for native!
+; reflexivity test for native
 [strict-equal? :all :all]
 ; reflexivity test for infix
 [strict-equal? :+ :+]
@@ -5546,7 +5542,7 @@
 [[1] == head apply :insert [copy [] [1] none none none]]
 [[1] == head apply :insert [copy [] [1] none none false]]
 [[[1]] == head apply :insert [copy [] [1] none none true]]
-[native! == apply :type? [:print]]
+[function! == apply :type? [:print]]
 [get-word! == apply/only :type? [:print]]
 [1 == eval does [apply :return [1] 2]]
 ; bug#1760
@@ -6721,7 +6717,7 @@
     num = 80
 ]
 ; functions/control/halt.r
-[any-function? :halt]
+[function? :halt]
 ; functions/control/if.r
 [
     success: false
@@ -7428,7 +7424,7 @@
 [#FFFFFFFE = to-hex/size -2 8]
 ; functions/file/clean-path.r
 ; bug#35
-[any-function? :clean-path]
+[function? :clean-path]
 ; functions/file/existsq.r
 ; functions/file/make-dir.r
 ; bug#1674

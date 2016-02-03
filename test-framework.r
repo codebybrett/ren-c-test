@@ -83,7 +83,7 @@ make object! compose [
 
     process-tests: func [
         test-sources [block!]
-        emit-test [any-function!]
+        emit-test [function!]
         /local value flags
     ] [
         parse test-sources [

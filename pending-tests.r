@@ -33,11 +33,11 @@
 ; bug#539
 ; EXIT out of USE
 [
-	f: func [] [
-		use [] [exit]
-		42
-	]
-	unset? f
+    f: func [] [
+        use [] [exit]
+        42
+    ]
+    unset? f
 ]
 
 ; "exit should not be caught by try"
@@ -52,8 +52,8 @@
 ; Until such time as there's a way to make locals truly out of band, (such
 ; as using set words and saying [/local a return:])
 [
-	a-value: func [/local a] [a]
-	1 == a-value/local 1
+    a-value: func [/local a] [a]
+    1 == a-value/local 1
 ]
 
 ;; Here are some weird tests indeed, that should be fixable with the
@@ -62,7 +62,7 @@
 ; bug#2076
 [
     o: context-of use [x] ['x]
-	3 == length? words-of append o 'self ; !!! weird test, includes /local
+    3 == length? words-of append o 'self ; !!! weird test, includes /local
 ]
 ; bug#2076
 [
@@ -89,24 +89,24 @@
 
 ; datatypes/library.r
 [
-	success: library? a-library: load/library case [
-		; this needs to be system-specific
-		system/version/4 = 2 [%libc.dylib]					; OSX
-		system/version/4 = 3 [%kernel32.dll]				; Windows
-		all [
-			system/version/4 = 4
-			system/version/5 = 2
-		] [
-			%/lib/libc.so.6									; Linux libc6
-		]
-		system/version/4 = 4 [%libc.so]						; Linux
-		system/version/4 = 7 [%libc.so]						; FreeBSD
-		system/version/4 = 8 [%libc.so]						; NetBSD
-		system/version/4 = 9 [%libc.so]						; OpenBSD
-		system/version/4 = 10 [%libc.so]					; Solaris
-	]
-	free a-library
-	success
+    success: library? a-library: load/library case [
+        ; this needs to be system-specific
+        system/version/4 = 2 [%libc.dylib]                    ; OSX
+        system/version/4 = 3 [%kernel32.dll]                ; Windows
+        all [
+            system/version/4 = 4
+            system/version/5 = 2
+        ] [
+            %/lib/libc.so.6                                    ; Linux libc6
+        ]
+        system/version/4 = 4 [%libc.so]                        ; Linux
+        system/version/4 = 7 [%libc.so]                        ; FreeBSD
+        system/version/4 = 8 [%libc.so]                        ; NetBSD
+        system/version/4 = 9 [%libc.so]                        ; OpenBSD
+        system/version/4 = 10 [%libc.so]                    ; Solaris
+    ]
+    free a-library
+    success
 ]
 
 ; bug #1947
@@ -150,9 +150,9 @@
 ; object cloning
 ; bug#2050
 [
-	o: make object! [n: 'o b: reduce [func [] [n]]]
-	p: make o [n: 'p]
-	(o/b)/1 = 'o
+    o: make object! [n: 'o b: reduce [func [] [n]]]
+    p: make o [n: 'p]
+    (o/b)/1 = 'o
 ]
 
 ; bug#1947
@@ -162,19 +162,26 @@
 [equal? mold/all load "#[path! [a]]" "#[path! [a]]"]
 
 [
-	a-value: USD$1
-	"USD" = a-value/1
+    a-value: USD$1
+    "USD" = a-value/1
 ]
 
 ; path evaluation order
 [
-	a: 1x2
-	found? any [
-		error? try [b: a/(a: [3 4] 1)]
-		b = 1
-		b = 3
-	]
+    a: 1x2
+    found? any [
+        error? try [b: a/(a: [3 4] 1)]
+        b = 1
+        b = 3
+    ]
 ]
+
+; This test went through a few iterations of trying to apply apply, then
+; apply eval, and now that eval is variadic then trying to get the old
+; r3-alpha-apply to work with it is not worth it.  Moved here to consider
+; if there's some parallel test for the new apply...
+;
+[8 == eval does [return r3-alpha-apply :eval [:add false 4 4]]]
 
 ; bug#1475
 [same? 1.7976931348623157e310% load mold/all 1.7976931348623157e310%]
@@ -184,74 +191,74 @@
 
 ; datatypes/routine.r
 [
-	success: routine? case [
-		; this needs to be system-specific
-		system/version/4 = 2 [							; OSX
-			a-library: load/library %libc.dylib
-			make routine! [
-				tv [struct! []]
-				tz [struct! []]
-				return: [integer!]
-			] a-library "settimeofday"
-		]
-		system/version/4 = 3 [							; Windows
-			a-library: load/library %kernel32.dll
-			make routine! [
-				systemtime [struct! []]
-				return: [int]
-			] a-library "SetSystemTime"
-		]
-		all [system/version/4 = 4 system/version/5 = 2] [			; Linux libc6
-			a-library: %/lib/libc.so.6
-			make routine! [
-				tv [struct! []]
-				tz [struct! []]
-				return: [integer!]
-			] a-library "settimeofday"
-		]
-		system/version/4 = 4 [							; Linux
-			a-library: load/library %libc.so
-			make routine! [
-				tv [struct! []]
-				tz [struct! []]
-				return: [integer!]
-			] a-library "settimeofday"
-		]
-		system/version/4 = 7 [							; FreeBSD
-			a-library: load/library %libc.so
-			make routine! [
-				tv [struct! []]
-				tz [struct! []]
-				return: [integer!]
-			] a-library "settimeofday"
-		]
-		system/version/4 = 8 [							; NetBSD
-			a-library: load/library %libc.so
-			make routine! [
-				tv [struct! []]
-				tz [struct! []]
-				return: [integer!]
-			] a-library "settimeofday"
-		]
-		system/version/4 = 9 [							; OpenBSD
-			a-library: load/library %libc.so
-			make routine! [
-				tv [struct! []]
-				tz [struct! []]
-				return: [integer!]
-			] a-library "settimeofday"
-		]
-		system/version/4 = 10 [							; Solaris
-			a-library: load/library %libc.so
-			make routine! [
-				tv [struct! []]
-				tz [struct! []]
-				return: [integer!]
-			] a-library "settimeofday"
-		]
-	]
-	free a-library
-	success
+    success: routine? case [
+        ; this needs to be system-specific
+        system/version/4 = 2 [                            ; OSX
+            a-library: load/library %libc.dylib
+            make routine! [
+                tv [struct! []]
+                tz [struct! []]
+                return: [integer!]
+            ] a-library "settimeofday"
+        ]
+        system/version/4 = 3 [                            ; Windows
+            a-library: load/library %kernel32.dll
+            make routine! [
+                systemtime [struct! []]
+                return: [int]
+            ] a-library "SetSystemTime"
+        ]
+        all [system/version/4 = 4 system/version/5 = 2] [            ; Linux libc6
+            a-library: %/lib/libc.so.6
+            make routine! [
+                tv [struct! []]
+                tz [struct! []]
+                return: [integer!]
+            ] a-library "settimeofday"
+        ]
+        system/version/4 = 4 [                            ; Linux
+            a-library: load/library %libc.so
+            make routine! [
+                tv [struct! []]
+                tz [struct! []]
+                return: [integer!]
+            ] a-library "settimeofday"
+        ]
+        system/version/4 = 7 [                            ; FreeBSD
+            a-library: load/library %libc.so
+            make routine! [
+                tv [struct! []]
+                tz [struct! []]
+                return: [integer!]
+            ] a-library "settimeofday"
+        ]
+        system/version/4 = 8 [                            ; NetBSD
+            a-library: load/library %libc.so
+            make routine! [
+                tv [struct! []]
+                tz [struct! []]
+                return: [integer!]
+            ] a-library "settimeofday"
+        ]
+        system/version/4 = 9 [                            ; OpenBSD
+            a-library: load/library %libc.so
+            make routine! [
+                tv [struct! []]
+                tz [struct! []]
+                return: [integer!]
+            ] a-library "settimeofday"
+        ]
+        system/version/4 = 10 [                            ; Solaris
+            a-library: load/library %libc.so
+            make routine! [
+                tv [struct! []]
+                tz [struct! []]
+                return: [integer!]
+            ] a-library "settimeofday"
+        ]
+    ]
+    free a-library
+    success
 ]
 
 ; bug#1947
@@ -273,52 +280,52 @@
 ; literal form
 [struct? #[struct! [] []]]
 [
-	s: make string! 15
-	addr: func [s] [copy third make struct! [s [string!]] reduce [s]]
-	(addr s) = (addr insert/dup s #"0" 15)
+    s: make string! 15
+    addr: func [s] [copy third make struct! [s [string!]] reduce [s]]
+    (addr s) = (addr insert/dup s #"0" 15)
 ]
 [false = not make struct! [] none]
 [
-	a-value: make struct! [] none
-	f: does [:a-value]
-	same? third :a-value third f
+    a-value: make struct! [] none
+    f: does [:a-value]
+    same? third :a-value third f
 ]
 [
-	a-value: make struct! [i [integer!]] [1]
-	1 == a-value/i
+    a-value: make struct! [i [integer!]] [1]
+    1 == a-value/i
 ]
 [
-	a-value: make struct! [] none
-	same? third :a-value third all [:a-value]
+    a-value: make struct! [] none
+    same? third :a-value third all [:a-value]
 ]
 [
-	a-value: make struct! [] none
-	same? third :a-value third all [true :a-value]
+    a-value: make struct! [] none
+    same? third :a-value third all [true :a-value]
 ]
 [
-	a-value: make struct! [] none
-	true = all [:a-value true]
+    a-value: make struct! [] none
+    true = all [:a-value true]
 ]
 [
-	a-value: make struct! [] none
-	same? third :a-value third do reduce [:a-value]
+    a-value: make struct! [] none
+    same? third :a-value third do reduce [:a-value]
 ]
 [
-	a-value: make struct! [] none
-	same? third :a-value third do :a-value
+    a-value: make struct! [] none
+    same? third :a-value third do :a-value
 ]
 [if make struct! [] none [true]]
 [
-	a-value: make struct! [] none
-	same? third :a-value third any [:a-value]
+    a-value: make struct! [] none
+    same? third :a-value third any [:a-value]
 ]
 [
-	a-value: make struct! [] none
-	same? third :a-value third any [false :a-value]
+    a-value: make struct! [] none
+    same? third :a-value third any [false :a-value]
 ]
 [
-	a-value: make struct! [] none
-	same? third :a-value third any [:a-value false]
+    a-value: make struct! [] none
+    same? third :a-value third any [:a-value false]
 ]
 
 
@@ -334,24 +341,24 @@
 ; Slight differences.
 ; bug#1133
 [
-	a-value: construct/only [c: $1]
-	b-value: construct/only [c: 100%]
-	equal? a-value b-value
+    a-value: construct/only [c: $1]
+    b-value: construct/only [c: 100%]
+    equal? a-value b-value
 ]
 [
-	a-value: construct/only [
-		a: 1 b: 1.0 c: $1 d: 1%
-		e: [a 'a :a a: /a #"a" #{00}]
-		f: ["a" #a http://a a@a.com <a>]
-		g: :a/b/(c: 'd/e/f)/(b/d: [:f/g h/i])
-	]
-	b-value: construct/only [
-		a: 1.0 b: $1 c: 100% d: 0.01
-		e: [/a a 'a :a a: #"A" #[binary! #{0000} 2]]
-		f: [#a <A> http://A a@A.com "A"]
-		g: :a/b/(c: 'd/e/f)/(b/d: [:f/g h/i])
-	]
-	equal? a-value b-value
+    a-value: construct/only [
+        a: 1 b: 1.0 c: $1 d: 1%
+        e: [a 'a :a a: /a #"a" #{00}]
+        f: ["a" #a http://a a@a.com <a>]
+        g: :a/b/(c: 'd/e/f)/(b/d: [:f/g h/i])
+    ]
+    b-value: construct/only [
+        a: 1.0 b: $1 c: 100% d: 0.01
+        e: [/a a 'a :a a: #"A" #[binary! #{0000} 2]]
+        f: [#a <A> http://A a@A.com "A"]
+        g: :a/b/(c: 'd/e/f)/(b/d: [:f/g h/i])
+    ]
+    equal? a-value b-value
 ]
 
 ; error! difference in infix code
@@ -366,8 +373,8 @@
 
 ; bug#2086
 [
-	bind next block: [a a] use [a] ['a]
-	same? 'a first block
+    bind next block: [a a] use [a] ['a]
+    same? 'a first block
 ]
 
 [
@@ -392,51 +399,51 @@
 
 ; #1906
 [
-	b: copy [] insert/dup b 1 32768 compose b
+    b: copy [] insert/dup b 1 32768 compose b
 ]
 
 ; bug#539
 [
-	f1: does [do "return 1 2" 2]
-	1 = f1
+    f1: does [do "return 1 2" 2]
+    1 = f1
 ]
 
 ; bug#1136
 #64bit
 [
-	num: 0
-	for i 9223372036854775807 9223372036854775807 1 [
-		num: num + 1
-		either num > 1 [break/return false] [true]
-	]
+    num: 0
+    for i 9223372036854775807 9223372036854775807 1 [
+        num: num + 1
+        either num > 1 [break/return false] [true]
+    ]
 ]
 #64bit
 [
-	num: 0
-	for i -9223372036854775808 -9223372036854775808 -1 [
-		num: num + 1
-		either num > 1 [break/return false] [true]
-	]
+    num: 0
+    for i -9223372036854775808 -9223372036854775808 -1 [
+        num: num + 1
+        either num > 1 [break/return false] [true]
+    ]
 ]
 ; bug#1994
 #64bit
 [
-	num: 0
-	for i 9223372036854775807 9223372036854775807 9223372036854775807 [
-		num: num + 1
-		if num <> 1 [break/return false]
-		true
-	]
+    num: 0
+    for i 9223372036854775807 9223372036854775807 9223372036854775807 [
+        num: num + 1
+        if num <> 1 [break/return false]
+        true
+    ]
 ]
 
 #64bit
 [
-	num: 0
-	for i -9223372036854775808 -9223372036854775808 -9223372036854775808 [
-		num: num + 1
-		if num <> 1 [break/return false]
-		true
-	]
+    num: 0
+    for i -9223372036854775808 -9223372036854775808 -9223372036854775808 [
+        num: num + 1
+        if num <> 1 [break/return false]
+        true
+    ]
 ]
 
 ; bug#1993
@@ -447,17 +454,17 @@
 [[1x1 2x1 1x2 2x2] == collect [repeat i 2x2 [keep i]]]
 
 [  ; bug#1519
-	success: true
-	cycle?: true
-	while [if cycle? [cycle?: false continue success: false] cycle?] []
-	success
+    success: true
+    cycle?: true
+    while [if cycle? [cycle?: false continue success: false] cycle?] []
+    success
 ]
 
 ; closure mold
 ; bug#23
 [
-	c: closure [a] [print a]
-	equal? "make closure! [[a] [print a]]" mold :c
+    c: closure [a] [print a]
+    equal? "make closure! [[a] [print a]]" mold :c
 ]
 
 ; bug#12
@@ -470,8 +477,8 @@
 
 ; bug#1894
 [
-	port: open/new %pokus.txt
-	append port newline
+    port: open/new %pokus.txt
+    append port newline
 ]
 
 #64bit
@@ -482,23 +489,23 @@
 
 ; functions/series/deline.r
 [
-	equal?
-		"^/"
-		deline case [
-			system/version/4 = 3  "^M^/" ; CR LF on Windows
-			true                  "^/"   ; LF elsewhere
-		]
+    equal?
+        "^/"
+        deline case [
+            system/version/4 = 3  "^M^/" ; CR LF on Windows
+            true                  "^/"   ; LF elsewhere
+        ]
 ]
 
 ; functions/series/enline.r
 ; bug#2191
 [
-	equal?
-		enline "^/"
-		case [
-			system/version/4 = 3  "^M^/" ; CR LF on Windows
-			true                  "^/"   ; LF elsewhere
-		]
+    equal?
+        enline "^/"
+        case [
+            system/version/4 = 3  "^M^/" ; CR LF on Windows
+            true                  "^/"   ; LF elsewhere
+        ]
 ]
 
 ; bug#647
@@ -506,21 +513,21 @@
 
 ; bug#854
 [
-	a: <0>
-	b: make tag! 0
-	insert b first a
-	a == b
+    a: <0>
+    b: make tag! 0
+    insert b first a
+    a == b
 ]
 
 [
-	; The results of decoding lossless encodings should be identical.
-	bmp-img: decode 'bmp read %fixtures/rebol-logo.bmp
-	gif-img: decode 'gif read %fixtures/rebol-logo.gif
-	png-img: decode 'gif read %fixtures/rebol-logo.png
-	all [
-		bmp-img == gif-img
-		bmp-img == png-img
-	]
+    ; The results of decoding lossless encodings should be identical.
+    bmp-img: decode 'bmp read %fixtures/rebol-logo.bmp
+    gif-img: decode 'gif read %fixtures/rebol-logo.gif
+    png-img: decode 'gif read %fixtures/rebol-logo.png
+    all [
+        bmp-img == gif-img
+        bmp-img == png-img
+    ]
 ]
 
 [[<b> "hello" </b>] == decode 'markup "<b>hello</b>"]
@@ -543,32 +550,32 @@
 ; system/clipboard.r
 ; empty clipboard
 [
-	write clipboard:// ""
-	c: read clipboard://
-	all [string? c empty? c]
+    write clipboard:// ""
+    c: read clipboard://
+    all [string? c empty? c]
 ]
 ; ASCII string
 [
-	write clipboard:// c: "This is a test."
-	d: read clipboard://
-	strict-equal? c d
+    write clipboard:// c: "This is a test."
+    d: read clipboard://
+    strict-equal? c d
 ]
 ; Unicode string
 [
-	write clipboard:// c: "Příliš žluťoučký kůň úpěl ďábelské ódy."
-	strict-equal? read clipboard:// c
+    write clipboard:// c: "Příliš žluťoučký kůň úpěl ďábelské ódy."
+    strict-equal? read clipboard:// c
 ]
 ; OPEN
 ; bug#1968
 [
-	p: open clipboard://
-	append p c: "Clipboard port test"
-	strict-equal? c copy p
+    p: open clipboard://
+    append p c: "Clipboard port test"
+    strict-equal? c copy p
 ]
 [
-	p: open clipboard://
-	write p c: "Clipboard port test"
-	strict-equal? c read p
+    p: open clipboard://
+    write p c: "Clipboard port test"
+    strict-equal? c read p
 ]
 ; WRITE shall return a port in R3
 [equal? read write clipboard:// c: "test" c]
