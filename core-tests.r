@@ -1217,10 +1217,10 @@
     f-value: f none none
     error? try [g compose [2 * (f-value)] 21]  ; re-entering different function
 ]
-; bug#19
+; bug#19 - but duplicate specializations currently not legal in Ren-C
 [
     f: func [/r x] [x]
-    2 == f/r/r 1 2
+    error? trap [2 == f/r/r 1 2]
 ]
 ; bug#27
 [error? try [(type?) 1]]
@@ -5512,49 +5512,47 @@
 ]
 ; functions/control/apply.r
 ; bug#44
-[error? try [apply 'type?/word []]]
-; EVAL is special
-[8 == eval does [return apply :eval [:add false 4 4]]]
-[1 == apply :subtract [2 1]]
+[error? try [r3-alpha-apply 'type?/word []]]
+[1 == r3-alpha-apply :subtract [2 1]]
 ; Infix OP! is not supported by user-mode APPLY, as it is a legacy concept
 ; in the first place and this is likely to be uncommon.
-[error? trap [apply :- [2 1]]]
-[error? try [apply func [a] [a] []]]
-[error? try [apply/only func [a] [a] []]]
+[error? trap [r3-alpha-apply :- [2 1]]]
+[error? try [r3-alpha-apply func [a] [a] []]]
+[error? try [r3-alpha-apply/only func [a] [a] []]]
 
 ; CC#2237
-[error? try [apply func [a] [a] [1 2]]]
-[error? try [apply/only func [a] [a] [1 2]]]
+[error? try [r3-alpha-apply func [a] [a] [1 2]]]
+[error? try [r3-alpha-apply/only func [a] [a] [1 2]]]
 
-['a = apply func [/a] [a] [true]]
-[none == apply func [/a] [a] [false]]
-[none == apply func [/a] [a] []]
-['a = apply/only func [/a] [a] [true]]
+['a = r3-alpha-apply func [/a] [a] [true]]
+[none == r3-alpha-apply func [/a] [a] [false]]
+[none == r3-alpha-apply func [/a] [a] []]
+['a = r3-alpha-apply/only func [/a] [a] [true]]
 ; the word 'false
-['a = apply/only func [/a] [a] [false]]
-[none == apply/only func [/a] [a] []]
-[use [a] [a: true 'a = apply func [/a] [a] [a]]]
-[use [a] [a: false none == apply func [/a] [a] [a]]]
-[use [a] [a: false 'a = apply func [/a] [a] ['a]]]
-[use [a] [a: false 'a = apply func [/a] [a] [/a]]]
-[use [a] [a: false 'a = apply/only func [/a] [a] [a]]]
-[group! == apply/only :type? [()]]
-[[1] == head apply :insert [copy [] [1] none none none]]
-[[1] == head apply :insert [copy [] [1] none none false]]
-[[[1]] == head apply :insert [copy [] [1] none none true]]
-[function! == apply :type? [:print]]
-[get-word! == apply/only :type? [:print]]
-[1 == eval does [apply :return [1] 2]]
+['a = r3-alpha-apply/only func [/a] [a] [false]]
+[none == r3-alpha-apply/only func [/a] [a] []]
+[use [a] [a: true 'a = r3-alpha-apply func [/a] [a] [a]]]
+[use [a] [a: false none == r3-alpha-apply func [/a] [a] [a]]]
+[use [a] [a: false 'a = r3-alpha-apply func [/a] [a] ['a]]]
+[use [a] [a: false 'a = r3-alpha-apply func [/a] [a] [/a]]]
+[use [a] [a: false 'a = r3-alpha-apply/only func [/a] [a] [a]]]
+[group! == r3-alpha-apply/only :type? [()]]
+[[1] == head r3-alpha-apply :insert [copy [] [1] none none none]]
+[[1] == head r3-alpha-apply :insert [copy [] [1] none none false]]
+[[[1]] == head r3-alpha-apply :insert [copy [] [1] none none true]]
+[function! == r3-alpha-apply :type? [:print]]
+[get-word! == r3-alpha-apply/only :type? [:print]]
+[1 == eval does [r3-alpha-apply :return [1] 2]]
 ; bug#1760
-[1 == eval does [apply does [] [return 1] 2]]
+[1 == eval does [r3-alpha-apply does [] [return 1] 2]]
 ; bug#1760
-[1 == eval does [apply func [a] [a] [return 1] 2]]
+[1 == eval does [r3-alpha-apply func [a] [a] [return 1] 2]]
 ; bug#1760
-[1 == eval does [apply does [] [return 1]]]
-[1 == eval does [apply func [a] [a] [return 1]]]
-[1 == eval does [apply :also [return 1 2]]]
+[1 == eval does [r3-alpha-apply does [] [return 1]]]
+[1 == eval does [r3-alpha-apply func [a] [a] [return 1]]]
+[1 == eval does [r3-alpha-apply :also [return 1 2]]]
 ; bug#1760
-[1 == eval does [apply :also [2 return 1]]]
+[1 == eval does [r3-alpha-apply :also [2 return 1]]]
 
 ; EVAL/ONLY
 [
@@ -5567,48 +5565,48 @@
     [1 + 2] = (eval/only :a 1 + 2)
 ]
 
-[unset? apply func [x [opt-any-value!]] [get/opt 'x] [()]]
-[unset? apply func ['x [opt-any-value!]] [get/opt 'x] [()]]
-[unset? apply func [:x [opt-any-value!]] [get/opt 'x] [()]]
-[unset? apply func [x [opt-any-value!]] [return get/opt 'x] [()]]
-[unset? apply func ['x [opt-any-value!]] [return get/opt 'x] [()]]
-[unset? apply func [:x [opt-any-value!]] [return get/opt 'x] [()]]
-[error? apply :make [error! ""]]
-[error? apply func [:x [opt-any-value!]] [return get/opt 'x] [make error! ""]]
+[unset? r3-alpha-apply func [x [opt-any-value!]] [get/opt 'x] [()]]
+[unset? r3-alpha-apply func ['x [opt-any-value!]] [get/opt 'x] [()]]
+[unset? r3-alpha-apply func [:x [opt-any-value!]] [get/opt 'x] [()]]
+[unset? r3-alpha-apply func [x [opt-any-value!]] [return get/opt 'x] [()]]
+[unset? r3-alpha-apply func ['x [opt-any-value!]] [return get/opt 'x] [()]]
+[unset? r3-alpha-apply func [:x [opt-any-value!]] [return get/opt 'x] [()]]
+[error? r3-alpha-apply :make [error! ""]]
+[error? r3-alpha-apply func [:x [opt-any-value!]] [return get/opt 'x] [make error! ""]]
 [
-    error? apply/only func [x [opt-any-value!]] [
+    error? r3-alpha-apply/only func [x [opt-any-value!]] [
         return get/opt 'x
     ] head insert copy [] make error! ""
 ]
 [
-    error? apply/only func ['x [opt-any-value!]] [
+    error? r3-alpha-apply/only func ['x [opt-any-value!]] [
         return get/opt 'x
     ] head insert copy [] make error! ""
 ]
 [
-    error? apply/only func [:x [opt-any-value!]] [
+    error? r3-alpha-apply/only func [:x [opt-any-value!]] [
         return get/opt 'x
     ] head insert copy [] make error! ""
 ]
-[use [x] [x: 1 strict-equal? 1 apply func ['x] [:x] [:x]]]
-[use [x] [x: 1 strict-equal? 1 apply func ['x] [:x] [:x]]]
-[use [x] [x: 1 strict-equal? first [:x] apply/only func [:x] [:x] [:x]]]
+[use [x] [x: 1 strict-equal? 1 r3-alpha-apply func ['x] [:x] [:x]]]
+[use [x] [x: 1 strict-equal? 1 r3-alpha-apply func ['x] [:x] [:x]]]
+[use [x] [x: 1 strict-equal? first [:x] r3-alpha-apply/only func [:x] [:x] [:x]]]
 [
     use [x] [
         unset 'x
-        strict-equal? first [:x] apply/only func [:x [opt-any-value!]] [
+        strict-equal? first [:x] r3-alpha-apply/only func [:x [opt-any-value!]] [
             return get/opt 'x
         ] [:x]
     ]
 ]
-[use [x] [x: 1 strict-equal? 1 apply func [:x] [:x] [x]]]
-[use [x] [x: 1 strict-equal? 'x apply func [:x] [:x] ['x]]]
-[use [x] [x: 1 strict-equal? 'x apply/only func [:x] [:x] [x]]]
-[use [x] [x: 1 strict-equal? 'x apply/only func [:x] [return :x] [x]]]
+[use [x] [x: 1 strict-equal? 1 r3-alpha-apply func [:x] [:x] [x]]]
+[use [x] [x: 1 strict-equal? 'x r3-alpha-apply func [:x] [:x] ['x]]]
+[use [x] [x: 1 strict-equal? 'x r3-alpha-apply/only func [:x] [:x] [x]]]
+[use [x] [x: 1 strict-equal? 'x r3-alpha-apply/only func [:x] [return :x] [x]]]
 [
     use [x] [
         unset 'x
-        strict-equal? 'x apply/only func [:x [opt-any-value!]] [
+        strict-equal? 'x r3-alpha-apply/only func [:x [opt-any-value!]] [
             return get/opt 'x
         ] [x]
     ]
