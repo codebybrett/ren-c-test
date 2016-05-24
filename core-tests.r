@@ -2400,7 +2400,7 @@
 ; bug#68
 [unset? to unset! none]
 [unset? to unset! 1]
-[error? try [a: ()]]
+[unset? try [a: ()]]
 [error? try [a: () a]]
 [not error? try [set/opt 'a ()]]
 ; datatypes/url.r
@@ -4778,13 +4778,13 @@
 [
     a: none
     unset 'a
-    not value? 'a
+    not set? 'a
 ]
 [
     a: none
     unset 'a
     unset 'a
-    not value? 'a
+    not set? 'a
 ]
 ; functions/context/use.r
 ; local word test
@@ -4831,10 +4831,10 @@
     1 = f
 ]
 ; functions/context/valueq.r
-[false == value? 'nonsense]
-[true == value? 'value?]
-; bug#1914
-[false == value? eval func [x] ['x] none]
+[false == set? 'nonsense]
+[true == set? 'set?]
+; #1914 ... Ren-C indefinite extent prioritizes failure if not indefinite
+[error? try [set? eval func [x] ['x] none]]
 ; functions/control/all.r
 ; zero values
 [true == all []]
@@ -10264,8 +10264,8 @@
 [equal? make typeset! [integer!] intersect make typeset! [decimal! integer!] make typeset! [integer!]]
 ; functions/series/last.r
 ; bug#2
-[value? try [last #"c"]]
-[value? try [last 7]]
+[error? try [last #"c"]]
+[error? try [last 7]]
 ; functions/series/lengthq.r
 ; bug#1626: "Allow LENGTH? to take none as an argument, return none"
 ; bug#1688: "LENGTH? NONE returns TRUE" (should return NONE)
@@ -10620,7 +10620,7 @@
 ; bug#1679
 ["foo" == to string! decompress/gzip #{1F8B0800EF46BE4C00034BCBCF07002165738C03000000}]
 ; bug#3
-[value? try [decompress #{AAAAAAAAAAAAAAAAAAAA}]]
+[error? try [decompress #{AAAAAAAAAAAAAAAAAAAA}]]
 ; functions/string/dehex.r
 ["a%b" = dehex "a%b"]
 ["a%~b" = dehex "a%~b"]
