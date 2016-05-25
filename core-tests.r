@@ -1682,7 +1682,7 @@
 [none = make none! none]
 [none = to none! none]
 [none = to none! 1]
-["none" = mold none]
+["_" = mold none]
 ; bug#1666
 ; bug#1650
 [
@@ -3796,8 +3796,6 @@
 [equiv? 'a 'A]
 ; symmetry
 [equal? equiv? 'a 'A equiv? 'A 'a]
-; binding
-[not equiv? 'a use [a] ['a]]
 ; symmetry
 [equal? equiv? 'a use [a] ['a] equiv? use [a] ['a] 'a]
 ; different word types
@@ -4635,8 +4633,8 @@
 [not strict-equal? 'a 'A]
 ; symmetry
 [equal? strict-equal? 'a 'A strict-equal? 'A 'a]
-; binding
-[not strict-equal? 'a use [a] ['a]]
+; binding not checked by STRICT-EQUAL? in Ren-C (only casing and type)
+[strict-equal? 'a use [a] ['a]]
 ; symmetry
 [equal? strict-equal? 'a use [a] ['a] strict-equal? use [a] ['a] 'a]
 ; different word types

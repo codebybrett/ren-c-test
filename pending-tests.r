@@ -603,3 +603,13 @@
 
 ; bug#2214
 [not parse "abcd" rule: ["ab" (clear rule) "cd"]]
+
+; !!! The general issue of tying up Rebol with more notions of equality
+; without getting the existing ones right is suspect.  Ren-C simplified matters
+; and left EQUIV? as a synonym for EQUAL? at the present time, with the option
+; that it may be a form of equality that returns in the future.
+;
+; With EQUIV? as a synonym for EQUAL, the following test (whatever it was
+; supposed to test) started to fail.
+;
+[not equiv? 'a use [a] ['a]]
