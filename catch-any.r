@@ -72,7 +72,7 @@ make object! [
                 ]
             ]
         ]
-        either get exception [#[unset!]] [:result]
+        either get exception [()] [:result]
     ]] [[
         error? set/opt 'result catch [
             error? set/opt 'result loop 1 [

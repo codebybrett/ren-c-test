@@ -3,6 +3,46 @@
 ; clearly, and to make the day to day testing run with 0 errors so that a
 ; log diffing is not required.
 
+; This is a lot of different ways of saying "REDUCE errors when an expression
+; evaluates to void".  While this is inconvenient for using blocks to erase
+; the state of variables, that is what NONE! (blank) is for...to serve as
+; a reified value placeholder when you don't have a value.
+
+[a: 1 set [a] reduce [2 ()] a = 2]
+[x: construct [a: 1] set x reduce [2 ()] x/a = 2]
+[a: 1 set/opt [a] reduce [()] void? get/opt 'a]
+[a: 1 b: 2 set/opt [a b] reduce [3 ()] all [a = 3 void? get/opt 'b]]
+[x: construct [a: 1] set/opt x reduce [()] void? get/opt in x 'a]
+[x: construct [a: 1 b: 2] set/opt x reduce [3 ()] all [a = 3 void? get/opt in x 'b]]
+[
+    blk: reduce [()]
+    blk = compose blk
+]
+
+; UNSET! is not a datatype in Ren-C.  This cites "bug#799" so investigate to
+; see if that is still relevant.
+;
+[typeset? complement make typeset! [unset!]]
+
+; There is an issue with doing a MAKE FRAME! for a definitional return and
+; then DOing that frame.  The problem is that while the behavior of each
+; RETURN looks like a unique function, it isn't.  So if you try to execute
+; the frame to call the "Unique" function, there is no way to target that
+; instance.  So the `exit_from` frame inside the definitional return has
+; to get tunneled in somehow as the "function" of the definitional return
+; to know where to make the call.
+;
+; Technically possible.  Just not on the priority list ATM.
+;
+[1 == eval does [r3-alpha-apply :return [1] 2]]
+
+; For bridging purposes, MAKE is currently a "sniffing" variadic.  These are
+; evil, but helpful because it wants to examine its arguments before deciding
+; whether to evaluate or quote them at the callsite.  So long as it is evil
+; it will not be easily amenable to APPLY.
+;
+[error? r3-alpha-apply :make [error! ""]]
+
 ; !!! #1893 suggests that there isn't value to be gained by prohibiting the
 ; binding of words to frames that are off the stack.  Many factors are now
 ; different in Ren-C from when that was written...where each function 

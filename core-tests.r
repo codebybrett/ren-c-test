@@ -299,7 +299,7 @@
 ; return-less return value tests
 [
     f: closure [] []
-    unset? f
+    void? f
 ]
 [
     f: closure [] [:abs]
@@ -474,7 +474,7 @@
 ]
 [
     f: closure [] [()]
-    unset? f
+    void? f
 ]
 [
     f: closure [] ['a]
@@ -627,7 +627,6 @@
 [datatype? time!]
 [datatype? tuple!]
 [datatype? typeset!]  ; typeset! =? block! in R2/Forward, R2 2.7.7+
-[datatype? unset!]
 [datatype? url!]
 [datatype? vector!]
 [datatype? word!]
@@ -964,7 +963,7 @@
 ; return-less return value tests
 [
     f: does []
-    unset? f
+    void? f
 ]
 [
     f: does [:abs]
@@ -1139,7 +1138,7 @@
 ]
 [
     f: does [()]
-    unset? f
+    void? f
 ]
 [
     f: does ['a]
@@ -1305,7 +1304,7 @@
 ]
 [
     unset 'a
-    unset? :a
+    void? :a
 ]
 ; datatypes/gob.r
 ; minimum
@@ -2393,14 +2392,11 @@
     not x = now
 ]
 ; datatypes/unset.r
-[unset? ()]
-[unset! == type? ()]
-[not unset? 1]
-[unset? make unset! none]
+[void? ()]
+[none? type? ()]
+[not void? 1]
 ; bug#68
-[unset? to unset! none]
-[unset? to unset! 1]
-[unset? try [a: ()]]
+[void? try [a: ()]]
 [error? try [a: () a]]
 [not error? try [set/opt 'a ()]]
 ; datatypes/url.r
@@ -3384,7 +3380,7 @@
 [not (() = none)]
 ; basic comparison with unset first argument succeeds with != op
 ; Code in R3 mezzanines depends on this.
-[() != none]
+[() <> none]
 ; basic comparison with unset second argument fails with = op
 [not none = ()]
 ; basic comparison with unset second argument fails with != op
@@ -4759,19 +4755,13 @@
 ; functions/context/set.r
 ; bug#1763
 [a: 1 all [error? try [set [a] reduce [()]] a = 1]]
-[a: 1 set [a] reduce [2 ()] a = 2]
 [a: 1 attempt [set [a b] reduce [2 ()]] a = 1]
 [x: construct [a: 1] all [error? try [set x reduce [()]] x/a = 1]]
-[x: construct [a: 1] set x reduce [2 ()] x/a = 2]
 [x: construct [a: 1 b: 2] all [error? try [set x reduce [3 ()]] x/a = 1]]
-[a: 1 set/opt [a] reduce [()] unset? get/opt 'a]
-[a: 1 b: 2 set/opt [a b] reduce [3 ()] all [a = 3 unset? get/opt 'b]]
-[x: construct [a: 1] set/opt x reduce [()] unset? get/opt in x 'a]
-[x: construct [a: 1 b: 2] set/opt x reduce [3 ()] all [a = 3 unset? get/opt in x 'b]]
 ; set [:get-word] [word]
 [a: 1 b: none set [:b] [a] b =? 1]
 [unset 'a b: none all [error? try [set [:b] [a]] none? b]]
-[unset 'a b: none set/opt [:b] [a] unset? get/opt 'b]
+[unset 'a b: none set/opt [:b] [a] void? get/opt 'b]
 ; functions/context/unset.r
 [
     a: none
@@ -4797,7 +4787,7 @@
     a = 1
 ]
 ; initialization (lack of)
-[a: 10 all [use [a] [unset? :a] a = 10]]
+[a: 10 all [use [a] [void? :a] a = 10]]
 ; BREAK out of USE
 [
     1 = loop 1 [
@@ -5534,9 +5524,7 @@
 ; bug#44
 [error? try [r3-alpha-apply 'type?/word []]]
 [1 == r3-alpha-apply :subtract [2 1]]
-; Infix OP! is not supported by user-mode APPLY, as it is a legacy concept
-; in the first place and this is likely to be uncommon.
-[error? trap [r3-alpha-apply :- [2 1]]]
+[1 = (r3-alpha-apply :- [2 1])]
 [error? try [r3-alpha-apply func [a] [a] []]]
 [error? try [r3-alpha-apply/only func [a] [a] []]]
 
@@ -5562,7 +5550,6 @@
 [[[1]] == head r3-alpha-apply :insert [copy [] [1] none none true]]
 [function! == r3-alpha-apply :type? [:print]]
 [get-word! == r3-alpha-apply/only :type? [:print]]
-[1 == eval does [r3-alpha-apply :return [1] 2]]
 ; bug#1760
 [1 == eval does [r3-alpha-apply does [] [return 1] 2]]
 ; bug#1760
@@ -5585,26 +5572,25 @@
     [1 + 2] = (eval/only :a 1 + 2)
 ]
 
-[unset? r3-alpha-apply func [x [opt-any-value!]] [get/opt 'x] [()]]
-[unset? r3-alpha-apply func ['x [opt-any-value!]] [get/opt 'x] [()]]
-[unset? r3-alpha-apply func [:x [opt-any-value!]] [get/opt 'x] [()]]
-[unset? r3-alpha-apply func [x [opt-any-value!]] [return get/opt 'x] [()]]
-[unset? r3-alpha-apply func ['x [opt-any-value!]] [return get/opt 'x] [()]]
-[unset? r3-alpha-apply func [:x [opt-any-value!]] [return get/opt 'x] [()]]
-[error? r3-alpha-apply :make [error! ""]]
-[error? r3-alpha-apply func [:x [opt-any-value!]] [return get/opt 'x] [make error! ""]]
+[void? r3-alpha-apply func [x [<opt> any-value!]] [get/opt 'x] [()]]
+[void? r3-alpha-apply func ['x [<opt> any-value!]] [get/opt 'x] [()]]
+[void? r3-alpha-apply func [:x [<opt> any-value!]] [get/opt 'x] [()]]
+[void? r3-alpha-apply func [x [<opt> any-value!]] [return get/opt 'x] [()]]
+[void? r3-alpha-apply func ['x [<opt> any-value!]] [return get/opt 'x] [()]]
+[void? r3-alpha-apply func [:x [<opt> any-value!]] [return get/opt 'x] [()]]
+[error? r3-alpha-apply func [:x [<opt> any-value!]] [return get/opt 'x] [make error! ""]]
 [
-    error? r3-alpha-apply/only func [x [opt-any-value!]] [
+    error? r3-alpha-apply/only func [x [<opt> any-value!]] [
         return get/opt 'x
     ] head insert copy [] make error! ""
 ]
 [
-    error? r3-alpha-apply/only func ['x [opt-any-value!]] [
+    error? r3-alpha-apply/only func ['x [<opt> any-value!]] [
         return get/opt 'x
     ] head insert copy [] make error! ""
 ]
 [
-    error? r3-alpha-apply/only func [:x [opt-any-value!]] [
+    error? r3-alpha-apply/only func [:x [<opt> any-value!]] [
         return get/opt 'x
     ] head insert copy [] make error! ""
 ]
@@ -5614,7 +5600,7 @@
 [
     use [x] [
         unset 'x
-        strict-equal? first [:x] r3-alpha-apply/only func [:x [opt-any-value!]] [
+        strict-equal? first [:x] r3-alpha-apply/only func [:x [<opt> any-value!]] [
             return get/opt 'x
         ] [:x]
     ]
@@ -5626,7 +5612,7 @@
 [
     use [x] [
         unset 'x
-        strict-equal? 'x r3-alpha-apply/only func [:x [opt-any-value!]] [
+        strict-equal? 'x r3-alpha-apply/only func [:x [<opt> any-value!]] [
             return get/opt 'x
         ] [x]
     ]
@@ -5635,7 +5621,7 @@
 ; bug#41
 [none? attempt [1 / 0]]
 [1 = attempt [1]]
-[unset? attempt []]
+[void? attempt []]
 ; RETURN stops attempt evaluation
 [
     f1: does [attempt [return 1 2] 2]
@@ -5644,7 +5630,7 @@
 ; THROW stops attempt evaluation
 [1 == catch [attempt [throw 1 2] 2]]
 ; BREAK stops attempt evaluation
-[unset? loop 1 [attempt [break 2] 2]]
+[void? loop 1 [attempt [break 2] 2]]
 [1 == loop 1 [attempt [break/return 1 2] 2]]
 ; recursion
 [1 = attempt [attempt [1]]]
@@ -5659,12 +5645,12 @@
 ; just testing return values, but written as if break could fail altogether
 ; in case that becomes an issue. break failure tests are with the functions
 ; that they are failing to break from.
-[unset? loop 1 [break 2]]
+[void? loop 1 [break 2]]
 ; break/return should return argument
 [none? loop 1 [break/return none 2]]
 [false =? loop 1 [break/return false 2]]
 [true =? loop 1 [break/return true 2]]
-[unset? loop 1 [break/return () 2]]
+[void? loop 1 [break/return () 2]]
 [error? loop 1 [break/return try [1 / 0] 2]]
 ; the "result" of break should not be assignable, bug#1515
 [a: 1 loop 1 [a: break] :a =? 1]
@@ -5702,9 +5688,9 @@
     case [false [success: false]]
     success
 ]
-[unset? case []]
+[void? case []]
 ;-- CC#2246
-[unset? case [true []]]
+[void? case [true []]]
 ; case results
 [case [true [true]]]
 [not case [true [false]]]
@@ -5755,19 +5741,19 @@
     success
 ]
 ; catch results
-[unset? catch []]
-[unset? catch [()]]
+[void? catch []]
+[void? catch [()]]
 [error? catch [try [1 / 0]]]
 [1 = catch [1]]
-[unset? catch [throw ()]]
+[void? catch [throw ()]]
 [error? first catch [throw reduce [try [1 / 0]]]]
 [1 = catch [throw 1]]
 ; catch/name results
-[unset? catch/name [] 'catch]
-[unset? catch/name [()] 'catch]
+[void? catch/name [] 'catch]
+[void? catch/name [()] 'catch]
 [error? catch/name [try [1 / 0]] 'catch]
 [1 = catch/name [1] 'catch]
-[unset? catch/name [throw/name () 'catch] 'catch]
+[void? catch/name [throw/name () 'catch] 'catch]
 [error? first catch/name [throw/name reduce [try [1 / 0]] 'catch] 'catch]
 [1 = catch/name [throw/name 1 'catch] 'catch]
 ; recursive cases
@@ -5839,10 +5825,6 @@
     append blk [try [1 / 0]]
     blk = compose blk
 ]
-[
-    blk: reduce [()]
-    blk = compose blk
-]
 ; RETURN stops the evaluation
 [
     f1: does [compose [(return 1)] 2]
@@ -5912,7 +5894,7 @@
     same? a-value eval a-value
 ]
 ; do block start
-[unset? do []]
+[void? do []]
 [:abs = do [:abs]]
 [
     a-value: #{}
@@ -6005,7 +5987,7 @@
 ]
 [0:00 == do [0:00]]
 [0.0.0 == do [0.0.0]]
-[unset? do [()]]
+[void? do [()]]
 ['a == do ['a]]
 ; do block end
 [
@@ -6057,7 +6039,7 @@
 [true = eval true]
 [false = eval false]
 [$1 == eval $1]
-[unset! = eval :type? ()]
+[_ = eval :type-of ()]
 [none? do #[none]]
 [
     a-value: make object! []
@@ -6087,7 +6069,7 @@
     a-value: "1"
     1 == do :a-value
 ]
-[unset? do ""]
+[void? do ""]
 [1 = do "1"]
 [3 = do "1 2 3"]
 [
@@ -6138,7 +6120,7 @@
         [2] = b
     ]
 ]
-[unset? do/next [] 'b]
+[void? do/next [] 'b]
 [error? do/next [try [1 / 0]] 'b]
 [
     f1: does [do/next [return 1 2] 'b 2]
@@ -6181,8 +6163,8 @@
 ]
 [1 = either true [1] [2]]
 [2 = either false [1] [2]]
-[unset? either true [] [1]]
-[unset? either false [1] []]
+[void? either true [] [1]]
+[void? either false [1] []]
 [error? either true [try [1 / 0]] []]
 [error? either false [] [try [1 / 0]]]
 ; RETURN stops the evaluation
@@ -6249,7 +6231,7 @@
 ]
 [
     f1: does [exit]
-    unset? f1
+    void? f1
 ]
 ; the "result" of exit should not be assignable, bug#1515
 [a: 1 eval does [a: exit] :a =? 1]
@@ -6281,7 +6263,7 @@
     num = 1
 ]
 ; break return value
-[unset? for i 1 10 1 [break]]
+[void? for i 1 10 1 [break]]
 ; break/return return value
 [2 = for i 1 10 1 [break/return 2]]
 ; continue cycle
@@ -6485,7 +6467,7 @@
 ; break return value
 [
     blk: [1 2 3 4]
-    unset? forall blk [break]
+    void? forall blk [break]
 ]
 ; break/return return value
 [
@@ -6569,7 +6551,7 @@
 ; break return value
 [
     blk: [1 2 3 4]
-    unset? foreach i blk [break]
+    void? foreach i blk [break]
 ]
 ; break/return return value
 [
@@ -6622,7 +6604,7 @@
     num = 10
 ]
 ; Test break, break/return and continue
-[unset? forever [break]]
+[void? forever [break]]
 [1 = forever [break/return 1]]
 [
     success: true
@@ -6636,7 +6618,7 @@
     1 = f1
 ]
 ; Test that exit stops the loop
-[unset? eval does [forever [exit]]]
+[void? eval does [forever [exit]]]
 ; Test that errors do not stop the loop and errors can be returned
 [
     num: 0
@@ -6689,7 +6671,7 @@
 ; break return value
 [
     blk: [1 2 3 4]
-    unset? forskip blk 2 [break]
+    void? forskip blk 2 [break]
 ]
 ; break/return return value
 [
@@ -6748,7 +6730,7 @@
     success
 ]
 [1 = if true [1]]
-[unset? if true []]
+[void? if true []]
 [error? if true [try [1 / 0]]]
 ; RETURN stops the evaluation
 [
@@ -6791,10 +6773,10 @@
 [if first ['a/b] [true]]
 [if first ['a] [true]]
 [if true [true]]
-[unset? if false [true]]
+[void? if false [true]]
 [if $1 [true]]
 [if :type? [true]]
-[unset? if none [true]]
+[void? if none [true]]
 [if make object! [] [true]]
 [if get '+ [true]]
 [if 0x0 [true]]
@@ -6811,7 +6793,7 @@
 [if  http:// [true]]
 [if 'a [true]]
 ; recursive behaviour
-[unset? if true [if false [1]]]
+[void? if true [if false [1]]]
 [1 = if true [if true [1]]]
 ; infinite recursion
 [
@@ -6833,7 +6815,7 @@
     num = 1
 ]
 ; break return value
-[unset? loop 10 [break]]
+[void? loop 10 [break]]
 ; break/return return value
 [2 = loop 10 [break/return 2]]
 ; continue cycle
@@ -6900,18 +6882,18 @@
     success
 ]
 [[] = reduce []]
-[unset? first reduce [()]]
+[error? try [first reduce [()]]]
 ["1 + 1" = reduce "1 + 1"]
 [error? first reduce [try [1 / 0]]]
 ; unwind functions should stop evaluation, bug#1760
-[unset? loop 1 [reduce [break]]]
-[unset? loop 1 [reduce/no-set [a: break]]]
+[void? loop 1 [reduce [break]]]
+[void? loop 1 [reduce/no-set [a: break]]]
 [1 = loop 1 [reduce [break/return 1]]]
-[unset? loop 1 [reduce [continue]]]
+[void? loop 1 [reduce [continue]]]
 [1 = catch [reduce [throw 1]]]
 [1 = catch/name [reduce [throw/name 1 'a]] 'a]
 [1 = eval does [reduce [return 1 2] 2]]
-[unset? if 1 < 2 [eval does [reduce [exit/from :if 1] 2]]]
+[void? if 1 < 2 [eval does [reduce [exit/from :if 1] 2]]]
 ; recursive behaviour
 [1 = first reduce [first reduce [1]]]
 ; infinite recursion
@@ -6947,7 +6929,7 @@
     num = 1
 ]
 ; break return value
-[unset? repeat i 10 [break]]
+[void? repeat i 10 [break]]
 ; break/return return value
 [2 = repeat i 10 [break/return 2]]
 ; continue cycle
@@ -7042,7 +7024,7 @@
 ; return value tests
 [
     f1: does [return ()]
-    unset? f1
+    void? f1
 ]
 [
     f1: does [return try [1 / 0]]
@@ -7074,7 +7056,7 @@
         2 [12]
     ]
 ]
-[unset? switch 1 [1 []]]
+[void? switch 1 [1 []]]
 [
     cases: reduce [1 head insert copy [] try [1 / 0]]
     error? switch 1 cases
@@ -7144,8 +7126,8 @@
     success
 ]
 [1 = unless false [1]]
-[unset? unless true [1]]
-[unset? unless false []]
+[void? unless true [1]]
+[void? unless false []]
 [error? unless false [try [1 / 0]]]
 ; RETURN stops the evaluation
 [
@@ -7164,7 +7146,7 @@
 ; Test body-block return values
 [1 = until [1]]
 ; Test break and break/return
-[unset? until [break true]]
+[void? until [break true]]
 [1 = until [break/return 1 true]]
 ; Test continue
 [
@@ -7209,7 +7191,7 @@
     num: 0
     1 = while [num < 1] [num: num + 1]
 ]
-[unset? while [false] []]
+[void? while [false] []]
 ; zero repetition
 [
     success: true
@@ -7217,7 +7199,7 @@
     success
 ]
 ; Test break, break/return and continue
-[cycle?: true unset? while [cycle?] [break cycle?: false]]
+[cycle?: true void? while [cycle?] [break cycle?: false]]
 ; Test reactions to break and continue in the condition
 [
     was-stopped: true
@@ -7268,7 +7250,7 @@
 [
     cycle?: true
     f1: does [if 1 < 2 [while [cycle?] [cycle?: false exit/from :if] 2]]
-    unset? f1
+    void? f1
 ]
 [  ; bug#1519
     cycle?: true
@@ -7277,7 +7259,7 @@
             while [if cycle? [exit/from :unless] cycle?] [cycle?: false 2]
         ]
     ]
-    unset? f1
+    void? f1
 ]
 ; THROW should stop the loop
 [1 = catch [cycle?: true while [cycle?] [throw 1 cycle?: false]]]
@@ -7832,8 +7814,6 @@
 [(make image! [1x1 #{000000} #{00}]) = complement make image! [1x1 #{ffffff} #{ff}]]
 [(make image! [1x1 #{ffffff} #{ff}]) = complement make image! [1x1 #{000000} #{00}]]
 ; typeset
-; bug#799
-[typeset? complement make typeset! [unset!]]
 ; functions/math/cosine.r
 [1 = cosine 0]
 [1 = cosine/radians 0]
@@ -10278,16 +10258,16 @@
     same? blk next blk
 ]
 ; functions/series/ordinals.r
-[none? first []]
-[none? second []]
-[none? third []]
-[none? fourth []]
-[none? fifth []]
-[none? sixth []]
-[none? seventh []]
-[none? eighth []]
-[none? ninth []]
-[none? tenth []]
+[void? first []]
+[void? second []]
+[void? third []]
+[void? fourth []]
+[void? fifth []]
+[void? sixth []]
+[void? seventh []]
+[void? eighth []]
+[void? ninth []]
+[void? tenth []]
 [1 = first [1 2 3 4 5 6 7 8 9 10 11]]
 [2 = second [1 2 3 4 5 6 7 8 9 10 11]]
 [3 = third [1 2 3 4 5 6 7 8 9 10 11]]
@@ -10395,17 +10375,17 @@
 ; functions/series/pick.r
 #64bit
 [error? try [pick at [1 2 3 4 5] 3 -9223372036854775808]]
-[none? pick at [1 2 3 4 5] 3 -2147483648]
-[none? pick at [1 2 3 4 5] 3 -2147483647]
-[none? pick at [1 2 3 4 5] 3 -3]
-[none? pick at [1 2 3 4 5] 3 -2]
+[void? pick at [1 2 3 4 5] 3 -2147483648]
+[void? pick at [1 2 3 4 5] 3 -2147483647]
+[void? pick at [1 2 3 4 5] 3 -3]
+[void? pick at [1 2 3 4 5] 3 -2]
 [1 = pick at [1 2 3 4 5] 3 -1]
 [2 = pick at [1 2 3 4 5] 3 0]
 [3 = pick at [1 2 3 4 5] 3 1]
 [4 = pick at [1 2 3 4 5] 3 2]
 [5 = pick at [1 2 3 4 5] 3 3]
-[none? pick at [1 2 3 4 5] 3 4]
-[none? pick at [1 2 3 4 5] 3 2147483647]
+[void? pick at [1 2 3 4 5] 3 4]
+[void? pick at [1 2 3 4 5] 3 2147483647]
 #64bit
 [error? try [pick at [1 2 3 4 5] 3 9223372036854775807]]
 ; string
