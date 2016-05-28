@@ -89,7 +89,7 @@ rebsource: context [
             file
         ] [
 
-            if whitelisted? file [return none]
+            if whitelisted? file [return blank]
 
             analysis: make block! []
 
@@ -109,7 +109,7 @@ rebsource: context [
             ]
 
             wsp-not-eol: exclude c.lexical/charsets/ws-char charset {^/}
-            eol-wsp: malloc: none
+            eol-wsp: malloc: _
             file-text: text
 
             do bind [
@@ -199,7 +199,7 @@ rebsource: context [
 
             ]
 
-            non-std-func-space: none
+            non-std-func-space: _
             proto-parser/emit-proto: :emit-proto
             proto-parser/process text
 
@@ -237,7 +237,7 @@ rebsource: context [
 
         ; Extend parser to support checking of function spacing.
 
-        last-func-end: none
+        last-func-end: _
 
         lbrace: [and punctuator #"{"]
         rbrace: [and punctuator #"}"]
@@ -253,7 +253,7 @@ rebsource: context [
         ]
 
         append/only grammar/other-segment to group! [
-            last-func-end: none
+            last-func-end: _
         ]
 
     ] proto-parser c.lexical/grammar

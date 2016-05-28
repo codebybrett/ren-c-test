@@ -30,8 +30,8 @@ read-binary: either find spec-of :read /binary [
 
 make object! [
 
-    position: none
-    success: none
+    position: _
+    success: _
     set 'test-source-rule [
         any [
             position: ["{" | {"}] (
@@ -106,7 +106,7 @@ make object! [
                             error? try [
                                 set/opt [value next-position] transcode/next position
                             ]
-                            none? next-position
+                            blank? next-position
                         ] [stop: [:position]]
                         issue? get/opt 'value [
                             append flags value
@@ -183,7 +183,7 @@ make object! [
                         )
                     ]
                         |
-                    "system/version:" to end (stop: none)
+                    "system/version:" to end (stop: _)
                         |
                     (do make error! "log file parsing problem")
                 ] position: stop break

@@ -321,7 +321,7 @@
     same? a-value f
 ]
 [
-    a-value: none!
+    a-value: blank!
     f: closure [] [a-value]
     same? a-value f
 ]
@@ -409,8 +409,8 @@
     same? :type? f
 ]
 [
-    f: closure [] [#[none]]
-    none? f
+    f: closure [] [#[blank]]
+    blank? f
 ]
 [
     a-value: make object! []
@@ -611,7 +611,7 @@
 [datatype? map!]  ; map! =? hash! in R2/Forward, R2 2.7.7+
 [datatype? module!]
 [datatype? money!]
-[datatype? none!]
+[datatype? blank!]
 [datatype? object!]
 [datatype? pair!]
 [datatype? group!]
@@ -985,7 +985,7 @@
     same? a-value f
 ]
 [
-    a-value: none!
+    a-value: blank!
     f: does [a-value]
     same? a-value f
 ]
@@ -1073,8 +1073,8 @@
     same? :type? f
 ]
 [
-    f: does [#[none]]
-    none? f
+    f: does [_]
+    blank? f
 ]
 [
     a-value: make object! []
@@ -1228,14 +1228,14 @@
 ; a function-local word that escapes the function's dynamic extent still works
 ; when re-entering the dynamic extent of the same function later.
 [
-    f: func [code value] [either none? code ['value] [do code]]
-    f-value: f none none
+    f: func [code value] [either blank? code ['value] [do code]]
+    f-value: f blank blank
     42 == f compose [2 * (f-value)] 21  ; re-entering same function
 ]
 [
-    f: func [code value] [either none? code ['value] [do code]]
-    g: func [code value] [either none? code ['value] [do code]]
-    f-value: f none none
+    f: func [code value] [either blank? code ['value] [do code]]
+    g: func [code value] [either blank? code ['value] [do code]]
+    f-value: f blank blank
     error? try [g compose [2 * (f-value)] 21]  ; re-entering different function
 ]
 ; bug#19 - but duplicate specializations currently not legal in Ren-C
@@ -1253,7 +1253,7 @@
 ]
 ; no-rebind test
 [
-    a: func [b] [a: none c: b]
+    a: func [b] [a: _ c: b]
     f: func [d] [a [d] do c]
     all [
         1 = f 1
@@ -1321,7 +1321,7 @@
     g2: make gob! []
     insert g1 g2
     same? g1 g2/parent
-    do "g1: none"
+    do "g1: _"
     do "recycle"
     g3: make gob! []
     insert g2/parent g3
@@ -1457,7 +1457,7 @@
 [true = make logic! 1]
 [true = to logic! 0]
 [true = to logic! 1]
-[false = to logic! none]
+[false = to logic! blank]
 [true = to logic! "f"]
 ["true" = mold true]
 ["false" = mold false]
@@ -1469,13 +1469,13 @@
 [2 == length? make map! [a 1 b 2]]  ; 4 in R2, R2/Forward
 [m: make map! [a 1 b 2] 1 == m/a]
 [m: make map! [a 1 b 2] 2 == m/b]
-[m: make map! [a 1 b 2] none? m/c]
+[m: make map! [a 1 b 2] blank? m/c]
 [m: make map! [a 1 b 2] m/c: 3 3 == m/c]
 ; Maps contain key/value pairs and must be created from blocks of even length.
 [error? try [make map! [1]]]
 [empty? clear make map! [a 1 b 2]]
 ; bug#1930: Lookup crashes on empty hashed map.
-[m: make map! 8 clear m none? m/a]
+[m: make map! 8 clear m blank? m/a]
 ; datatypes/module.r
 [module? module [] []]
 [not module? 1]
@@ -1668,20 +1668,20 @@
 [function! = type? :reduce]
 ; bug#1659
 ; natives are active
-[same? none! do reduce [:type? make none! none]]
+[same? blank! do reduce [:type? make blank! blank]]
 ; datatypes/none.r
-[none? none]
-[not none? 1]
-[none! = type? none]
+[blank? blank]
+[not blank? 1]
+[blank! = type? blank]
 ; literal form
-[none = #[none]]
+[blank = _]
 ; bug#845
-[none = #[none!]]
-[none = #]
-[none = make none! none]
-[none = to none! none]
-[none = to none! 1]
-["_" = mold none]
+[blank = _]
+[blank = #] ;-- Deprecated!
+[blank = make blank! blank]
+[blank = to blank! blank]
+[blank = to blank! 1]
+["_" = mold blank]
 ; bug#1666
 ; bug#1650
 [
@@ -1804,7 +1804,7 @@
     error? try [append o [self: 1]]
 ]
 ; datatypes/op.r
-[lookback? get '+]
+[lookback? '+]
 [error? try [lookback? 1]]
 [function? get '+]
 
@@ -1894,12 +1894,12 @@
     3 == blk/#[block! []]
 ]
 [
-    blk: [#[none] 3]
-    3 == do [blk/#[none]]
+    blk: [_ 3]
+    3 == do [blk/_]
 ]
 [
-    blk: [none 3]
-    3 == do [blk/none]
+    blk: [blank 3]
+    3 == do [blk/blank]
 ]
 [
     a-value: 1/Jan/0000
@@ -1939,7 +1939,7 @@
 ]
 [
     a-value: make port! http://
-    none? a-value/data
+    blank? a-value/data
 ]
 [
     a-value: first [a/b:]
@@ -2089,7 +2089,7 @@
 ["a/b:" = mold first [a/b:]]
 ; set-paths are active
 [
-    a: make object! [b: none]
+    a: make object! [b: _]
     a/b: 5
     5 == a/b
 ]
@@ -2382,9 +2382,9 @@
 [typeset? to-typeset any-scalar!]
 [typeset? any-series!]
 [typeset? to-typeset any-series!]
-[typeset? make typeset! [integer! none!]]
-[typeset? make typeset! reduce [integer! none!]]
-[typeset? to-typeset [integer! none!]]
+[typeset? make typeset! [integer! blank!]]
+[typeset? make typeset! reduce [integer! blank!]]
+[typeset? to-typeset [integer! blank!]]
 [typeset! = type? any-series!]
 ; bug#92
 [
@@ -2393,7 +2393,7 @@
 ]
 ; datatypes/unset.r
 [void? ()]
-[none? type? ()]
+[blank? type? ()]
 [not void? 1]
 ; bug#68
 [void? try [a: ()]]
@@ -2454,7 +2454,7 @@
     same? :a-value a-value
 ]
 [
-    a-value: none!
+    a-value: blank!
     same? :a-value a-value
 ]
 [
@@ -2528,7 +2528,7 @@
 ]
 ; natives are word-active
 [native! == type? :reduce]
-[:none == none]
+[:blank == blank]
 ; library test?
 [
     a-value: make object! []
@@ -2826,9 +2826,9 @@
 ; No binary! padding
 [not equal? #{00} #{0000}]
 [equal? equal? #{00} #{0000} equal? #{0000} #{00}]
-; Empty binary! not none
-[not equal? #{} none]
-[equal? equal? #{} none equal? none #{}]
+; Empty binary! not blank
+[not equal? #{} blank]
+[equal? equal? #{} blank equal? blank #{}]
 ; case sensitivity
 ; bug#1459
 [not-equal? #{0141} #{0161}]
@@ -2973,8 +2973,8 @@
     error? try [equal? a-value b-value]
     true
 ]
-[not equal? [] none]
-[equal? equal? [] none equal? none []]
+[not equal? [] blank]
+[equal? equal? [] blank equal? blank []]
 ; block! vs. group!
 [not equal? [] first [()]]
 ; block! vs. group! symmetry
@@ -3368,31 +3368,31 @@
 ; unset! comparison fails
 [equal? () ()]
 ; basic comparison with unset first argument fails
-[not-equal? () none]
+[not-equal? () blank]
 ; basic comparison with unset second argument fails
-[not-equal? none ()]
+[not-equal? blank ()]
 ; unset! symmetry
-[equal? equal? none () equal? () none]
+[equal? equal? blank () equal? () blank]
 ; unset! symmetry
 ; Fails on R2 because there is no structural comparison of objects.
 ; basic comparison with unset first argument succeeds with = op
 ; Code in R3 mezzanines depends on this.
-[not (() = none)]
+[not (() = blank)]
 ; basic comparison with unset first argument succeeds with != op
 ; Code in R3 mezzanines depends on this.
-[() <> none]
+[() <> blank]
 ; basic comparison with unset second argument fails with = op
-[not none = ()]
+[not blank = ()]
 ; basic comparison with unset second argument fails with != op
-[none != ()]
+[blank != ()]
 [() = ()]
 [not () != ()]
 ; unset! symmetry with =
-[equal? none = () () = none]
+[equal? blank = () () = blank]
 ; error! reflexivity
 ; Evaluates (try [1 / 0]) to get error! value.
 [
-    a-value: none
+    a-value: blank
     set/opt 'a-value (try [1 / 0])
     equal? a-value a-value
 ]
@@ -3406,23 +3406,23 @@
 ; error! difference in data
 [not equal? (make error! "hello") (make error! "there")]
 ; error! basic comparison
-[not equal? (try [1 / 0]) none]
+[not equal? (try [1 / 0]) blank]
 ; error! basic comparison
-[not equal? none (try [1 / 0])]
+[not equal? blank (try [1 / 0])]
 ; error! basic comparison symmetry
-[equal? equal? (try [1 / 0]) none equal? none (try [1 / 0])]
+[equal? equal? (try [1 / 0]) blank equal? blank (try [1 / 0])]
 ; error! basic comparison with = op
-[not ((try [1 / 0]) = none)]
+[not ((try [1 / 0]) = blank)]
 ; error! basic comparison with != op
-[(try [1 / 0]) != none]
+[(try [1 / 0]) != blank]
 ; error! basic comparison with = op
-[not (none = (try [1 / 0]))]
+[not (blank = (try [1 / 0]))]
 ; error! basic comparison with != op
-[none != (try [1 / 0])]
+[blank != (try [1 / 0])]
 ; error! symmetry with = op
-[equal? not ((try [1 / 0]) = none) not (none = (try [1 / 0]))]
+[equal? not ((try [1 / 0]) = blank) not (blank = (try [1 / 0]))]
 ; error! symmetry with != op
-[equal? (try [1 / 0]) != none none != (try [1 / 0])]
+[equal? (try [1 / 0]) != blank blank != (try [1 / 0])]
 ; port! reflexivity
 ; Error in R2 (could be fixed).
 [equal? p: make port! http:// p]
@@ -3467,8 +3467,8 @@
 ; No binary! padding
 [not equiv? #{00} #{0000}]
 [equal? equiv? #{00} #{0000} equiv? #{0000} #{00}]
-; Empty binary! not none
-[not equiv? #{} none]
+; Empty binary! not blank
+[not equiv? #{} blank]
 ; case sensitivity
 ; bug#1459
 [not-equiv? #{0141} #{0161}]
@@ -3514,7 +3514,7 @@
     equal? equiv? a-value to string! a-value equiv? to string! a-value a-value
 ]
 ; symmetry
-[equal? equiv? #{} none equiv? none #{}]
+[equal? equiv? #{} blank equiv? blank #{}]
 [
     a-value: ""
     not equiv? a-value to binary! a-value
@@ -3574,8 +3574,8 @@
     error? try [equiv? a-value b-value]
     true
 ]
-[not equiv? [] none]
-[equal? equiv? [] none equiv? none []]
+[not equiv? [] blank]
+[equal? equiv? [] blank equiv? blank []]
 ; block! vs. group!
 [not equiv? [] first [()]]
 ; block! vs. group! symmetry
@@ -3916,9 +3916,9 @@
     a-value: #a
     equal? same? a-value to string! a-value same? to string! a-value a-value
 ]
-[not same? #{} none]
+[not same? #{} blank]
 ; symmetry
-[equal? same? #{} none same? none #{}]
+[equal? same? #{} blank same? blank #{}]
 [
     a-value: ""
     not same? a-value to binary! a-value
@@ -3988,9 +3988,9 @@
     parse :a-value [b-value:]
     equal? same? :a-value :b-value same? :b-value :a-value
 ]
-[not same? [] none]
+[not same? [] blank]
 ; symmetry
-[equal? same? [] none same? none []]
+[equal? same? [] blank same? blank []]
 ; bug#1068
 ; bug#1066
 [
@@ -4336,9 +4336,9 @@
     a-value: #a
     equal? strict-equal? a-value to string! a-value strict-equal? to string! a-value a-value
 ]
-[not strict-equal? #{} none]
+[not strict-equal? #{} blank]
 ; symmetry
-[equal? strict-equal? #{} none strict-equal? none #{}]
+[equal? strict-equal? #{} blank strict-equal? blank #{}]
 [
     a-value: ""
     not strict-equal? a-value to binary! a-value
@@ -4410,9 +4410,9 @@
     parse :a-value [b-value:]
     equal? strict-equal? :a-value :b-value strict-equal? :b-value :a-value
 ]
-[not strict-equal? [] none]
+[not strict-equal? [] blank]
 ; symmetry
-[equal? strict-equal? [] none strict-equal? none []]
+[equal? strict-equal? [] blank strict-equal? blank []]
 ; bug#1068
 ; bug#1066
 [
@@ -4699,7 +4699,7 @@
 [strict-not-equal? 0 1]
 ; functions/context/bind.r
 ; bug#50
-[none? context-of to word! "zzz"]
+[blank? context-of to word! "zzz"]
 ; BIND works 'as expected' in object spec
 ; bug#1549
 [
@@ -4746,7 +4746,7 @@
 ; functions/context/boundq.r
 ; functions/context/bindq.r
 [
-    o: make object! [a: none]
+    o: make object! [a: _]
     same? o context-of in o 'a
 ]
 ; functions/context/resolve.r
@@ -4759,17 +4759,17 @@
 [x: construct [a: 1] all [error? try [set x reduce [()]] x/a = 1]]
 [x: construct [a: 1 b: 2] all [error? try [set x reduce [3 ()]] x/a = 1]]
 ; set [:get-word] [word]
-[a: 1 b: none set [:b] [a] b =? 1]
-[unset 'a b: none all [error? try [set [:b] [a]] none? b]]
-[unset 'a b: none set/opt [:b] [a] void? get/opt 'b]
+[a: 1 b: _ set [:b] [a] b =? 1]
+[unset 'a b: _ all [error? try [set [:b] [a]] blank? b]]
+[unset 'a b: _ set/opt [:b] [a] void? get/opt 'b]
 ; functions/context/unset.r
 [
-    a: none
+    a: _
     unset 'a
     not set? 'a
 ]
 [
-    a: none
+    a: _
     unset 'a
     unset 'a
     not set? 'a
@@ -4822,7 +4822,7 @@
 [false == set? 'nonsense]
 [true == set? 'set?]
 ; #1914 ... Ren-C indefinite extent prioritizes failure if not indefinite
-[error? try [set? eval func [x] ['x] none]]
+[error? try [set? eval func [x] ['x] blank]]
 ; functions/control/all.r
 ; zero values
 [true == all []]
@@ -4841,7 +4841,7 @@
     same? a-value all [a-value]
 ]
 [
-    a-value: none!
+    a-value: blank!
     same? a-value all [a-value]
 ]
 [1/Jan/0000 = all [1/Jan/0000]]
@@ -4881,10 +4881,10 @@
     :a-value == all [:a-value]
 ]
 [true = all [true]]
-[none? all [false]]
+[blank? all [false]]
 [$1 == all [$1]]
 [same? :type? all [:type?]]
-[none? all [#[none]]]
+[blank? all [_]]
 [
     a-value: make object! []
     same? :a-value all [:a-value]
@@ -4939,7 +4939,7 @@
     same? a-value all [true a-value]
 ]
 [
-    a-value: none!
+    a-value: blank!
     same? a-value all [true a-value]
 ]
 [1/Jan/0000 = all [true 1/Jan/0000]]
@@ -4980,7 +4980,7 @@
 ]
 [$1 == all [true $1]]
 [same? :type? all [true :type?]]
-[none? all [true #[none]]]
+[blank? all [true _]]
 [
     a-value: make object! []
     same? :a-value all [true :a-value]
@@ -5034,7 +5034,7 @@
     true = all [a-value true]
 ]
 [
-    a-value: none!
+    a-value: blank!
     true = all [a-value true]
 ]
 [true = all [1/Jan/0000 true]]
@@ -5074,11 +5074,11 @@
     true = all [:a-value true]
 ]
 [true = all [true true]]
-[none? all [false true]]
-[none? all [true false]]
+[blank? all [false true]]
+[blank? all [true false]]
 [true = all [$1 true]]
 [true = all [:type? true]]
-[none? all [#[none] true]]
+[blank? all [_ true]]
 [
     a-value: make object! []
     true = all [:a-value true]
@@ -5126,7 +5126,7 @@
 ]
 [
     success: true
-    all [none success: false]
+    all [blank success: false]
     success
 ]
 ; evaluation continues otherwise
@@ -5173,7 +5173,7 @@
 ]
 ; functions/control/any.r
 ; zero values
-[none? any []]
+[blank? any []]
 ; one value
 [:abs = any [:abs]]
 [
@@ -5189,7 +5189,7 @@
     same? a-value any [a-value]
 ]
 [
-    a-value: none!
+    a-value: blank!
     same? a-value any [a-value]
 ]
 [1/Jan/0000 = any [1/Jan/0000]]
@@ -5229,10 +5229,10 @@
     :a-value == any [:a-value]
 ]
 [true = any [true]]
-[none? any [false]]
+[blank? any [false]]
 [$1 == any [$1]]
 [same? :type? any [:type?]]
-[none? any [#[none]]]
+[blank? any [_]]
 [
     a-value: make object! []
     same? :a-value any [:a-value]
@@ -5271,7 +5271,7 @@
 ]
 [0:00 == any [0:00]]
 [0.0.0 == any [0.0.0]]
-[none? any [()]]
+[blank? any [()]]
 ['a == any ['a]]
 ; two values
 [:abs = any [false :abs]]
@@ -5288,7 +5288,7 @@
     same? a-value any [false a-value]
 ]
 [
-    a-value: none!
+    a-value: blank!
     same? a-value any [false a-value]
 ]
 [1/Jan/0000 = any [false 1/Jan/0000]]
@@ -5328,10 +5328,10 @@
     :a-value == any [false :a-value]
 ]
 [true = any [false true]]
-[none? any [false false]]
+[blank? any [false false]]
 [$1 == any [false $1]]
 [same? :type? any [false :type?]]
-[none? any [false #[none]]]
+[blank? any [false _]]
 [
     a-value: make object! []
     same? :a-value any [false :a-value]
@@ -5369,7 +5369,7 @@
 ]
 [0:00 == any [false 0:00]]
 [0.0.0 == any [false 0.0.0]]
-[none? any [false ()]]
+[blank? any [false ()]]
 ['a == any [false 'a]]
 [:abs = any [:abs false]]
 [
@@ -5385,7 +5385,7 @@
     same? a-value any [a-value false]
 ]
 [
-    a-value: none!
+    a-value: blank!
     same? a-value any [a-value false]
 ]
 [1/Jan/0000 = any [1/Jan/0000 false]]
@@ -5427,7 +5427,7 @@
 [true = any [true false]]
 [$1 == any [$1 false]]
 [same? :type? any [:type? false]]
-[none? any [#[none] false]]
+[blank? any [_ false]]
 [
     a-value: make object! []
     same? :a-value any [:a-value false]
@@ -5465,7 +5465,7 @@
 ]
 [0:00 == any [0:00 false]]
 [0.0.0 == any [0.0.0 false]]
-[none? any [() false]]
+[blank? any [() false]]
 ['a == any ['a false]]
 ; evaluation stops after encountering something else than FALSE or NONE
 [
@@ -5486,7 +5486,7 @@
 ]
 [
     success: false
-    any [none success: true]
+    any [blank success: true]
     success
 ]
 ; RETURN stops evaluation
@@ -5514,7 +5514,7 @@
 ]
 ; recursivity
 [any [false any [true]]]
-[none? any [false any [false]]]
+[blank? any [false any [false]]]
 ; infinite recursion
 [
     blk: [any blk]
@@ -5533,21 +5533,21 @@
 [error? try [r3-alpha-apply/only func [a] [a] [1 2]]]
 
 ['a = r3-alpha-apply func [/a] [a] [true]]
-[none == r3-alpha-apply func [/a] [a] [false]]
-[none == r3-alpha-apply func [/a] [a] []]
+[blank == r3-alpha-apply func [/a] [a] [false]]
+[blank == r3-alpha-apply func [/a] [a] []]
 ['a = r3-alpha-apply/only func [/a] [a] [true]]
 ; the word 'false
 ['a = r3-alpha-apply/only func [/a] [a] [false]]
-[none == r3-alpha-apply/only func [/a] [a] []]
+[blank == r3-alpha-apply/only func [/a] [a] []]
 [use [a] [a: true 'a = r3-alpha-apply func [/a] [a] [a]]]
-[use [a] [a: false none == r3-alpha-apply func [/a] [a] [a]]]
+[use [a] [a: false blank == r3-alpha-apply func [/a] [a] [a]]]
 [use [a] [a: false 'a = r3-alpha-apply func [/a] [a] ['a]]]
 [use [a] [a: false 'a = r3-alpha-apply func [/a] [a] [/a]]]
 [use [a] [a: false 'a = r3-alpha-apply/only func [/a] [a] [a]]]
 [group! == r3-alpha-apply/only :type? [()]]
-[[1] == head r3-alpha-apply :insert [copy [] [1] none none none]]
-[[1] == head r3-alpha-apply :insert [copy [] [1] none none false]]
-[[[1]] == head r3-alpha-apply :insert [copy [] [1] none none true]]
+[[1] == head r3-alpha-apply :insert [copy [] [1] blank blank blank]]
+[[1] == head r3-alpha-apply :insert [copy [] [1] blank blank false]]
+[[[1]] == head r3-alpha-apply :insert [copy [] [1] blank blank true]]
 [function! == r3-alpha-apply :type? [:print]]
 [get-word! == r3-alpha-apply/only :type? [:print]]
 ; bug#1760
@@ -5619,7 +5619,7 @@
 ]
 ; functions/control/attempt.r
 ; bug#41
-[none? attempt [1 / 0]]
+[blank? attempt [1 / 0]]
 [1 = attempt [1]]
 [void? attempt []]
 ; RETURN stops attempt evaluation
@@ -5634,11 +5634,11 @@
 [1 == loop 1 [attempt [break/return 1 2] 2]]
 ; recursion
 [1 = attempt [attempt [1]]]
-[none? attempt [attempt [1 / 0]]]
+[blank? attempt [attempt [1 / 0]]]
 ; infinite recursion
 [
     blk: [attempt blk]
-    none? attempt blk
+    blank? attempt blk
 ]
 ; functions/control/break.r
 ; see loop functions for basic breaking functionality
@@ -5647,7 +5647,7 @@
 ; that they are failing to break from.
 [void? loop 1 [break 2]]
 ; break/return should return argument
-[none? loop 1 [break/return none 2]]
+[blank? loop 1 [break/return blank 2]]
 [false =? loop 1 [break/return false 2]]
 [true =? loop 1 [break/return true 2]]
 [void? loop 1 [break/return () 2]]
@@ -5813,7 +5813,7 @@
 ; bug#851
 [error? try [catch/quit [] fail make error! ""]]
 ; bug#851
-[none? attempt [catch/quit [] fail make error! ""]]
+[blank? attempt [catch/quit [] fail make error! ""]]
 ; functions/control/compose.r
 [
     num: 1
@@ -5908,7 +5908,7 @@
     a-value: []
     same? a-value do reduce [a-value]
 ]
-[same? none! do reduce [none!]]
+[same? blank! do reduce [blank!]]
 [1/Jan/0000 = do [1/Jan/0000]]
 [0.0 == do [0.0]]
 [1.0 == do [1.0]]
@@ -5949,7 +5949,7 @@
 [#[false] == do [#[false]]]
 [$1 == do [$1]]
 [same? :type? do [:type?]]
-[none? do [#[none]]]
+[blank? do [_]]
 [
     a-value: make object! []
     same? :a-value do reduce [:a-value]
@@ -5991,7 +5991,7 @@
 ['a == do ['a]]
 ; do block end
 [
-    a-value: none!
+    a-value: blank!
     same? a-value eval a-value
 ]
 [1/Jan/0000 == eval 1/Jan/0000]
@@ -6040,7 +6040,7 @@
 [false = eval false]
 [$1 == eval $1]
 [_ = eval :type-of ()]
-[none? do #[none]]
+[blank? do _]
 [
     a-value: make object! []
     same? :a-value eval :a-value
@@ -6749,7 +6749,7 @@
 ; block
 [if [] [true]]
 ; datatype
-[if none! [true]]
+[if blank! [true]]
 ; typeset
 [if any-number! [true]]
 ; date
@@ -6776,7 +6776,7 @@
 [void? if false [true]]
 [if $1 [true]]
 [if :type? [true]]
-[void? if none [true]]
+[void? if blank [true]]
 [if make object! [] [true]]
 [if get '+ [true]]
 [if 0x0 [true]]
@@ -7037,10 +7037,10 @@
 ; the "result" of return should not be passable to functions, bug#1509
 [a: 1 eval does [a: error? return 2] :a =? 1]
 ; bug#1535
-[eval does [words-of return none] true]
-[eval does [values-of return none] true]
+[eval does [words-of return blank] true]
+[eval does [values-of return blank] true]
 ; bug#1945
-[eval does [spec-of return none] true]
+[eval does [spec-of return blank] true]
 ; return should not be caught by try
 [a: 1 eval does [a: error? try [return 2]] :a =? 1]
 ; functions/control/switch.r
@@ -7075,10 +7075,10 @@
 ; the "result" of throw should not be passable to functions, bug#1509
 [a: 1 catch [a: error? throw 2] :a =? 1]
 ; bug#1535
-[catch [words-of throw none] true]
-[catch [values-of throw none] true]
+[catch [words-of throw blank] true]
+[catch [values-of throw blank] true]
 ; bug#1945
-[catch [spec-of throw none] true]
+[catch [spec-of throw blank] true]
 [a: 1 catch/name [a: error? throw/name 2 'b] 'b :a =? 1]
 ; throw should not be caught by try
 [a: 1 catch [a: error? try [throw 2]] :a =? 1]
@@ -7309,7 +7309,7 @@
         42
         {foo}
         #{CAFE}
-        none
+        blank
         http://somewhere
         1900-01-30
         context [x: 42]
@@ -7392,7 +7392,7 @@
 ; bug#77
 ["#[block! [1 2] 2]" == mold/all next [1 2]]
 ; bug#77
-[none? find mold/flat make object! [a: 1] "    "]
+[blank? find mold/flat make object! [a: 1] "    "]
 ; bug#84
 [equal? mold make bitset! "^(00)" "make bitset! #{80}"]
 [equal? mold/all make bitset! "^(00)" "#[bitset! #{80}]"]
@@ -7439,7 +7439,7 @@
 [error? try [repeat n 200 [try [close open open join tcp://localhost: n]]] true]
 ; functions/file/file-typeq.r
 ; bug#1651: "FILE-TYPE? should return NONE for unknown types"
-[none? file-type? %foo.0123456789bar0123456789]
+[blank? file-type? %foo.0123456789bar0123456789]
 ; functions/math/absolute.r
 [:abs = :absolute]
 [0 = abs 0]
@@ -7677,7 +7677,7 @@
 [2x2 = add 1x1 1x1]
 [2147483647x2147483647 = add 2147483647x2147483647 0x0]
 ; pair + ...
-[error? try [0x0 + none]]
+[error? try [0x0 + blank]]
 [error? try [0x0 + ""]]
 ; char
 [#"^(00)" = add #"^(00)" #"^(00)"]
@@ -8237,7 +8237,7 @@
 [false = not make map! []]
 [false = not $0.00]
 [false = not :type?]
-[true = not none]
+[true = not blank]
 [false = not make object! []]
 [false = not type? get '+]
 [false = not 0x0]
@@ -9884,8 +9884,8 @@
     clear block
     [1 2] == head clear block
 ]
-; none
-[none == clear none]
+; blank
+[blank == clear blank]
 ; functions/series/copy.r
 [
     blk: []
@@ -9909,7 +9909,7 @@
 [[] = copy/part [] 0]
 [[] = copy/part [] 1]
 [[] = copy/part [] 2147483647]
-[error? try [copy none]]
+[error? try [copy blank]]
 ; bug#877
 [
     a: copy []
@@ -9937,7 +9937,7 @@
     clear head blk
     empty? blk
 ]
-[empty? none]
+[empty? blank]
 ; bug#190
 [x: copy "xx^/" loop 20 [enline x: join x x] true]
 ; functions/series/exclude.r
@@ -9945,18 +9945,18 @@
 ; bug#799
 [equal? make typeset! [decimal!] exclude make typeset! [decimal! integer!] make typeset! [integer!]]
 ; functions/series/find.r
-[none? find none 1]
-[none? find [] 1]
+[blank? find blank 1]
+[blank? find [] 1]
 [
     blk: [1]
     same? blk find blk 1
 ]
 ; bug#66
-[none? find/skip [1 2 3 4 5 6] 2 3]
+[blank? find/skip [1 2 3 4 5 6] 2 3]
 ; bug#88
 ["c" = find "abc" charset ["c"]]
 ; bug#88
-[none? find/part "ab" "b" 1]
+[blank? find/part "ab" "b" 1]
 ; functions/series/indexq.r
 [1 == index? []]
 [2 == index? next [a]]
@@ -9966,8 +9966,8 @@
     remove head a
     2 == index? a
 ]
-; bug#1611: Allow INDEX? to take none as an argument, return none
-[none? index? none]
+; bug#1611: Allow INDEX? to take blank as an argument, return blank
+[blank? index? blank]
 ; functions/series/insert.r
 [
     a: make block! 0
@@ -10245,9 +10245,9 @@
 [error? try [last #"c"]]
 [error? try [last 7]]
 ; functions/series/lengthq.r
-; bug#1626: "Allow LENGTH? to take none as an argument, return none"
+; bug#1626: "Allow LENGTH? to take blank as an argument, return blank"
 ; bug#1688: "LENGTH? NONE returns TRUE" (should return NONE)
-[none? length? none]
+[blank? length? blank]
 ; functions/series/next.r
 [
     blk: [1]
@@ -10304,7 +10304,7 @@
 ; THRU rule
 ; bug#682: parse thru tag!
 [
-    t: none
+    t: _
     parse "<tag>text</tag>" [thru <tag> copy t to </tag>]
     t == "text"
 ]
@@ -10391,18 +10391,18 @@
 ; string
 #64bit
 [error? try [pick at "12345" 3 -9223372036854775808]]
-[none? pick at "12345" 3 -2147483648]
-[none? pick at "12345" 3 -2147483647]
-[none? pick at "12345" 3 -3]
-[none? pick at "12345" 3 -2]
+[blank? pick at "12345" 3 -2147483648]
+[blank? pick at "12345" 3 -2147483647]
+[blank? pick at "12345" 3 -3]
+[blank? pick at "12345" 3 -2]
 [#"1" = pick at "12345" 3 -1]
 ; bug#857
 [#"2" = pick at "12345" 3 0]
 [#"3" = pick at "12345" 3 1]
 [#"4" = pick at "12345" 3 2]
 [#"5" = pick at "12345" 3 3]
-[none? pick at "12345" 3 4]
-[none? pick at "12345" 3 2147483647]
+[blank? pick at "12345" 3 4]
+[blank? pick at "12345" 3 2147483647]
 #64bit
 [error? try [pick at "12345" 3 9223372036854775807]]
 ; functions/series/poke.r
@@ -10413,18 +10413,18 @@
 ; functions/series/remove.r
 [[] = remove []]
 [[] = head remove [1]]
-; none
-[none = remove none]
+; blank
+[blank = remove blank]
 ; bitset
 [
     a-bitset: charset "a"
     remove/part a-bitset "a"
-    none? find a-bitset #"a"
+    blank? find a-bitset #"a"
 ]
 [
     a-bitset: charset "a"
     remove/part a-bitset to integer! #"a"
-    none? find a-bitset #"a"
+    blank? find a-bitset #"a"
 ]
 ; functions/series/reverse.r
 ; bug#1810: REVERSE/part does not work for tuple!
@@ -10513,7 +10513,7 @@
 [[1 2 3] = sort/compare [1 3 2] :<]
 [[3 2 1] = sort/compare [1 3 2] :>]
 ; bug#1516: SORT/compare ignores the typespec of its function argument
-[error? try [sort/compare reduce [1 2 #[none!]] :>]]
+[error? try [sort/compare reduce [1 2 #[blank!]] :>]]
 ; functions/series/split.r
 ; Tests taken from bug#1886.
 [["1234" "5678" "1234" "5678"] == split "1234567812345678" 4]
@@ -10668,14 +10668,14 @@
 ]
 ; Mold recursive object
 [
-    o: object [a: 1 r: none]
+    o: object [a: 1 r: _]
     o/r: o
     (ajoin ["<" mold o  ">"])
         = "<make object! [^/    a: 1^/    r: make object! [...]^/]>"
 ]
 ; Form recursive object...
 [
-    o: object [a: 1 r: none] o/r: o
+    o: object [a: 1 r: _] o/r: o
     (ajoin ["<" form o  ">"]) = "<a: 1^/r: make object! [...]>"
 ]
 ; detab...
@@ -10706,7 +10706,7 @@
 ; reword
 [equal? reword "$1 is $2." [1 "This" 2 "that"] "This is that."]
 [equal? reword/escape "A %%a is %%b." [a "fox" b "brown"] "%%" "A fox is brown." ]
-[equal? reword/escape "I am answering you." ["I am" "Brian is" you "Adrian"] none "Brian is answering Adrian."]
+[equal? reword/escape "I am answering you." ["I am" "Brian is" you "Adrian"] blank "Brian is answering Adrian."]
 
 ;;
 ;; Simplest possible HTTP and HTTPS protocol smoke test

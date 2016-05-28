@@ -40,7 +40,7 @@ run-tests: func [
 
     print "Testing ..."
     change-dir first split-path tests
-    set [log-file summary] do-recover tests [] none log-file-prefix
+    set [log-file summary] do-recover tests [] blank log-file-prefix
 ]
 
 run-tests to-rebol-file system/script/args

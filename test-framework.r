@@ -17,18 +17,18 @@ do %test-parsing.r
 do %catch-any.r
 
 make object! compose [
-    log-file: none
+    log-file: _
 
     log: func [report [block!]] [
         write/append log-file to binary! rejoin report
     ]
 
     ; counters
-    skipped: none
-    test-failures: none
-    crashes: none
-    dialect-failures: none
-    successes: none
+    skipped: _
+    test-failures: _
+    crashes: _
+    dialect-failures: _
+    successes: _
 
     exceptions: make object! [
         return: "return/exit out of the test code"
@@ -38,7 +38,7 @@ make object! compose [
         quit: "quit out of the test code"
     ]
 
-    allowed-flags: none
+    allowed-flags: _
 
     process-vector: func [
         flags [block!]
@@ -106,7 +106,7 @@ make object! compose [
         {Executes tests in the FILE and recovers from crash}
         file [file!] {test file}
         flags [block!] {which flags to accept}
-        code-checksum [binary! none!]
+        code-checksum [binary! blank!]
         log-file-prefix [file!]
         /local interpreter last-vector value position next-position
         test-sources test-checksum guard
@@ -142,7 +142,7 @@ make object! compose [
             all [
                 parse read log-file [
                     (
-                        last-vector: none
+                        last-vector: _
                         guard: [end skip]
                     )
                     any [
@@ -164,7 +164,7 @@ make object! compose [
                                     ; crash found
                                     crashes: crashes + 1
                                     log [{ "crashed"^/}]
-                                    guard: none
+                                    guard: _
                                 )
                                     |
                                 {"} copy value to {"} skip
@@ -190,7 +190,7 @@ make object! compose [
                                 |
                             "system/version:"
                             to end
-                            (last-vector: guard: none)
+                            (last-vector: guard: _)
                                 |
                             (do make error! "log file parsing problem")
                         ] position: guard break

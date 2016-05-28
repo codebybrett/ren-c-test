@@ -28,7 +28,7 @@ make object! [
                         try [
                             set exception 'return
                             set/opt 'result do block
-                            set exception none
+                            set exception blank
                             return :result
                         ]
                         ; an error was triggered
@@ -82,7 +82,7 @@ make object! [
                     set/opt 'result do block
 
                     ; no exception
-                    set exception none
+                    set exception blank
                     return get/opt 'result
                 ]
                 ; an error was triggered

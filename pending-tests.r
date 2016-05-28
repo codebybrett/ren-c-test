@@ -312,11 +312,11 @@
 [set-word? first [///:]]
 
 ; datatypes/struct.r
-[struct? make struct! [i [integer!]] none]
+[struct? make struct! [i [integer!]] blank]
 [not struct? 1]
-[struct! = type? make struct! [] none]
+[struct! = type? make struct! [] blank]
 ; minimum
-[struct? make struct! [] none]
+[struct? make struct! [] blank]
 ; literal form
 [struct? #[struct! [] []]]
 [
@@ -324,9 +324,9 @@
     addr: func [s] [copy third make struct! [s [string!]] reduce [s]]
     (addr s) = (addr insert/dup s #"0" 15)
 ]
-[false = not make struct! [] none]
+[false = not make struct! [] blank]
 [
-    a-value: make struct! [] none
+    a-value: make struct! [] blank
     f: does [:a-value]
     same? third :a-value third f
 ]
@@ -335,36 +335,36 @@
     1 == a-value/i
 ]
 [
-    a-value: make struct! [] none
+    a-value: make struct! [] blank
     same? third :a-value third all [:a-value]
 ]
 [
-    a-value: make struct! [] none
+    a-value: make struct! [] blank
     same? third :a-value third all [true :a-value]
 ]
 [
-    a-value: make struct! [] none
+    a-value: make struct! [] blank
     true = all [:a-value true]
 ]
 [
-    a-value: make struct! [] none
+    a-value: make struct! [] blank
     same? third :a-value third do reduce [:a-value]
 ]
 [
-    a-value: make struct! [] none
+    a-value: make struct! [] blank
     same? third :a-value third do :a-value
 ]
-[if make struct! [] none [true]]
+[if make struct! [] blank [true]]
 [
-    a-value: make struct! [] none
+    a-value: make struct! [] blank
     same? third :a-value third any [:a-value]
 ]
 [
-    a-value: make struct! [] none
+    a-value: make struct! [] blank
     same? third :a-value third any [false :a-value]
 ]
 [
-    a-value: make struct! [] none
+    a-value: make struct! [] blank
     same? third :a-value third any [:a-value false]
 ]
 
@@ -418,7 +418,7 @@
 ]
 
 [
-    o: make object! [a: none]
+    o: make object! [a: _]
     same? context-of in o 'self context-of in o 'a
 ]
 
@@ -435,7 +435,7 @@
 ['group! == apply/only :type? [() true]]
 
 ;-- CC#2246
-[none? case [true []]]
+[blank? case [true []]]
 
 ; #1906
 [

@@ -56,7 +56,7 @@ make-diff: func [
                 new-test
                 new-result <> 'skipped
                 any [
-                    none? old-test
+                    blank? old-test
                     all [
                         strict-not-equal? old-test new-test
                         old-test == second sort/case reduce [new-test old-test]
@@ -92,7 +92,7 @@ make-diff: func [
                 old-test
                 old-result <> 'skipped
                 any [
-                    none? new-test
+                    blank? new-test
                     all [
                         strict-not-equal? new-test old-test
                         new-test == second sort/case reduce [old-test new-test]
@@ -138,14 +138,14 @@ make-diff: func [
         next-old-log: all [
             old-test
             any [
-                none? new-test
+                blank? new-test
                 old-test == first sort/case reduce [old-test new-test]
             ]
         ]
         next-new-log: all [
             new-test
             any [
-                none? old-test
+                blank? old-test
                 new-test == first sort/case reduce [new-test old-test]
             ]
         ]
