@@ -1804,8 +1804,8 @@
     error? try [append o [self: 1]]
 ]
 ; datatypes/op.r
-[infix? get '+]
-[error? try [infix? 1]]
+[lookback? get '+]
+[error? try [lookback? 1]]
 [function? get '+]
 
 ; #1934
@@ -2540,7 +2540,7 @@
 ]
 [
     a-value: get '+
-    1 a-value 2 == 3
+    (avalue 1 2) == 3
 ]
 [
     a-value: 0x0
