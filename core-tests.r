@@ -2540,7 +2540,7 @@
 ]
 [
     a-value: get '+
-    (avalue 1 2) == 3
+    (a-value 1 2) == 3
 ]
 [
     a-value: 0x0
