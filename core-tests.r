@@ -5532,18 +5532,18 @@
 [error? try [r3-alpha-apply func [a] [a] [1 2]]]
 [error? try [r3-alpha-apply/only func [a] [a] [1 2]]]
 
-['a = r3-alpha-apply func [/a] [a] [true]]
-[blank == r3-alpha-apply func [/a] [a] [false]]
-[blank == r3-alpha-apply func [/a] [a] []]
-['a = r3-alpha-apply/only func [/a] [a] [true]]
+[true = r3-alpha-apply func [/a] [a] [true]]
+[false == r3-alpha-apply func [/a] [a] [false]]
+[false == r3-alpha-apply func [/a] [a] []]
+[true = r3-alpha-apply/only func [/a] [a] [true]]
 ; the word 'false
-['a = r3-alpha-apply/only func [/a] [a] [false]]
-[blank == r3-alpha-apply/only func [/a] [a] []]
-[use [a] [a: true 'a = r3-alpha-apply func [/a] [a] [a]]]
-[use [a] [a: false blank == r3-alpha-apply func [/a] [a] [a]]]
-[use [a] [a: false 'a = r3-alpha-apply func [/a] [a] ['a]]]
-[use [a] [a: false 'a = r3-alpha-apply func [/a] [a] [/a]]]
-[use [a] [a: false 'a = r3-alpha-apply/only func [/a] [a] [a]]]
+[true = r3-alpha-apply/only func [/a] [a] [false]]
+[false == r3-alpha-apply/only func [/a] [a] []]
+[use [a] [a: true true = r3-alpha-apply func [/a] [a] [a]]]
+[use [a] [a: false false == r3-alpha-apply func [/a] [a] [a]]]
+[use [a] [a: false true = r3-alpha-apply func [/a] [a] ['a]]]
+[use [a] [a: false true = r3-alpha-apply func [/a] [a] [/a]]]
+[use [a] [a: false true = r3-alpha-apply/only func [/a] [a] [a]]]
 [group! == r3-alpha-apply/only :type? [()]]
 [[1] == head r3-alpha-apply :insert [copy [] [1] blank blank blank]]
 [[1] == head r3-alpha-apply :insert [copy [] [1] blank blank false]]
@@ -5574,11 +5574,10 @@
 
 [void? r3-alpha-apply func [x [<opt> any-value!]] [get/opt 'x] [()]]
 [void? r3-alpha-apply func ['x [<opt> any-value!]] [get/opt 'x] [()]]
-[void? r3-alpha-apply func [:x [<opt> any-value!]] [get/opt 'x] [()]]
+[void? r3-alpha-apply func ['x [<opt> any-value!]] [get/opt 'x] [()]]
 [void? r3-alpha-apply func [x [<opt> any-value!]] [return get/opt 'x] [()]]
 [void? r3-alpha-apply func ['x [<opt> any-value!]] [return get/opt 'x] [()]]
-[void? r3-alpha-apply func [:x [<opt> any-value!]] [return get/opt 'x] [()]]
-[error? r3-alpha-apply func [:x [<opt> any-value!]] [return get/opt 'x] [make error! ""]]
+[error? r3-alpha-apply func ['x [<opt> any-value!]] [return get/opt 'x] [make error! ""]]
 [
     error? r3-alpha-apply/only func [x [<opt> any-value!]] [
         return get/opt 'x
@@ -5589,18 +5588,13 @@
         return get/opt 'x
     ] head insert copy [] make error! ""
 ]
-[
-    error? r3-alpha-apply/only func [:x [<opt> any-value!]] [
-        return get/opt 'x
-    ] head insert copy [] make error! ""
-]
 [use [x] [x: 1 strict-equal? 1 r3-alpha-apply func ['x] [:x] [:x]]]
 [use [x] [x: 1 strict-equal? 1 r3-alpha-apply func ['x] [:x] [:x]]]
 [use [x] [x: 1 strict-equal? first [:x] r3-alpha-apply/only func [:x] [:x] [:x]]]
 [
     use [x] [
         unset 'x
-        strict-equal? first [:x] r3-alpha-apply/only func [:x [<opt> any-value!]] [
+        strict-equal? first [:x] r3-alpha-apply/only func ['x [<opt> any-value!]] [
             return get/opt 'x
         ] [:x]
     ]
@@ -5612,7 +5606,7 @@
 [
     use [x] [
         unset 'x
-        strict-equal? 'x r3-alpha-apply/only func [:x [<opt> any-value!]] [
+        strict-equal? 'x r3-alpha-apply/only func ['x [<opt> any-value!]] [
             return get/opt 'x
         ] [x]
     ]
