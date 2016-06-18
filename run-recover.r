@@ -25,7 +25,7 @@ do-core-tests: has [
     set 'flags pick [
         [#64bit #r3only #r3]
         [#32bit #r2only]
-    ] found? in system 'catalog
+    ] not blank? in system 'catalog
 
     ; calculate interpreter checksum
     case [

@@ -17,16 +17,8 @@ do %line-numberq.r
 
 whitespace: charset [#"^A" - #" " "^(7F)^(A0)"]
 
-; compatibility functions:
-unless set? 'transcode [transcode: :load]
 
-unless set? 'spec-of [spec-of: :third]
-
-read-binary: either find spec-of :read /binary [
-    func [source [port! file! url! block!]] [read/binary source]
-] [
-    :read
-]
+read-binary: :read
 
 make object! [
 

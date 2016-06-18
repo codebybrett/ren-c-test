@@ -22,7 +22,7 @@
 ; datatypes/action.r
 [action? :abs]
 [not action? 1]
-[function! = type? :abs]
+[function! = type-of :abs]
 ; bug#1659
 ; actions are active
 [1 == do reduce [:abs -1]]
@@ -88,7 +88,7 @@
 ; datatypes/binary.r
 [binary? #{00}]
 [not binary? 1]
-[binary! = type? #{00}]
+[binary! = type-of #{00}]
 [
     system/options/binary-base: 2
     "2#{00000000}" == mold #{00}
@@ -125,7 +125,7 @@
 ; datatypes/bitset.r
 [bitset? make bitset! "a"]
 [not bitset? 1]
-[bitset! = type? make bitset! "a"]
+[bitset! = type-of make bitset! "a"]
 ; minimum, literal representation
 [bitset? #[bitset! #{}]]
 ; TS crash
@@ -133,7 +133,7 @@
 ; datatypes/block.r
 [block? [1]]
 [not block? 1]
-[block! = type? [1]]
+[block! = type-of [1]]
 ; minimum
 [block? []]
 ; alternative literal representation
@@ -144,7 +144,7 @@
 ; datatypes/char.r
 [char? #"a"]
 [not char? 1]
-[char! = type? #"a"]
+[char! = type-of #"a"]
 [#"^@" = #"^(00)"]
 [#"^A" = #"^(01)"]
 [#"^B" = #"^(02)"]
@@ -293,7 +293,7 @@
 ; datatypes/closure.r
 [closure? closure [] ["OK"]]
 [not closure? 1]
-[closure! = type? closure [] ["OK"]]
+[closure! = type-of closure [] ["OK"]]
 ; minimum
 [closure? closure [] []]
 ; return-less return value tests
@@ -405,8 +405,8 @@
     $1 == f
 ]
 [
-    f: closure [] [:type?]
-    same? :type? f
+    f: closure [] [:type-of]
+    same? :type-of f
 ]
 [
     f: closure [] [#[blank]]
@@ -582,7 +582,7 @@
 ]
 ; datatypes/datatype.r
 [not datatype? 1]
-[datatype! = type? function!]
+[datatype! = type-of function!]
 [datatype? function!]
 [datatype? binary!]
 [datatype? bitset!]
@@ -635,7 +635,7 @@
 ; datatypes/date.r
 [date? 25/Sep/2006]
 [not date? 1]
-[date! = type? 25/Sep/2006]
+[date! = type-of 25/Sep/2006]
 ; alternative formats
 [25/Sep/2006 = 25/9/2006]
 [25/Sep/2006 = 25-Sep-2006]
@@ -649,13 +649,13 @@
 [date? 1/Jan/0000/0:00]
 ; extreme behaviour
 [
-    found? any [
+    any? [
         error? try [date-d: 1/Jan/0000 - 1]
         date-d = load mold date-d
     ]
 ]
 [
-    found? any [
+    any? [
         error? try [date-d: 31-Dec-16383 + 1]
         date-d = load mold date-d
     ]
@@ -663,7 +663,7 @@
 ; datatypes/decimal.r
 [decimal? 0.0]
 [not decimal? 0]
-[decimal! = type? 0.0]
+[decimal! = type-of 0.0]
 [decimal? 1.0]
 [decimal? -1.0]
 [decimal? 1.5]
@@ -806,7 +806,7 @@
 ; datatypes/email.r
 [email? me@here.com]
 [not email? 1]
-[email! = type? me@here.com]
+[email! = type-of me@here.com]
 ; "minimum"
 [email? #[email! ""]]
 [strict-equal? #[email! ""] make email! 0]
@@ -814,7 +814,7 @@
 ; datatypes/error.r
 [error? try [1 / 0]]
 [not error? 1]
-[error! = type? try [1 / 0]]
+[error! = type-of try [1 / 0]]
 ; error evaluation
 [error? do head insert copy [] try [1 / 0]]
 ; error that does not exist in the SCRIPT category--all of whose ids are
@@ -943,7 +943,7 @@
 ; datatypes/file.r
 [file? %myscript.r]
 [not file? 1]
-[file! = type? %myscript.r]
+[file! = type-of %myscript.r]
 ; minimum
 [file? %""]
 [%"" == #[file! ""]]
@@ -955,7 +955,7 @@
 ; datatypes/function.r
 [function? does ["OK"]]
 [not function? 1]
-[function! = type? does ["OK"]]
+[function! = type-of does ["OK"]]
 ; minimum
 [function? does []]
 ; literal form
@@ -1069,8 +1069,8 @@
     $1 == f
 ]
 [
-    f: does [:type?]
-    same? :type? f
+    f: does [:type-of]
+    same? :type-of f
 ]
 [
     f: does [_]
@@ -1244,7 +1244,7 @@
     error? trap [2 == f/r/r 1 2]
 ]
 ; bug#27
-[error? try [(type?) 1]]
+[error? try [(type-of) 1]]
 ; bug#1659
 ; inline function test
 [
@@ -1296,7 +1296,7 @@
 ; datatypes/get-word.r
 [get-word? first [:a]]
 [not get-word? 1]
-[get-word! = type? first [:a]]
+[get-word! = type-of first [:a]]
 [
     ; context-less get-word
     e: try [do to block! ":a"]
@@ -1309,7 +1309,7 @@
 ; datatypes/gob.r
 ; minimum
 [gob? make gob! []]
-[gob! = type? make gob! []]
+[gob! = type-of make gob! []]
 ; bug#62
 [
     g: make gob! []
@@ -1342,7 +1342,7 @@
 ; datatypes/image.r
 [image? make image! 100x100]
 [not image? 1]
-[image! = type? make image! 0x0]
+[image! = type-of make image! 0x0]
 ; minimum
 [image? #[image! 0x0 #{}]]
 ; default colours
@@ -1355,7 +1355,7 @@
 ; bug#33
 [integer? -0]
 [not integer? 1.1]
-[integer! = type? 0]
+[integer! = type-of 0]
 [integer? 1]
 [integer? -1]
 [integer? 2]
@@ -1404,14 +1404,14 @@
 ; datatypes/issue.r
 [issue? #aa]
 [not issue? 1]
-[issue! = type? #aa]
+[issue! = type-of #aa]
 ; minimum
 [issue? #a]
 ; datatypes/list.r
 ; datatypes/lit-path.r
 [lit-path? first ['a/b]]
 [not lit-path? 1]
-[lit-path! = type? first ['a/b]]
+[lit-path! = type-of first ['a/b]]
 ; minimum
 ; bug#1947
 [lit-path? load "#[lit-path! [a]]"]
@@ -1429,7 +1429,7 @@
 ; datatypes/lit-word.r
 [lit-word? first ['a]]
 [not lit-word? 1]
-[lit-word! = type? first ['a]]
+[lit-word! = type-of first ['a]]
 ; lit-words are active
 [
     a-value: first ['a]
@@ -1445,8 +1445,8 @@
 [logic? true]
 [logic? false]
 [not logic? 1]
-[logic! = type? true]
-[logic! = type? false]
+[logic! = type-of true]
+[logic! = type-of false]
 [true = #[true]]
 [false = #[false]]
 [on = true]
@@ -1479,7 +1479,7 @@
 ; datatypes/module.r
 [module? module [] []]
 [not module? 1]
-[module! = type? module [] []]
+[module! = type-of module [] []]
 [
     a-module: module [
     ] [
@@ -1513,7 +1513,7 @@
 ; datatypes/money.r
 [money? $0.0]
 [not money? 0]
-[money! = type? $0.0]
+[money! = type-of $0.0]
 [money? $1.0]
 [money? -$1.0]
 [money? $1.5]
@@ -1524,14 +1524,14 @@
 ; check, whether these are moldable
 [
     x: $999999999999999
-    found? any [
+    any? [
         error? try [x: x + $1]
         not error? try [mold x]
     ]
 ]
 [
     x: -$999999999999999
-    found? any [
+    any? [
         error? try [x: x - $1]
         not error? try [mold x]
     ]
@@ -1539,7 +1539,7 @@
 ; alternative form
 [$1.1 == $1,1]
 [
-    found? any [
+    any? [
         error? try [x: $1234567890123456]
         not error? try [mold x]
     ]
@@ -1665,14 +1665,14 @@
 ; datatypes/native.r
 [function? :reduce]
 [not function? 1]
-[function! = type? :reduce]
+[function! = type-of :reduce]
 ; bug#1659
 ; natives are active
-[same? blank! do reduce [:type? make blank! blank]]
+[same? blank! do reduce [:type-of make blank! blank]]
 ; datatypes/none.r
 [blank? blank]
 [not blank? 1]
-[blank! = type? blank]
+[blank! = type-of blank]
 ; literal form
 [blank = _]
 ; bug#845
@@ -1691,7 +1691,7 @@
 ; datatypes/object.r
 [object? make object! [x: 1]]
 [not object? 1]
-[object! = type? make object! [x: 1]]
+[object! = type-of make object! [x: 1]]
 ; minimum
 [object? make object! []]
 ; literal form
@@ -1815,7 +1815,7 @@
 ; datatypes/pair.r
 [pair? 1x2]
 [not pair? 1]
-[pair! = type? 1x2]
+[pair! = type-of 1x2]
 [1x1 = make pair! 1]
 [1x2 = make pair! [1 2]]
 [1x1 = to pair! 1]
@@ -1831,7 +1831,7 @@
 [group? first [(1 + 1)]]
 [not group? 1]
 ; minimum
-[group! = type? first [()]]
+[group! = type-of first [()]]
 ; alternative literal form
 [strict-equal? first [()] first [#[group! []]]]
 [strict-equal? first [()] make group! 0]
@@ -1861,7 +1861,7 @@
 [path? 'a/b]
 ['a/b == first [a/b]]
 [not path? 1]
-[path! = type? 'a/b]
+[path! = type-of 'a/b]
 ; the minimum
 ; bug#1947
 [path? load "#[path! [a]]"]
@@ -2012,7 +2012,7 @@
 ; datatypes/percent.r
 [percent? 0%]
 [not percent? 1]
-[percent! = type? 0%]
+[percent! = type-of 0%]
 [percent? 0.0%]
 [percent? 1%]
 [percent? -1.0%]
@@ -2068,15 +2068,15 @@
 ; datatypes/port.r
 [port? make port! http://]
 [not port? 1]
-[port! = type? make port! http://]
+[port! = type-of make port! http://]
 ; datatypes/refinement.r
 [refinement? /a]
 [not refinement? 1]
-[refinement! = type? /a]
+[refinement! = type-of /a]
 ; datatypes/set-path.r
 [set-path? first [a/b:]]
 [not set-path? 1]
-[set-path! = type? first [a/b:]]
+[set-path! = type-of first [a/b:]]
 ; the minimum
 ; bug#1947
 [set-path? load "#[set-path! [a]]"]
@@ -2118,7 +2118,7 @@
 ; datatypes/set-word.r
 [set-word? first [a:]]
 [not set-word? 1]
-[set-word! = type? first [a:]]
+[set-word! = type-of first [a:]]
 ; set-word is active
 [
     a: :abs
@@ -2151,7 +2151,7 @@
 ; datatypes/string.r
 [string? "ahoj"]
 [not string? 1]
-[string! = type? "ahoj"]
+[string! = type-of "ahoj"]
 ; minimum
 [string? ""]
 ; alternative literal form
@@ -2300,7 +2300,7 @@
 ; datatypes/symbol.r
 [tag? <tag>]
 [not tag? 1]
-[tag! = type? <tag>]
+[tag! = type-of <tag>]
 ; minimum
 [tag? #[tag! ""]]
 [strict-equal? #[tag! ""] make tag! 0]
@@ -2311,21 +2311,21 @@
 ; datatypes/time.r
 [time? 0:00]
 [not time? 1]
-[time! = type? 0:00]
+[time! = type-of 0:00]
 [0:0:10 = make time! 10]
 [0:0:10 = to time! 10]
 [error? try [to time! "a"]]
 ["0:00" = mold 0:00]
 ; small value
 [
-    found? any [
+    any? [
         error? try [t: -596522:0:0 - 1:00]
         t = load mold t
     ]
 ]
 ; big value
 [
-    found? any [
+    any? [
         error? try [t: 596522:0:0 + 1:00]
         t = load mold t
     ]
@@ -2353,7 +2353,7 @@
 ; datatypes/tuple.r
 [tuple? 1.2.3]
 [not tuple? 1]
-[tuple! = type? 1.2.3]
+[tuple! = type-of 1.2.3]
 [1.2.3 = to tuple! [1 2 3]]
 ["1.2.3" = mold 1.2.3]
 ; minimum
@@ -2385,7 +2385,7 @@
 [typeset? make typeset! [integer! blank!]]
 [typeset? make typeset! reduce [integer! blank!]]
 [typeset? to-typeset [integer! blank!]]
-[typeset! = type? any-series!]
+[typeset! = type-of any-series!]
 ; bug#92
 [
     x: to typeset! []
@@ -2393,7 +2393,7 @@
 ]
 ; datatypes/unset.r
 [void? ()]
-[blank? type? ()]
+[blank? type-of ()]
 [not void? 1]
 ; bug#68
 [void? try [a: ()]]
@@ -2402,7 +2402,7 @@
 ; datatypes/url.r
 [url? http://www.fm.tul.cz/~ladislav/rebol]
 [not url? 1]
-[url! = type? http://www.fm.tul.cz/~ladislav/rebol]
+[url! = type-of http://www.fm.tul.cz/~ladislav/rebol]
 ; minimum; alternative literal form
 [url? #[url! ""]]
 [strict-equal? #[url! ""] make url! 0]
@@ -2436,7 +2436,7 @@
 ; datatypes/word.r
 [word? 'a]
 [not word? 1]
-[word! = type? 'a]
+[word! = type-of 'a]
 ; literal form
 [word? first [a]]
 ; words are active; actions are word-active
@@ -2527,7 +2527,7 @@
     :a-value == a-value
 ]
 ; natives are word-active
-[native! == type? :reduce]
+[native! == type-of :reduce]
 [:blank == blank]
 ; library test?
 [
@@ -4883,7 +4883,7 @@
 [true = all [true]]
 [blank? all [false]]
 [$1 == all [$1]]
-[same? :type? all [:type?]]
+[same? :type-of all [:type-of]]
 [blank? all [_]]
 [
     a-value: make object! []
@@ -4979,7 +4979,7 @@
     :a-value == all [true :a-value]
 ]
 [$1 == all [true $1]]
-[same? :type? all [true :type?]]
+[same? :type-of all [true :type-of]]
 [blank? all [true _]]
 [
     a-value: make object! []
@@ -5077,7 +5077,7 @@
 [blank? all [false true]]
 [blank? all [true false]]
 [true = all [$1 true]]
-[true = all [:type? true]]
+[true = all [:type-of true]]
 [blank? all [_ true]]
 [
     a-value: make object! []
@@ -5231,7 +5231,7 @@
 [true = any [true]]
 [blank? any [false]]
 [$1 == any [$1]]
-[same? :type? any [:type?]]
+[same? :type-of any [:type-of]]
 [blank? any [_]]
 [
     a-value: make object! []
@@ -5330,7 +5330,7 @@
 [true = any [false true]]
 [blank? any [false false]]
 [$1 == any [false $1]]
-[same? :type? any [false :type?]]
+[same? :type-of any [false :type-of]]
 [blank? any [false _]]
 [
     a-value: make object! []
@@ -5426,7 +5426,7 @@
 ]
 [true = any [true false]]
 [$1 == any [$1 false]]
-[same? :type? any [:type? false]]
+[same? :type-of any [:type-of false]]
 [blank? any [_ false]]
 [
     a-value: make object! []
@@ -5522,7 +5522,7 @@
 ]
 ; functions/control/apply.r
 ; bug#44
-[error? try [r3-alpha-apply 'type?/word []]]
+[error? try [r3-alpha-apply 'type-of/word []]]
 [1 == r3-alpha-apply :subtract [2 1]]
 [1 = (r3-alpha-apply :- [2 1])]
 [error? try [r3-alpha-apply func [a] [a] []]]
@@ -5544,12 +5544,12 @@
 [use [a] [a: false true = r3-alpha-apply func [/a] [a] ['a]]]
 [use [a] [a: false true = r3-alpha-apply func [/a] [a] [/a]]]
 [use [a] [a: false true = r3-alpha-apply/only func [/a] [a] [a]]]
-[group! == r3-alpha-apply/only :type? [()]]
+[group! == r3-alpha-apply/only :type-of [()]]
 [[1] == head r3-alpha-apply :insert [copy [] [1] blank blank blank]]
 [[1] == head r3-alpha-apply :insert [copy [] [1] blank blank false]]
 [[[1]] == head r3-alpha-apply :insert [copy [] [1] blank blank true]]
-[function! == r3-alpha-apply :type? [:print]]
-[get-word! == r3-alpha-apply/only :type? [:print]]
+[function! == r3-alpha-apply :type-of [:print]]
+[get-word! == r3-alpha-apply/only :type-of [:print]]
 ; bug#1760
 [1 == eval does [r3-alpha-apply does [] [return 1] 2]]
 ; bug#1760
@@ -5656,7 +5656,7 @@
 ; the "result" of break should not be passable to functions, bug#1509
 [a: 1 loop 1 [a: error? break] :a =? 1] ; error? function takes 1 arg
 [a: 1 loop 1 [a: error? break/return 2] :a =? 1]
-[a: 1 loop 1 [a: type? break] :a =? 1] ; type? function takes 1-2 args
+[a: 1 loop 1 [a: type-of break] :a =? 1] ; type-of function takes 1-2 args
 [foo: func [x y] [9] a: 1 loop 1 [a: foo break 5] :a =? 1] ; foo takes 2 args
 [foo: func [x y] [9] a: 1 loop 1 [a: foo 5 break] :a =? 1]
 [foo: func [x y] [9] a: 1 loop 1 [a: foo break break] :a =? 1]
@@ -5942,7 +5942,7 @@
 [#[true] == do [#[true]]]
 [#[false] == do [#[false]]]
 [$1 == do [$1]]
-[same? :type? do [:type?]]
+[same? :type-of do [:type-of]]
 [blank? do [_]]
 [
     a-value: make object! []
@@ -6383,7 +6383,7 @@
     ]
 ]
 ; bug#1993
-[equal? type? for i -1 -2 0 [break] type? for i 2 1 0 [break]]
+[equal? type-of for i -1 -2 0 [break] type-of for i 2 1 0 [break]]
 ; skip before head test
 [[] = for i b: tail [1] head b -2 [i]]
 ; "recursive safety", "locality" and "body constantness" test in one
@@ -6769,7 +6769,7 @@
 [if true [true]]
 [void? if false [true]]
 [if $1 [true]]
-[if :type? [true]]
+[if :type-of [true]]
 [void? if blank [true]]
 [if make object! [] [true]]
 [if get '+ [true]]
@@ -8230,10 +8230,10 @@
 [true = not false]
 [false = not make map! []]
 [false = not $0.00]
-[false = not :type?]
+[false = not :type-of]
 [true = not blank]
 [false = not make object! []]
-[false = not type? get '+]
+[false = not type-of get '+]
 [false = not 0x0]
 [false = not first [()]]
 [false = not first [a/b]]
@@ -9903,7 +9903,7 @@
 [[] = copy/part [] 0]
 [[] = copy/part [] 1]
 [[] = copy/part [] 2147483647]
-[error? try [copy blank]]
+[ok? try [copy blank]]
 ; bug#877
 [
     a: copy []

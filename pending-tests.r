@@ -209,7 +209,7 @@
 ; path evaluation order
 [
     a: 1x2
-    found? any [
+    any? [
         error? try [b: a/(a: [3 4] 1)]
         b = 1
         b = 3
