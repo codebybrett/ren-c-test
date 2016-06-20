@@ -1848,7 +1848,7 @@
     num2: 1
     fact: to group! [either num1 = 1 [num2] [num2: num1 * num2 num1: num1 - 1]]
     insert/only tail last fact fact
-    24 = do fact
+    24 = do as block! fact
 ]
 ; bug#1665
 ; infinite recursion
@@ -6041,7 +6041,7 @@
 ]
 [
     a-value: first [(2)]
-    2 == do :a-value
+    2 == do as block! :a-value
 ]
 [
     a-value: 'a/b
